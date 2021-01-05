@@ -1,4 +1,4 @@
-# **E-sential Projectt**
+# **E-sential Project**
 
 ## **Welcome to E-sential where your financial prosperity is essiential to us!**
 
