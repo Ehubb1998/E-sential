@@ -1,6 +1,6 @@
 # **E-sential Project**
 
-## **Welcome to E-sential where your financial prosperity is essiential to us!**
+## **Welcome to E-sential where your financial prosperity is essential to us!**
 
 ## **About**
 
