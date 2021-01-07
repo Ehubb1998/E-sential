@@ -75,4 +75,32 @@ _Ehubb's first Full-Stack Application!_
     - GET /api/watch_list/:id -- Get Watch List
     - POST /api/watch_list/ -- Create a new plan
     - DELETE /api/watch_list/:id -- Delete Plan
+
+
+# **MVP** 
+
+- Banking Info
+- Stock Market
+- Stock Tutorial
+- Custom Planning
+- Watch List
+
+---
+
+# **Features**
+
+- Sign Up / Log In
+- Can setup and organize financial information
+- Tutorial on the Stock Market and investing
+- Custom plan on how to invest
+- View stocks
+- Stock Watch List
+
+# **Models**
+
+- User
+- BankInfo
+- StockInfo
+- Plan
+- WatchList
 ---
