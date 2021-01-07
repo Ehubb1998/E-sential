@@ -5,6 +5,7 @@ name = "pypi"
 
 [packages]
 werkzeug = "*"
+flask-cors = "*"
 
 [dev-packages]
 
