@@ -103,4 +103,14 @@ _Ehubb's first Full-Stack Application!_
 - StockInfo
 - Plan
 - WatchList
+
+# **Components**
+
+- NavBar Component
+- Splash Page Component
+    - Stock Market Component
+- *Once Logged In
+- Homepage Component
+    - Banking Component
+    - Stock Market Component
 ---
