@@ -46,12 +46,10 @@ _Ehubb's first Full-Stack Application!_
 ## **Backend Routes**
 
 - Authentication
-    - /api/auth/ -- Authenticate User
     - POST /api/auth/login -- Login User
-    - /api/auth/logout -- Logout User
+    - POST /api/user/signup -- Create New User
 
 - User
-    - POST /api/user/signup -- Create New User
     - GET /api/user/:userId -- Get User
     - PUT /api/user/:userId -- Edit User
     - DELETE /api/user/:userId -- Delete User
