@@ -15,6 +15,10 @@ wtforms = "*"
 flask-wtf = "*"
 pylint = "*"
 jinja2 = "*"
+werkzeug = "*"
+flask-cors = "*"
+pyjwt = "*"
+flask-login = "*"
 
 [dev-packages]
 
