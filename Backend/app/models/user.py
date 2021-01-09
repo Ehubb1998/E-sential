@@ -9,12 +9,12 @@ class User(db.Model, UserMixin):
     __tablename__ = 'users'
 
     id = db.Column(db.Integer, primary_key=True)
-    firstName = db.Column(db.String(50), nullable=False)
-    lastName = db.Column(db.String(50), nullable=False)
+    firstName = db.Column(db.String(100), nullable=False)
+    lastName = db.Column(db.String(100), nullable=False)
     email = db.Column(db.String(100), nullable=False, unique=True)
-    primaryBank = db.Column(db.String(50), nullable=False)
+    primaryBank = db.Column(db.String(100), nullable=False)
     job = db.Column(db.String(100), nullable=False)
-    hashedPassword = db.Column(db.String(50), nullable=False)
+    hashedPassword = db.Column(db.String(500), nullable=False)
 
 
     @property
