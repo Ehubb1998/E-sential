@@ -178,8 +178,40 @@ def signup():
     if email == '' and password_result == '':
        return make_response("Please fill out Email and correct Password fields", 401, {"WWW-Authenticate": "Basic realm='Sign Up failed'")
 
-    hashedPassword = 
+    if password != confirmedPassword:
+        return make_response("Password and Confirmed Password must match", 401, {"WWW-Authenticate": "Basic realm='Sign Up failed'")
 
+    if password_result == False:
+        return make_response("Please follow Password requirements", 401, {"WWW-Authenticate": "Basic realm='Sign Up failed'")
+
+    if firstName == '':
+        return make_response("Please fill out First Name field", 401, {"WWW-Authenticate": "Basic realm='Sign Up failed'")
+
+    if lastName == '':
+        return make_response("Please fill out Last Name field", 401, {"WWW-Authenticate": "Basic realm='Sign Up failed'")
+
+    if email == '':
+        return make_response("Please fill out Email field", 401, {"WWW-Authenticate": "Basic realm='Sign Up failed'")
+
+    if primaryBank == '':
+        return make_response("Please fill out Primary Bank field", 401, {"WWW-Authenticate": "Basic realm='Sign Up failed'")
+
+    if job == '':
+        return make_response("Please fill out Job field", 401, {"WWW-Authenticate": "Basic realm='Sign Up failed'")
+
+    user = User(
+        firstName=firstName,
+        lastName=lastName,
+        email=email,
+        primaryBank=primaryBank,
+        job=job
+    )
+
+    user.password = password
+    db.session.add(user)
+    db.session.commit()
+
+    
 
 
 @auth_routes.route("/login", methods=["POST"])
