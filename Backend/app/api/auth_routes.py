@@ -3,7 +3,6 @@ import jwt
 import datetime
 from ..config import Config
 from app.models import db, User
-from .check_for_token import check_for_token
 
 auth_routes = Blueprint("auth", __name__)
 
@@ -18,7 +17,7 @@ def validate_signup_password(password):
     def has_number(string):
         return any(char.isdigit() for char in string)
     
-    
+
     if has_number(password) == True:
         num_result = True
 

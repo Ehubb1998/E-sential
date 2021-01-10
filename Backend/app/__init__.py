@@ -6,7 +6,7 @@ from flask_wtf.csrf import generate_csrf
 
 from .models import db
 from .api.auth_routes import auth_routes
-# from .api.bankInfo_routes import bankInfo_routes
+from .api.bankInfo_routes import bankInfo_routes
 # from .api.plan_routes import plan_routes
 # from .api.stockInfo_routes import stockInfo_routes
 # from .api.user_routes import user_routes
