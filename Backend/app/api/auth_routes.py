@@ -18,6 +18,7 @@ def validate_signup_password(password):
     def has_number(string):
         return any(char.isdigit() for char in string)
     
+    
     if has_number(password) == True:
         num_result = True
 
@@ -277,5 +278,7 @@ def login():
                 Config.SECRET_KEY)
                 user_dict = user.profile_dict()
                 return jsonify({"token": token, "userData": user_dict})
+        else:
+            return make_response("Incorrect Password", 401, {"WWW-Authenticate": "Basic realm='Login Required'"})
     else:
-        return make_response("Unable to verify", 401, {"WWW-Authenticate": "Basic realm='Login Required'"})
+        return make_response("The provided Email does not exist", 401, {"WWW-Authenticate": "Basic realm='Login Required'"})
