@@ -50,13 +50,14 @@ _Ehubb's first Full-Stack Application!_
     - POST /api/user/signup -- Create New User
 
 - User
-    - GET /api/user/:userId -- Get User
-    - PUT /api/user/:userId -- Edit User
+    - GET /api/user/:id -- Get User
+    - PUT /api/user/edit/:userId -- Edit User
     - DELETE /api/user/:userId -- Delete User
 
 - Bank Info
+    - POST /api/bank_info/ -- Create new bank info
     - GET /api/bank_info/:id -- Get Bank info
-    - PUT /api/bank_info/:id -- Edit Banking info
+    - PUT /api/bank_info/edit/:id -- Edit Banking info
 
 - Stock Info
     - POST /api/stock_info/ -- Create new stock info
