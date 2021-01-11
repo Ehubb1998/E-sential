@@ -19,6 +19,7 @@ werkzeug = "*"
 flask-cors = "*"
 pyjwt = "*"
 flask-login = "*"
+requests = "*"
 
 [dev-packages]
 
