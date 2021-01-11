@@ -50,30 +50,31 @@ _Ehubb's first Full-Stack Application!_
     - POST /api/user/signup -- Create New User
 
 - User
-    - GET /api/user/:id -- Get User
-    - PUT /api/user/edit/:userId -- Edit User
-    - DELETE /api/user/:userId -- Delete User
+    - GET /api/user/ -- Get User
+    - PUT /api/user/edit -- Edit User
+    - DELETE /api/user/ -- Delete User
 
 - Bank Info
     - POST /api/bank_info/ -- Create new bank info
-    - GET /api/bank_info/:id -- Get Bank info
-    - PUT /api/bank_info/edit/:id -- Edit Banking info
+    - GET /api/bank_info/info -- Get Bank info
+    - PUT /api/bank_info/edit -- Edit Banking info
+    - DELETE /api/bank_info/ -- Delete Banking info
 
 - Stock Info
     - POST /api/stock_info/ -- Create new stock info
-    - GET /api/stock_info/:id -- Get Stock info
-    - PUT /api/stock_info/:id -- Edit Stock info
-    - DELETE /api/stock_info/:id -- Delete Stock info
+    - GET /api/stock_info/info -- Get Stock info
+    - PUT /api/stock_info/edit -- Edit Stock info
+    - DELETE /api/stock_info/ -- Delete Stock info
 
 - Plan
-    - GET /api/plan/:id -- Get Plan
     - POST /api/plan/ -- Create a new plan
-    - DELETE /api/plan:id -- Delete Plan
+    - GET /api/plan/info -- Get Plan
+    - DELETE /api/plan/ -- Delete Plan
 
 - Watch List 
-    - GET /api/watch_list/:id -- Get Watch List
     - POST /api/watch_list/ -- Create a new plan
-    - DELETE /api/watch_list/:id -- Delete Plan
+    - GET /api/watch_list/list -- Get Watch List
+    - DELETE /api/watch_list/ -- Delete Plan
 
 
 # **MVP** 

@@ -8,7 +8,7 @@ from .models import db
 from .api.auth_routes import auth_routes
 from .api.bankInfo_routes import bankInfo_routes
 # from .api.plan_routes import plan_routes
-# from .api.stockInfo_routes import stockInfo_routes
+from .api.stockInfo_routes import stockInfo_routes
 # from .api.user_routes import user_routes
 # from .api.watchList_routes import watchList_routes
 
@@ -20,9 +20,9 @@ app = Flask(__name__)
 app.cli.add_command(seed_commands)
 app.config.from_object(Config)
 app.register_blueprint(auth_routes, url_prefix="/api/auth")
-# app.register_blueprint(bankInfo_routes, url_prefix="/api/bank_info")
+app.register_blueprint(bankInfo_routes, url_prefix="/api/bank_info")
 # app.register_blueprint(plan_routes, url_prefix="/api/plan")
-# app.register_blueprint(stockInfo_routes, url_prefix="/api/stock_info")
+app.register_blueprint(stockInfo_routes, url_prefix="/api/stock_info")
 # app.register_blueprint(user_routes, url_prefix="/api/user")
 # app.register_blueprint(watchList_routes, url_prefix="/api/watch_list")
 

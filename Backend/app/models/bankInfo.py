@@ -33,7 +33,7 @@ class BankInfo(db.Model):
     def bank_info(self):
         return {
             "id": self.id,
-            "userId": self.userId,
+            "userId": self.user_id,
             "accountBalance": self.accountBalance,
             "monthlyIncome": self.monthlyIncome,
         }
