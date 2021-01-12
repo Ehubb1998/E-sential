@@ -65,4 +65,4 @@ def delete_bank_info():
 
     db.session.delete(bank)
     db.session.commit()
-    return jsonify("Bank Information Deleted")
+    return "Bank Information Deleted"

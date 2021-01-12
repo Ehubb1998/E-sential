@@ -55,17 +55,13 @@ def stock_info():
 
     if allOrOne == "one":
         stock_name = request.json["stock"]
-        stocks = StockInfo.query.filter(StockInfo.user_id == user_id).all()
+        stock = StockInfo.query.filter((StockInfo.user_id == user_id) & (StockInfo.stock == stock_name)).first()
 
-        if not stocks:
+        if not stock:
             return make_response(f"You do not own any {stock_name} stock", 401, {"WWW-Authenticate": "Basic realm='Invalid'"})
 
-        for stock in stocks:
-            stock_info = stock.stock_info()
-            if stock_info["stock"] == stock_name:
-                info = stock.stock_info()
-                return jsonify({"StockInfo": info})
-        return make_response("Not a valid stock name", 401, {"WWW-Authenticate": "Basic realm='Invalid'"})
+        info = stock.stock_info()
+        return jsonify({"StockInfo": info})
     else:
         stocks = StockInfo.query.filter(StockInfo.user_id == user_id).all()
 
@@ -76,5 +72,32 @@ def stock_info():
         return jsonify({"StockInfo": info})
 
 
+@stockInfo_routes.route("/edit", methods=["PUT"])
+@check_for_token
+def edit_stock_info():
+    user_id = request.json["userId"]
+    stock_name = request.json["stock"]
+    edit_value = request.json["editValue"]
+
+    stock = StockInfo.query.filter((StockInfo.user_id == user_id) & (StockInfo.stock == stock_name)).first()
+
+    if not stock:
+        return make_response(f"You do not own any {stock_name} stock", 401, {"WWW-Authenticate": "Basic realm='Invalid'"})
+
+    stock.numShares = edit_value
+    db.session.add(stock)
+    db.session.commit()
+
+    return jsonify({"Stock Info": stock.stock_info()})
 
 
+@stockInfo_routes.route("/", methods=["DELETE"])
+@check_for_token
+def delete_stock_info():
+    user_id = request.json["userId"]
+    stock_name = request.json["stock"]
+    stock = StockInfo.query.filter((StockInfo.user_id == user_id) & (StockInfo.stock == stock_name)).first()
+
+    db.session.delete(stock)
+    db.session.commit()
+    return "Stock Information Deleted"
