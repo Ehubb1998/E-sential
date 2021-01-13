@@ -54,6 +54,7 @@ _Ehubb's first Full-Stack Application!_
 - User
     - GET /api/user/ -- Get User
     - PUT /api/user/edit -- Edit User
+    - PUT /api/user/edit/password -- Edit Password
     - DELETE /api/user/ -- Delete User
 
 - Bank Info
@@ -74,16 +75,15 @@ _Ehubb's first Full-Stack Application!_
     - DELETE /api/plan/ -- Delete Plan
 
 - Watch List 
-    - POST /api/watch_list/ -- Create a new plan
+    - POST /api/watch_list/ -- Create a new Watch List
     - GET /api/watch_list/list -- Get Watch List
-    - DELETE /api/watch_list/ -- Delete Plan
+    - DELETE /api/watch_list/ -- Delete Watch List
 
 
 # **MVP** 
 
 - Banking Info
 - Stock Market
-- Stock Tutorial
 - Custom Planning
 - Watch List
 

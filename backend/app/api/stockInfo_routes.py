@@ -58,7 +58,7 @@ def stock_info():
         stock = StockInfo.query.filter((StockInfo.user_id == user_id) & (StockInfo.stock == stock_name)).first()
 
         if not stock:
-            return make_response(f"You do not own any {stock_name} stock", 401, {"WWW-Authenticate": "Basic realm='Invalid'"})
+            return make_response(f"You do not own any {stock_name} stock", 404, {"WWW-Authenticate": "Basic realm='Invalid'"})
 
         info = stock.stock_info()
         return jsonify({"StockInfo": info})
@@ -66,7 +66,7 @@ def stock_info():
         stocks = StockInfo.query.filter(StockInfo.user_id == user_id).all()
 
         if not stocks:
-            return make_response("You do not own stocks", 401, {"WWW-Authenticate": "Basic realm='Invalid'"})
+            return make_response("You do not own stocks", 404, {"WWW-Authenticate": "Basic realm='Invalid'"})
 
         info = [stock.stock_info() for stock in stocks]
         return jsonify({"StockInfo": info})
@@ -82,7 +82,7 @@ def edit_stock_info():
     stock = StockInfo.query.filter((StockInfo.user_id == user_id) & (StockInfo.stock == stock_name)).first()
 
     if not stock:
-        return make_response(f"You do not own any {stock_name} stock", 401, {"WWW-Authenticate": "Basic realm='Invalid'"})
+        return make_response(f"You do not own any {stock_name} stock", 404, {"WWW-Authenticate": "Basic realm='Invalid'"})
 
     stock.numShares = edit_value
     db.session.add(stock)
@@ -93,10 +93,22 @@ def edit_stock_info():
 
 @stockInfo_routes.route("/", methods=["DELETE"])
 @check_for_token
-def delete_stock_info():
-    user_id = request.json["userId"]
+def delete_stock_info(user, amount):
+    if user and amount:
+        user_id = user
+        stocks = StockInfo.query.filter(StockInfo.user_id == user_id).all()
+        if not stocks:
+            return "User does not own any stocks"
+
+        for stock in stocks:
+            db.session.delete(stock)
+            db.session.commit()
+        return "Stock Information Deleted"
+    else: 
+        user_id = request.json["userId"]
+
     stock_name = request.json["stock"]
-    stock = StockInfo.query.filter((StockInfo.user_id == user_id) & (StockInfo.stock == stock_name)).first()
+    stock = StockInfo.query.filter((StockInfo.user_id == user_id) & (StockInfo.stock == stock_name)).first_or_404(description="User does not own that stock")
 
     db.session.delete(stock)
     db.session.commit()

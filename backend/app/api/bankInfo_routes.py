@@ -31,7 +31,7 @@ def bank_info():
     bank = BankInfo.query.filter(BankInfo.user_id == user_id).first()
 
     if not bank:
-        return make_response("Please add Bank Information", 401, {"WWW-Authenticate": "Basic realm='Bank Info Required'"})
+        return make_response("Please add Bank Information", 404, {"WWW-Authenticate": "Basic realm='Bank Info Required'"})
     info = bank.bank_info()
 
     return jsonify({ "BankInfo": info })
@@ -43,7 +43,7 @@ def edit_bank_info():
     user_id = request.json["userId"]
     edit = request.json["whatToEdit"]
     edit_value = request.json["editValue"]
-    bank = BankInfo.query.filter(BankInfo.user_id == user_id).first()
+    bank = BankInfo.query.filter(BankInfo.user_id == user_id).first_or_404(description="User does not have any bank information")
 
     if edit == "balance":
         bank.balance = edit_value
@@ -59,9 +59,13 @@ def edit_bank_info():
 
 @bankInfo_routes.route("/", methods=["DELETE"])
 @check_for_token
-def delete_bank_info():
-    user_id = request.json["userId"]
-    bank = BankInfo.query.filter(BankInfo.user_id == user_id).first()
+def delete_bank_info(user):
+    if user:
+        user_id = user
+    else: 
+        user_id = request.json["userId"]
+        
+    bank = BankInfo.query.filter(BankInfo.user_id == user_id).first_or_404(description="User does not have any bank information")
 
     db.session.delete(bank)
     db.session.commit()
