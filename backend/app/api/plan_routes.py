@@ -8,6 +8,7 @@ plan_routes = Blueprint("plan", __name__)
 @check_for_token
 def create_plan():
     user_id = request.json["userId"]
+    name = request.json["name"]
     job = request.json["job"]
     monthlyIncome = request.json["monthlyIncome"]
     stock = request.json["stockName"]
@@ -16,6 +17,7 @@ def create_plan():
 
     new_plan = Plan(
         user_id=user_id,
+        name=name,
         job=job,
         monthlyIncome=monthlyIncome,
         stock=stock,
