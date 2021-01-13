@@ -37,7 +37,7 @@ def watchList_info():
 @watchList_routes.route("/", methods=["DELETE"])
 @check_for_token
 def delete_watchList(user, amount):
-    if user and amount:
+    if user != "" and amount != "":
         user_id = user
         watchLists = WatchList.query.filter(WatchList.user_id == user_id).all()
 

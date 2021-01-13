@@ -52,7 +52,7 @@ def plan_info():
 @plan_routes.route("/", methods=["DELETE"])
 @check_for_token
 def delete_plan(user, amount):
-    if user and amount:
+    if user != "" and amount != "":
         user_id = user
         plans = Plan.query.filter(Plan.user_id == user_id).all()
         if not plans:

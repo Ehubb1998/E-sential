@@ -93,8 +93,8 @@ def edit_stock_info():
 
 @stockInfo_routes.route("/", methods=["DELETE"])
 @check_for_token
-def delete_stock_info(user, amount):
-    if user and amount:
+def delete_stock_info(user="", amount=""):
+    if user != "" and amount != "":
         user_id = user
         stocks = StockInfo.query.filter(StockInfo.user_id == user_id).all()
         if not stocks:

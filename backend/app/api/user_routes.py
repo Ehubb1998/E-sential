@@ -72,9 +72,9 @@ def delete_user():
 
     user = User.query.filter(User.id == user_id).first_or_404(description="That user does not exist")
     delete_bank_info(user_id)
-    delete_stock_info(user_id, "all")
-    delete_plan(user_id, "all")
-    delete_watchList(user_id, "all")
+    delete_stock_info(user=user_id, amount="all")
+    delete_plan(user=user_id, amount="all")
+    delete_watchList(user=user_id, amount="all")
     
     db.session.delete(user)
     db.session.commit()
