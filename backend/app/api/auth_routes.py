@@ -237,7 +237,7 @@ def signup():
     if rememberMe == True:
         token = jwt.encode({
             "email": request.json["email"],
-            "exp": datetime.datetime.utcnow() + datetime.datetime(2030, 1, 1)
+            "exp": datetime.datetime.utcnow() + datetime.timedelta(weeks=1040)
         },
         Config.SECRET_KEY)
         return jsonify({"token": token, "userData": user_dict})
@@ -264,7 +264,7 @@ def login():
             if rememberMe == True:
                 token = jwt.encode({
                     "email": request.json["email"],
-                    "exp": datetime.datetime.utcnow() + datetime.datetime(2030, 1, 1)
+                    "exp": datetime.datetime.utcnow() + datetime.timedelta(weeks=1040)
                 },
                 Config.SECRET_KEY)
                 user_dict = user.profile_dict()
