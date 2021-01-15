@@ -8,7 +8,7 @@ export const UPDATE_TOKEN_VALUE = "UPDATE_TOKEN_VALUE";
 
 export const updateTokenValue = value => ({ type: UPDATE_TOKEN_VALUE, value });
 export const handleErrors = () => ({ type: HANDLE_ERRORS, title: errorTitle, msg: errorMsg });
-export const currentUser = (user) => ({ type: CURRENT_USER, user })
+export const currentUser = (user) => ({ type: CURRENT_USER, user });
 
 export const signUp = (firstName, lastName, email, primaryBank, job, hashedPassword, confirmedPassword, rememberMe) => {
     return async (dispatch) => {

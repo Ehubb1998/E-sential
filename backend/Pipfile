@@ -4,22 +4,22 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-flask = "*"
-flask-sqlalchemy = "*"
 alembic = "*"
-flask-migrate = "*"
 python-dotenv = "*"
 psycopg2-binary = "*"
-sqlalchemy = "*"
-wtforms = "*"
-flask-wtf = "*"
 pylint = "*"
-jinja2 = "*"
-werkzeug = "*"
-flask-cors = "*"
-pyjwt = "*"
-flask-login = "*"
 requests = "*"
+Flask = "*"
+Flask-SQLAlchemy = "*"
+Flask-Migrate = "*"
+SQLAlchemy = "*"
+WTForms = "*"
+Flask-WTF = "*"
+Werkzeug = "*"
+Flask-Cors = "*"
+Flask-Login = "*"
+Jinja2 = "*"
+PyJWT = "*"
 
 [dev-packages]
 
