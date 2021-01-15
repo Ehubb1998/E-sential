@@ -11,7 +11,7 @@
     "bootstrap": "^4.5.3",
     "hover.css": "^2.3.2",
     "jquery": "^3.5.1",
-    "node-sass": "^5.0.0",
+    "node-sass": "^4.14.1",
     "react": "^17.0.1",
     "react-bootstrap": "^1.4.3",
     "react-dom": "^17.0.1",
