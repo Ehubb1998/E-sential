@@ -29,8 +29,8 @@ export const signUp = (firstName, lastName, email, primaryBank, job, hashedPassw
             dispatch(updateTokenValue(token));
             const id = userData.id;
 
-            window.localStorage.setItem("Esential_ACCESS_TOKEN", token);
-            window.localStorage.setItem("Esential_USER_ID", id);
+            window.localStorage.setItem("ESENTIAL_ACCESS_TOKEN", token);
+            window.localStorage.setItem("ESENTIAL_USER_ID", id);
 
             dispatch(currentUser(userData));
             return <Redirect to="/homepage" />
@@ -63,8 +63,8 @@ export const logIn = (email, password, rememberMe) => {
             dispatch(updateTokenValue(token));
             const id = userData.id;
 
-            window.localStorage.setItem("Esential_ACCESS_TOKEN", token);
-            window.localStorage.setItem("Esential_USER_ID", id);
+            window.localStorage.setItem("ESENTIAL_ACCESS_TOKEN", token);
+            window.localStorage.setItem("ESENTIAL_USER_ID", id);
 
             dispatch(currentUser(userData));
             return <Redirect to="/homepage" />
@@ -96,8 +96,8 @@ export const demo = () => {
             dispatch(updateTokenValue(token));
             const id = userData.id;
 
-            window.localStorage.setItem("Esential_ACCESS_TOKEN", token);
-            window.localStorage.setItem("Esential_USER_ID", id);
+            window.localStorage.setItem("ESENTIAL_ACCESS_TOKEN", token);
+            window.localStorage.setItem("ESENTIAL_USER_ID", id);
 
             dispatch(currentUser(userData));
             return <Redirect to="/homepage" />
