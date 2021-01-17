@@ -46,35 +46,44 @@ export const signUp = (firstName, lastName, email, primaryBank, job, hashedPassw
 
 export const logIn = (email, password, rememberMe) => {
     return async (dispatch) => {
-        try {
-            const userLogin = {email: email, password: password, rememberMe: rememberMe}
-            const res = await fetch("http://localhost:5000/api/auth/login", {
-                method: "POST",
-                body: JSON.stringify(userLogin),
-                headers: {
-                    "Content-Type": "application/json"
-                },
-            });
-
-            if (!res.ok) {
-                throw res;
-            }
-            const { token, userData } = await res.json();
-            dispatch(updateTokenValue(token));
-            const id = userData.id;
-
-            window.localStorage.setItem("ESENTIAL_ACCESS_TOKEN", token);
-            window.localStorage.setItem("ESENTIAL_USER_ID", id);
-
-            dispatch(currentUser(userData));
-            return <Redirect to="/homepage" />
-
-        } catch (err) {
-            const { title, errors } = await err.json();
-            errorTitle = title;
-            errorMsg = errors;
-            dispatch(handleErrors());
+        console.log("Remember Me before function: " + rememberMe);
+        let newRememberMe;
+        const JStoPythonBoolean = (string) => {
+            let word = string.charAt(0).toUpperCase() + string.slice(1);
+            newRememberMe = word;
         }
+        JStoPythonBoolean(rememberMe)
+        console.log("Remember Me after function: " + newRememberMe);
+        debugger;
+        // try {
+        //     const userLogin = {email: email, password: password, rememberMe: rememberMe}
+        //     const res = await fetch("http://localhost:5000/api/auth/login", {
+        //         method: "POST",
+        //         body: JSON.stringify(userLogin),
+        //         headers: {
+        //             "Content-Type": "application/json"
+        //         },
+        //     });
+
+        //     if (!res.ok) {
+        //         throw res;
+        //     }
+        //     const { token, userData } = await res.json();
+        //     dispatch(updateTokenValue(token));
+        //     const id = userData.id;
+
+        //     window.localStorage.setItem("ESENTIAL_ACCESS_TOKEN", token);
+        //     window.localStorage.setItem("ESENTIAL_USER_ID", id);
+
+        //     dispatch(currentUser(userData));
+        //     return <Redirect to="/homepage" />
+
+        // } catch (err) {
+        //     const { title, errors } = await err.json();
+        //     errorTitle = title;
+        //     errorMsg = errors;
+        //     dispatch(handleErrors());
+        // }
     }
 }
 

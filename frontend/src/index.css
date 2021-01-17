@@ -4,6 +4,7 @@ body {
     margin: 0;
 }
 
+/* NavBar */
 .navBar {
     box-shadow: 0px 1px 4px 0px rgba(0,0,0,0.2);
     background-color: rgb(255,255,255,0.5);
@@ -46,4 +47,195 @@ body {
 .navBar__authDiv-signup:hover {
     background-color: rgb(0, 160, 5);
     color: white;
+}
+
+.searchWrap {
+    margin-left: 40px;
+}
+
+.instaSearch {
+    font-family: proxima-nove, 'Helvetica Neue', Arial, Helvetica, sans-serif;
+    font-size: 15px;
+    font-weight:300;
+    letter-spacing: .5px;
+    height:30px;
+    -moz-border-radius: 15px;
+    -webkit-border-radius: 15px;
+    -khtml-border-radius: 15px;
+    border-radius: 15px;
+    text-align: center;
+    border: 1px solid #edeeee;
+    background: #fafafa;
+    background-image: url("./searchIcon.png");
+    background-repeat: no-repeat;
+    background-size: 13px 13px;
+    background-position: 85px 10px;
+    outline: none;
+    width: 250px;
+    margin-top: 10px;
+    margin-bottom: 15px;
+    color: #c9cbcc;
+    transition: all 0.05s ease-in-out;
+}
+.instaSearch:focus {
+    text-align: left;
+    padding-left: 30px;
+    background: #ffffff;
+    background-image: url("./searchIcon.png");
+    background-repeat: no-repeat;
+    background-size: 13px 13px;
+    background-position: 15px 10px;
+    color: #000;
+}
+ 
+.instaSearch:focus::-webkit-input-placeholder {
+     color: #c9cbcc;
+}
+.instaSearch:focus::-moz-placeholder {
+     color: #c9cbcc;
+}
+.instaSearch:focus::-ms-input-placeholder { 
+     color: #c9cbcc;
+}
+
+/* Login Page */
+.logInPage-mainDiv {
+    display: flex;
+    justify-content: flex-start;
+}
+.loginPic {
+    width: 50%;
+    object-fit: cover;
+    height: 100%;
+    overflow: hidden;
+}
+.loginForm-backgroundDiv {
+    background-color: rgb(0, 200, 5);
+    width: 50%;
+    height: 100vh;
+    position:relative;
+}
+.loginForm-mainDiv {
+    background-color: rgb(255,255,255);
+    border-radius: 15px;
+    position:absolute;
+    width: 88%;
+    height: 91vh;
+    margin-left: 40px;
+    margin-top: 35px;
+    box-shadow: 5px 2px 8px 10px rgba(0,0,0,0.2);
+}
+.loginForm {
+    font-size: 30px;
+    font-weight: 700;
+    display: block;
+    margin-top: 130px;
+    margin-left: 35px;
+}
+.loginForm__label {
+    font-size: 16px;
+    font-weight: 400;
+    padding-top: 40px;
+    display: block;
+    font-family: "Capsule Sans Text",system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+}
+.loginForm__input {
+    display: block;
+    padding: 10px 10px;
+    margin: 10px 0px;
+    width: 430px;
+    height: 20px;
+    border: 1px solid rgba(4, 13, 20, 0.1);
+    border-radius: 4px;
+    font-size: 17px;
+}
+.loginButton {
+    position: absolute;
+    background-color: rgb(0, 200, 5);
+    width: 140px;
+    height: 50px;
+    padding: 10px 10px;
+    font-size: 13px;
+    font-weight: 600;
+    color: white;
+    border-radius: 4px;
+    border: none;
+    margin-left: 2px;
+    margin-top: 25px;
+    cursor: pointer;
+}
+.loginButton:hover {
+    background-color: rgb(0, 140, 3);
+}
+.demoButton {
+    position: absolute;
+    background-color: rgb(0, 200, 5);
+    width: 140px;
+    height: 50px;
+    padding: 10px 10px;
+    font-size: 13px;
+    font-weight: 600;
+    color: white;
+    border-radius: 4px;
+    border: none;
+    margin-left: 200px;
+    margin-top: 25px;
+    cursor: pointer;
+}
+.demoButton:hover {
+    background-color: rgb(0, 140, 3);
+}
+.checkboxContainer {
+  display: block;
+  position: relative;
+  padding-left: 35px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  font-size: 20px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  margin-left: 360px;
+  margin-top: 47px;
+}
+.checkboxContainer input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 25px;
+  width: 25px;
+  background-color: #eee;
+}
+.checkboxContainer:hover input ~ .checkmark {
+  background-color: #ccc;
+}
+.checkboxContainer input:checked ~ .checkmark {
+  background-color: #2196F3;
+}
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+.checkboxContainer input:checked ~ .checkmark:after {
+  display: block;
+}
+.checkboxContainer .checkmark:after {
+  left: 9px;
+  top: 5px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
 }
