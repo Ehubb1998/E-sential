@@ -10,7 +10,10 @@ def check_for_token(func):
         try:
             token = request.json["token"]
         except:
-            return jsonify({"message": "Missing Token"}), 401
+            try:
+                token = kwargs["token"]
+            except:
+                return jsonify({"message": "Missing Token"}), 401
         try:
             data = jwt.decode(token, Config.SECRET_KEY, algorithms="HS256")
         except:

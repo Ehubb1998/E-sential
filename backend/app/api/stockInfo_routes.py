@@ -47,23 +47,23 @@ def new_stock_info():
         "Invalid Company Stock Symbol"
 
 
-@stockInfo_routes.route("/info")
+@stockInfo_routes.route("/info/<id>/<token>/<allOrOne>/<stock>")
 @check_for_token
-def stock_info():
-    user_id = request.json["userId"]
-    allOrOne = request.json["allOrOne"]
+def stock_info(*args, **kwargs):
+    id = kwargs["id"]
+    allOrOne = kwargs["allOrOne"]
+    stock = kwargs["stock"]
 
-    if allOrOne == "one":
-        stock_name = request.json["stock"]
-        stock = StockInfo.query.filter((StockInfo.user_id == user_id) & (StockInfo.stock == stock_name)).first()
+    if allOrOne == "1":
+        stock = StockInfo.query.filter((StockInfo.user_id == id) & (StockInfo.stock == stock)).first()
 
         if not stock:
-            return make_response(f"You do not own any {stock_name} stock", 404, {"WWW-Authenticate": "Basic realm='Invalid'"})
+            return make_response(f"You do not own any {stock} stock", 404, {"WWW-Authenticate": "Basic realm='Invalid'"})
 
         info = stock.stock_info()
         return jsonify({"StockInfo": info})
     else:
-        stocks = StockInfo.query.filter(StockInfo.user_id == user_id).all()
+        stocks = StockInfo.query.filter(StockInfo.user_id == id).all()
 
         if not stocks:
             return make_response("You do not own stocks", 404, {"WWW-Authenticate": "Basic realm='Invalid'"})

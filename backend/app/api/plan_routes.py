@@ -1,7 +1,6 @@
 from flask import Blueprint, jsonify, session, request, make_response
 from app.models import db, Plan
 from .check_for_token import check_for_token
-from .get_check_for_token import get_check_for_token
 
 plan_routes = Blueprint("plan", __name__)
 
@@ -31,19 +30,19 @@ def create_plan():
     return jsonify({"Plan": new_plan.plan()})
 
 
-@plan_routes.route("/info")
-@get_check_for_token
-def plan_info():
-    user_id = request.json["userId"]
-    allOrOne = request.json["allOrOne"]
+@plan_routes.route("/info/<id>/<token>/<allOrOne>/<plan>")
+@check_for_token
+def plan_info(*args, **kwargs):
+    id = kwargs["id"]
+    allOrOne = kwargs["allOrOne"]
+    plan = kwargs["plan"]
 
-    if allOrOne == "one":
-        plan_name = request.json["planName"]
-        plan = Plan.query.filter((Plan.user_id == user_id) & (Plan.name == plan_name)).first_or_404(description="User does that plan")
+    if allOrOne == "1":
+        plan = Plan.query.filter((Plan.user_id == id) & (Plan.name == plan)).first_or_404(description="User does that plan")
 
         return jsonify({"Plan": plan.plan()})
     else:
-        plans = Plan.query.filter(Plan.user_id == user_id).all()
+        plans = Plan.query.filter(Plan.user_id == id).all()
 
         if not plans:
             return make_response("You do not have any plans", 404, {"WWW-Authenticate": "Basic realm='Invalid'"})

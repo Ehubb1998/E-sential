@@ -1,7 +1,6 @@
 from flask import Blueprint, jsonify, session, request, make_response
 from app.models import db, BankInfo
 from .check_for_token import check_for_token
-from .get_check_for_token import get_check_for_token
 
 bankInfo_routes = Blueprint("bankInfo", __name__)
 
@@ -25,9 +24,10 @@ def new_bank_info():
     return jsonify({ "BankInfo": info })
 
 
-@bankInfo_routes.route("/info")
-@get_check_for_token
-def bank_info(id, token):
+@bankInfo_routes.route("/info/<id>/<token>")
+@check_for_token
+def bank_info(*args, **kwargs):
+    id = kwargs["id"]
     bank = BankInfo.query.filter(BankInfo.user_id == id).first()
 
     if not bank:

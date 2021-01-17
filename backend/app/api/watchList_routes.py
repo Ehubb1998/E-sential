@@ -20,12 +20,12 @@ def create_watchList():
     return jsonify({"New Watch List Info": new_watchList.watch_list()})
 
 
-@watchList_routes.route("/list")
+@watchList_routes.route("/list/<id>/<token>")
 @check_for_token
-def watchList_info():
-    user_id = request.json["userId"]
+def watchList_info(*args, **kwargs):
+    id = kwargs["id"]
 
-    watchLists = WatchList.query.filter(WatchList.user_id == user_id).all()
+    watchLists = WatchList.query.filter(WatchList.user_id == id).all()
 
     if not watchLists:
         return make_response("You do not have any stocks in your Watch List", 404, {"WWW-Authenticate": "Basic realm='Invalid'"})
