@@ -1,13 +1,21 @@
-import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import loginPic from "../../loginPic.jpg";
 import { logIn, demo } from "../../store/actions/auth";
 
 const LoginPage = (props) => {
     const dispatch = useDispatch();
+    const errors = useSelector(state => state.auth.msg);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [rememberMe, setRememberMe] = useState("False");
+    const [authErrors, setAuthErrors] = useState(false);
+
+    useEffect(() => {
+        if (errors) {
+            setAuthErrors(true)
+        }
+    }, [errors])
 
     const loginButton = (e) => {
         e.preventDefault();
@@ -15,7 +23,7 @@ const LoginPage = (props) => {
     }
     const demoButton = (e) => {
         e.preventDefault();
-        demo();
+        dispatch(demo());
     }
     const emailInput = (e) => {
         setEmail(e.target.value)
@@ -30,6 +38,36 @@ const LoginPage = (props) => {
             setRememberMe("False")
         }
     }
+
+    const loginErrors = (
+        <>
+            <div className="logInPage-mainDiv">
+                <img src={loginPic} className="loginPic" alt="loginPic" />
+                <div className="loginForm-backgroundDiv">
+                    <div className="loginForm-mainDiv">
+                        <h4 className="loginErrors">{}</h4>
+                        <form className="loginForm">
+                            Welcome Back to E-sential
+                        <label className="loginForm__label">
+                                Email
+                            <input onChange={emailInput} className="loginForm__input" value={email} name="email" type="email" required />
+                            </label>
+                            <label className="loginForm__label">
+                                Password
+                            <input onChange={passwordInput} className="loginForm__input" value={password} name="password" type="password" required />
+                            </label>
+                            <button type="submit" onClick={loginButton} className="loginButton">Sign In</button>
+                        </form>
+                        <button type="submit" onClick={demoButton} className="demoButton">Demo</button>
+                        <label className="checkboxContainer">Remember Me
+                        <input onClick={clickedRememberMe} type="checkbox" />
+                            <span className="checkmark"></span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </>
+    )
     return (
         <>
         <div className="logInPage-mainDiv">

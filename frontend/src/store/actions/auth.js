@@ -32,7 +32,6 @@ export const signUp = (firstName, lastName, email, primaryBank, job, hashedPassw
             window.localStorage.setItem("ESENTIAL_USER_ID", id);
 
             window.location.href = "/homepage";
-            dispatch(currentUser(userData));
 
         } catch (err) {
             const { title, errors } = await err.json();
@@ -66,13 +65,15 @@ export const logIn = (email, password, rememberMe) => {
             window.localStorage.setItem("ESENTIAL_USER_ID", id);
 
             window.location.href = "/homepage";
-            dispatch(currentUser(userData));
 
         } catch (err) {
-            const { title, errors } = await err.json();
-            errorTitle = title;
-            errorMsg = errors;
-            dispatch(handleErrors());
+            // debugger;
+            // const error = await err.json();
+            console.log(await err.json())
+            // debugger;
+            // errorTitle = title;
+            // errorMsg = errors;
+            // dispatch(handleErrors());
         }
     }
 }
@@ -99,7 +100,6 @@ export const demo = () => {
             window.localStorage.setItem("ESENTIAL_USER_ID", id);
 
             window.location.href = "/homepage";
-            dispatch(currentUser(userData));
 
         } catch (err) {
             console.error(err)

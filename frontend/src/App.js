@@ -1,6 +1,7 @@
 import React from 'react';
-// import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import { currentUser } from "./store/actions/auth";
 
 import Homepage from "./components/Homepage";
 import NavBar from "./components/NavBar";
@@ -12,6 +13,24 @@ import SplashPage from "./components/SplashPage";
 
 const App = () => {
   const token = window.localStorage.getItem("ESENTIAL_ACCESS_TOKEN");
+  const userId = window.localStorage.getItem("ESENTIAL_USER_ID");
+  const dispatch = useDispatch();
+
+  const userData = async () => {
+    try {
+      const request = await fetch(`http://localhost:5000/api/user/${userId}/${token}`);
+
+      if (!request.ok) {
+        throw request;
+      }
+
+      const { userData } = await request.json();
+      dispatch(currentUser(userData));
+    } catch (err) {
+      console.error(err);
+    }
+  }
+  userData();
 
   return (
     <BrowserRouter>

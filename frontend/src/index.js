@@ -12,21 +12,6 @@ const token = window.localStorage.getItem("ESENTIAL_ACCESS_TOKEN");
 
 const store = configureStore({ auth: { token } });
 
-const userId = window.localStorage.getItem("ESENTIAL_USER_ID");
-const userData = async () => {
-  try {
-    const request = await fetch(`http://localhost:5000/api/user/${userId}`);
-
-    if (!request.ok) {
-      throw request;
-    }
-    console.log(request);
-  } catch (err) {
-    console.error(err);
-  }
-}
-userData();
-
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>

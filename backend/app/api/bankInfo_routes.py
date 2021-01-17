@@ -31,7 +31,7 @@ def bank_info(*args, **kwargs):
     bank = BankInfo.query.filter(BankInfo.user_id == id).first()
 
     if not bank:
-        return make_response("Please add Bank Information", 404, {"WWW-Authenticate": "Basic realm='Bank Info Required'"})
+        return make_response(jsonify("Please add Bank Information"), 404, {"WWW-Authenticate": "Basic realm='Bank Info Required'"})
     info = bank.bank_info()
 
     return jsonify({ "BankInfo": info })
@@ -69,4 +69,4 @@ def delete_bank_info(user):
 
     db.session.delete(bank)
     db.session.commit()
-    return "Bank Information Deleted"
+    return jsonify("Bank Information Deleted")

@@ -45,7 +45,7 @@ def plan_info(*args, **kwargs):
         plans = Plan.query.filter(Plan.user_id == id).all()
 
         if not plans:
-            return make_response("You do not have any plans", 404, {"WWW-Authenticate": "Basic realm='Invalid'"})
+            return make_response(jsonify("You do not have any plans"), 404, {"WWW-Authenticate": "Basic realm='Invalid'"})
 
         info = [plan.plan() for plan in plans]
         return jsonify({"Plans": info})
@@ -58,12 +58,12 @@ def delete_plan(user, amount):
         user_id = user
         plans = Plan.query.filter(Plan.user_id == user_id).all()
         if not plans:
-            return "User does not have any plans"
+            return jsonify("User does not have any plans")
 
         for plan in plans:
             db.session.delete(plan)
             db.session.commit()
-        return "Plans Deleted"
+        return jsonify("Plans Deleted")
     else: 
         user_id = request.json["userId"]
         plan_name = request.json["planName"]
@@ -71,6 +71,6 @@ def delete_plan(user, amount):
         plan = Plan.query.filter((Plan.user_id == user_id) & (Plan.name == plan_name)).first_or_404(description="User does not have that plan")
         db.session.delete(plan)
         db.session.commit()
-        return "Plan Deleted"
+        return jsonify("Plan Deleted")
 
     

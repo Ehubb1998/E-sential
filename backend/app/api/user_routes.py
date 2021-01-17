@@ -14,7 +14,7 @@ def user_info(*args, **kwargs):
     id = kwargs["id"]
     
     user = User.query.filter(User.id == id).first_or_404(description="That user does not exist")
-    return jsonify({"User Info": user.profile_dict()})
+    return jsonify({"userData": user.profile_dict()})
 
 
 @user_routes.route("/edit", methods=["PUT"])
@@ -48,7 +48,7 @@ def edit_user():
         db.session.commit()
         return "Job Successfully Updated"
 
-    return make_response("Edit Info Required", 404, {"WWW-Authenticate": "Basic realm='Edit Info Required'"})
+    return make_response(jsonify("Edit Info Required"), 404, {"WWW-Authenticate": "Basic realm='Edit Info Required'"})
 
 
 @user_routes.route("/edit/password", methods=["PUT"])
@@ -62,7 +62,7 @@ def update_password():
     user.password = edit_value
     db.session.add(user)
     db.session.commit()
-    return "Password Successfully Updated"
+    return jsonify("Password Successfully Updated")
 
 
 @user_routes.route("/", methods=["DELETE"])
@@ -78,5 +78,5 @@ def delete_user():
     
     db.session.delete(user)
     db.session.commit()
-    return "Account Successfully Deleted"
+    return jsonify("Account Successfully Deleted")
     

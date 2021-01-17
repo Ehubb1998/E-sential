@@ -28,7 +28,7 @@ def watchList_info(*args, **kwargs):
     watchLists = WatchList.query.filter(WatchList.user_id == id).all()
 
     if not watchLists:
-        return make_response("You do not have any stocks in your Watch List", 404, {"WWW-Authenticate": "Basic realm='Invalid'"})
+        return make_response(jsonify("You do not have any stocks in your Watch List"), 404, {"WWW-Authenticate": "Basic realm='Invalid'"})
 
     info = [watchList.watch_list() for watchList in watchLists]
     return jsonify({"Watch List": info})
@@ -42,12 +42,12 @@ def delete_watchList(user, amount):
         watchLists = WatchList.query.filter(WatchList.user_id == user_id).all()
 
         if not watchLists:
-            return make_response("You do not have any stocks in your Watch List", 404, {"WWW-Authenticate": "Basic realm='Invalid'"})
+            return make_response(jsonify("You do not have any stocks in your Watch List"), 404, {"WWW-Authenticate": "Basic realm='Invalid'"})
 
         for watchList in watchLists:
             db.session.delete(watchList)
             db.session.commit()
-        return "Watch List Deleted"
+        return jsonify("Watch List Deleted")
     else:
         user_id = request.json["userId"]
         stock = request.json["stockName"]
@@ -55,4 +55,4 @@ def delete_watchList(user, amount):
         watchList = WatchList.query.filter((WatchList.user_id == user_id) & (WatchList.stock == stock)).first_or_404(description="You do not have this stock")
         db.session.delete(watchList)
         db.session.commit()
-        return "Stock deleted from Watch List"
+        return jsonify("Stock deleted from Watch List")
