@@ -1,6 +1,7 @@
 from flask import Blueprint, jsonify, session, request, make_response
 from app.models import db, User
 from .check_for_token import check_for_token
+from .get_check_for_token import get_check_for_token
 from .bankInfo_routes import delete_bank_info
 from .stockInfo_routes import delete_stock_info
 from .plan_routes import delete_plan
@@ -8,12 +9,10 @@ from .watchList_routes import delete_watchList
 
 user_routes = Blueprint("user", __name__)
 
-@user_routes.route("/")
-@check_for_token
-def user_info():
-    user_id = request.json["userId"]
-
-    user = User.query.filter(User.id == user_id).first_or_404(description="That user does not exist")
+@user_routes.route("/<int:id>/<token>")
+@get_check_for_token
+def user_info(id, token):
+    user = User.query.filter(User.id == id).first_or_404(description="That user does not exist")
     return jsonify({"User Info": user.profile_dict()})
 
 

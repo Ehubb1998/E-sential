@@ -1,6 +1,7 @@
 from flask import Blueprint, jsonify, session, request, make_response
 from app.models import db, BankInfo
 from .check_for_token import check_for_token
+from .get_check_for_token import get_check_for_token
 
 bankInfo_routes = Blueprint("bankInfo", __name__)
 
@@ -25,10 +26,9 @@ def new_bank_info():
 
 
 @bankInfo_routes.route("/info")
-@check_for_token
-def bank_info():
-    user_id = request.json["userId"]
-    bank = BankInfo.query.filter(BankInfo.user_id == user_id).first()
+@get_check_for_token
+def bank_info(id, token):
+    bank = BankInfo.query.filter(BankInfo.user_id == id).first()
 
     if not bank:
         return make_response("Please add Bank Information", 404, {"WWW-Authenticate": "Basic realm='Bank Info Required'"})

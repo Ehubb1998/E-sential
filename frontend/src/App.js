@@ -1,5 +1,5 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+// import { useSelector } from 'react-redux';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 
 import Homepage from "./components/Homepage";
@@ -11,7 +11,7 @@ import SplashPage from "./components/SplashPage";
 
 
 const App = () => {
-  const token = useSelector(state => state.token);
+  const token = window.localStorage.getItem("ESENTIAL_ACCESS_TOKEN");
 
   return (
     <BrowserRouter>

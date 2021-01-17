@@ -1,6 +1,7 @@
 from flask import Blueprint, jsonify, session, request, make_response
 from app.models import db, Plan
 from .check_for_token import check_for_token
+from .get_check_for_token import get_check_for_token
 
 plan_routes = Blueprint("plan", __name__)
 
@@ -31,7 +32,7 @@ def create_plan():
 
 
 @plan_routes.route("/info")
-@check_for_token
+@get_check_for_token
 def plan_info():
     user_id = request.json["userId"]
     allOrOne = request.json["allOrOne"]

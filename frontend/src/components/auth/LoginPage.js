@@ -7,11 +7,10 @@ const LoginPage = (props) => {
     const dispatch = useDispatch();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [rememberMe, setRememberMe] = useState(false);
+    const [rememberMe, setRememberMe] = useState("False");
 
     const loginButton = (e) => {
         e.preventDefault();
-        console.log("inside login function")
         dispatch(logIn(email, password, rememberMe));
     }
     const demoButton = (e) => {
@@ -25,10 +24,10 @@ const LoginPage = (props) => {
         setPassword(e.target.value)
     }
     const clickedRememberMe = () => {
-        if (rememberMe === false) {
-            setRememberMe(true)
+        if (rememberMe === "False") {
+            setRememberMe("True")
         } else {
-            setRememberMe(false)
+            setRememberMe("False")
         }
     }
     return (

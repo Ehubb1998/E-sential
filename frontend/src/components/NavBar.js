@@ -26,7 +26,7 @@ const NavBar = (props) => {
             <NavLink to="/" className="logo">
                 <img src={Logo} alt="logo" height="44px" />
             </NavLink>
-            <div class="searchWrap">
+            <div className="searchWrap">
                 <form action="index.php" method="post">
                     <span className="searchIcon"></span>
                     <input onChange={searchBox} type="text" name="subject" className="instaSearch" value={searchInput} placeholder="Search" />
