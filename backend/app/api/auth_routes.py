@@ -59,6 +59,9 @@ def signup():
     password_result = validate_signup_password(password)
     email_result = validate_signup_email(email)
 
+    if email == '' or firstName == '' or lastName == '' or primaryBank == '' or job == '':
+        return make_response(jsonify("Please fill out all required fields"), 401, {"WWW-Authenticate": "Basic realm='Sign Up failed'"})
+
     if password != confirmedPassword:
         return make_response(jsonify("Password and Confirmed Password must match"), 401, {"WWW-Authenticate": "Basic realm='Sign Up failed'"})
 
@@ -68,8 +71,6 @@ def signup():
     if email_result == False:
         return make_response(jsonify("Sorry, that email already exists"), 401, {"WWW-Authenticate": "Basic realm='Sign Up failed'"})
 
-    if email == '' or firstName == '' or lastName == '' or primaryBank == '' or job == '' or password_result == False:
-        return make_response(jsonify("Please fill out all required fields"), 401, {"WWW-Authenticate": "Basic realm='Sign Up failed'"})
 
     # if email == '' and firstName == '' and lastName == '' and primaryBank == '' and job == '' and password_result == False:
     #     return make_response("Please fill out all required fields 1", 401, {"WWW-Authenticate": "Basic realm='Sign Up failed'"})
