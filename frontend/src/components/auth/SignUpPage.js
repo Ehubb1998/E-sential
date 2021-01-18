@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Redirect } from 'react-router-dom';
-import signupPic from "../../signupPic.jpeg"
+import signupPic from "../../assets/signupPic.jpeg"
 import { signUp, demo } from "../../store/actions/auth";
 
 const SignUpPage = (props) => {

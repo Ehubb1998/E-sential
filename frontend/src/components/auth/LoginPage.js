@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Redirect } from 'react-router-dom';
-import loginPic from "../../loginPic.jpg";
+import loginPic from "../../assets/loginPic.jpg";
 import { logIn, demo } from "../../store/actions/auth";
 
 const LoginPage = (props) => {
