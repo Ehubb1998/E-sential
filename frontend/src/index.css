@@ -7,11 +7,14 @@ body {
 /* NavBar */
 .navBar {
     box-shadow: 0px 1px 4px 0px rgba(0,0,0,0.2);
-    background-color: rgb(255,255,255,0.5);
+    background-color: rgb(255,255,255,0.9);
     display: flex;
     justify-content: space-between;
     align-items: center;
     height: 64px;
+    position: sticky;
+    top: 0;
+    z-index: 4;
     /* height: 15vh; */
 }
 
@@ -346,4 +349,21 @@ body {
     margin: 0px;
     font-size: 15px;
     padding-top: 5px;
+}
+
+/* Splash Page */
+.splashPage__backgroundDiv {
+    width: 100vw;
+    height: 100vh;
+    background-color: rgb(0, 200, 5);
+}
+.splashPage__mainDiv {
+    width: 74em;
+    height: 100vh;
+    background-color: rgb(255,255,255,0.9);
+    margin-left: 3em;
+}
+.splashPage__img1 {
+    max-width: 100%;
+    height: auto;
 }
