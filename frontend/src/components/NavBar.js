@@ -3,11 +3,15 @@ import { NavLink } from "react-router-dom";
 import Logo from "../logo.png";
 
 const NavBar = (props) => {
-    // const [authorized, setAuthorized] = useState(props.isLoggedIn)
     const [searchInput, setSearchInput] = useState("");
 
     const searchBox = (e) => {
         setSearchInput(e.target.value)
+    }
+    const logout = (e) => {
+        e.preventDefault();
+        window.localStorage.clear();
+        window.location.href = "/";
     }
 
     let notLoggedIn = (
@@ -23,7 +27,7 @@ const NavBar = (props) => {
     )
     let loggedIn = (
         <nav role="navigation" className="navBar">
-            <NavLink to="/" className="logo">
+            <NavLink to="/homepage" className="logo">
                 <img src={Logo} alt="logo" height="44px" />
             </NavLink>
             <div className="searchWrap">
@@ -32,6 +36,8 @@ const NavBar = (props) => {
                     <input onChange={searchBox} type="text" name="subject" className="instaSearch" value={searchInput} placeholder="Search" />
                 </form>
             </div>
+            <a onClick={logout} className="navBar__authDiv-login" href="/">Logout</a>
+
         </nav>
     )
     return (

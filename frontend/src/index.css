@@ -50,7 +50,7 @@ body {
 }
 
 .searchWrap {
-    margin-left: 40px;
+    margin-left: -70px;
 }
 
 .instaSearch {
@@ -64,7 +64,7 @@ body {
     -khtml-border-radius: 15px;
     border-radius: 15px;
     text-align: center;
-    border: 1px solid #edeeee;
+    border: 2px solid #edeeee;
     background: #fafafa;
     background-image: url("./searchIcon.png");
     background-repeat: no-repeat;
@@ -75,7 +75,7 @@ body {
     margin-top: 10px;
     margin-bottom: 15px;
     color: #c9cbcc;
-    transition: all 0.05s ease-in-out;
+    /* transition: all 0.05s ease-in-out; */
 }
 .instaSearch:focus {
     text-align: left;
