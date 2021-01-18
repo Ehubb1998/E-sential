@@ -40,37 +40,35 @@ const LoginPage = (props) => {
     }
 
     const loginErrors = (
-        <>
-            <div className="logInPage-mainDiv">
-                <img src={loginPic} className="loginPic" alt="loginPic" />
-                <div className="loginForm-backgroundDiv">
-                    <div className="loginForm-mainDiv">
-                        <h4 className="loginErrors">{}</h4>
-                        <form className="loginForm">
-                            Welcome Back to E-sential
+        <div className="logInPage-mainDiv">
+            <img src={loginPic} className="loginPic" alt="loginPic" />
+            <div className="loginForm-backgroundDiv">
+                <div className="loginForm-mainDiv">
+                    <form className="loginForm">
+                        <h6 className="loginErrors">{errors}</h6>
+                        Welcome Back to E-sential
                         <label className="loginForm__label">
-                                Email
-                            <input onChange={emailInput} className="loginForm__input" value={email} name="email" type="email" required />
-                            </label>
-                            <label className="loginForm__label">
-                                Password
-                            <input onChange={passwordInput} className="loginForm__input" value={password} name="password" type="password" required />
-                            </label>
-                            <button type="submit" onClick={loginButton} className="loginButton">Sign In</button>
-                        </form>
-                        <button type="submit" onClick={demoButton} className="demoButton">Demo</button>
-                        <label className="checkboxContainer">Remember Me
-                        <input onClick={clickedRememberMe} type="checkbox" />
-                            <span className="checkmark"></span>
+                            Email
+                            {errors === "The provided Email does not exist" ? <input onChange={emailInput} className="loginForm__input-error" value={email} name="email" type="email" required /> : <input onChange={emailInput} className="loginForm__input" value={email} name="email" type="email" required />}
                         </label>
-                    </div>
+                        <label className="loginForm__label">
+                            Password
+                            {errors === "Incorrect Password" ? <input onChange={passwordInput} className="loginForm__input-error" value={password} name="password" type="password" required /> : <input onChange={passwordInput} className="loginForm__input" value={password} name="password" type="password" required />}
+                        </label>
+                        <button type="submit" onClick={loginButton} className="loginButton">Sign In</button>
+                    </form>
+                    <button type="submit" onClick={demoButton} className="demoButton">Demo</button>
+                    <label className="checkboxContainer">Remember Me
+                    <input onClick={clickedRememberMe} type="checkbox" />
+                        <span className="checkmark"></span>
+                    </label>
                 </div>
             </div>
-        </>
+        </div>
     )
     return (
         <>
-        <div className="logInPage-mainDiv">
+        {authErrors === false ? <div className="logInPage-mainDiv">
             <img src={loginPic} className="loginPic" alt="loginPic" />
             <div className="loginForm-backgroundDiv">
                 <div className="loginForm-mainDiv">
@@ -93,7 +91,7 @@ const LoginPage = (props) => {
                     </label>
                 </div>
             </div>
-        </div>
+        </div> : loginErrors}
         </>
     )
 }

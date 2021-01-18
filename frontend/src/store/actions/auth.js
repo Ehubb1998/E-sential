@@ -34,9 +34,8 @@ export const signUp = (firstName, lastName, email, primaryBank, job, hashedPassw
             window.location.href = "/homepage";
 
         } catch (err) {
-            const { title, errors } = await err.json();
-            errorTitle = title;
-            errorMsg = errors;
+            const error = await err.json();
+            errorMsg = error;
             dispatch(handleErrors());
         }
     }
@@ -67,13 +66,9 @@ export const logIn = (email, password, rememberMe) => {
             window.location.href = "/homepage";
 
         } catch (err) {
-            // debugger;
-            // const error = await err.json();
-            console.log(await err.json())
-            // debugger;
-            // errorTitle = title;
-            // errorMsg = errors;
-            // dispatch(handleErrors());
+            const error = await err.json();
+            errorMsg = error;
+            dispatch(handleErrors());
         }
     }
 }

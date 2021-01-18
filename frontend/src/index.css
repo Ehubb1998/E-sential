@@ -135,7 +135,7 @@ body {
 .loginForm__label {
     font-size: 16px;
     font-weight: 400;
-    padding-top: 40px;
+    margin-top: 40px;
     display: block;
     font-family: "Capsule Sans Text",system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
 }
@@ -238,4 +238,17 @@ body {
   -webkit-transform: rotate(45deg);
   -ms-transform: rotate(45deg);
   transform: rotate(45deg);
+}
+.loginForm__input-error {
+    display: block;
+    padding: 10px 10px;
+    margin: 10px 0px;
+    width: 430px;
+    height: 20px;
+    border: 2px solid rgba(233, 5, 5, 0.904);
+    border-radius: 4px;
+    font-size: 17px;
+}
+.loginErrors {
+    color: rgba(233, 5, 5, 0.904);
 }
