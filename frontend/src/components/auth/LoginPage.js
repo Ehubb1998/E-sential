@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 import loginPic from "../../loginPic.jpg";
 import { logIn, demo } from "../../store/actions/auth";
 
@@ -37,6 +38,9 @@ const LoginPage = (props) => {
         } else {
             setRememberMe("False")
         }
+    }
+    if (props.isLoggedIn) {
+        return <Redirect to='/homepage' />;
     }
 
     const loginErrors = (
