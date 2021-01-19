@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { NavLink } from "react-router-dom";
+import { NavLink, Redirect } from "react-router-dom";
 import splashPageImg1 from "../assets/splashPage-1.png";
 import splashPageImg2 from "../assets/splashPage-img2.jpeg";
 import splashPageImg3 from "../assets/splashPage-img3.png";
@@ -22,6 +22,10 @@ const SplashPage = (props) => {
     const leftLinked = () => {
         setOverLinkedIn(false)
     }
+    if (props.isLoggedIn) {
+        return <Redirect to='/homepage' />;
+    }
+
     return (
         <>
         <div className="splashPage__backgroundDiv">
