@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { NavLink, Redirect } from "react-router-dom";
+import { useDispatch } from 'react-redux';
+import { clearErrors } from "../store/actions/auth";
 import splashPageImg1 from "../assets/splashPage-1.png";
 import splashPageImg2 from "../assets/splashPage-img2.jpeg";
 import splashPageImg3 from "../assets/splashPage-img3.png";
@@ -7,9 +9,13 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGithub, faLinkedinIn } from "@fortawesome/free-brands-svg-icons";
 
 const SplashPage = (props) => {
+    const dispatch = useDispatch();
     const [overGithub, setOverGithub] = useState(false);
     const [overLinkedIn, setOverLinkedIn] = useState(false);
 
+    (function () {
+        dispatch(clearErrors())
+    })();
     const overGitHub = () => {
         setOverGithub(true)
     }

@@ -94,17 +94,17 @@ const SignUpPage = (props) => {
                         </label>
                         <label className="signupForm__label">
                             Password
-                            {errors === "Password and Confirmed Password must match" || errors === "Please follow Password requirements" ? <input onChange={passwordInput} className="signupForm__input-error" value={password} name="lastName" type="text" required /> : <input onChange={passwordInput} className="signupForm__input-row1" value={password} name="lastName" type="text" required />}
+                            {errors === "Password and Confirmed Password must match" || errors === "Please follow Password requirements" ? <input onChange={passwordInput} className="signupForm__input-error" value={password} name="password" type="password" required /> : <input onChange={passwordInput} className="signupForm__input-row1" value={password} name="password" type="password" required />}
                         </label>
                         <label className="signupForm__label">
                             Confirm Password
-                            {errors === "Password and Confirmed Password must match" ? <input onChange={confirmPasswordInput} className="signupForm__input-error" value={confirmPassword} name="email" type="email" required /> : <input onChange={confirmPasswordInput} className="signupForm__input-row1" value={confirmPassword} name="email" type="email" required />}
+                            {errors === "Password and Confirmed Password must match" ? <input onChange={confirmPasswordInput} className="signupForm__input-error" value={confirmPassword} name="confirmPassword" type="password" required /> : <input onChange={confirmPasswordInput} className="signupForm__input-row1" value={confirmPassword} name="confirmPassword" type="password" required />}
                         </label>
                     </div>
                     <div className="signupForm__row1">
                         <label className="signupForm__label">
                             Primary Bank
-                            <input onChange={primaryBankInput} className="signupForm__input-row1" value={primaryBank} name="firstName" type="text" required />
+                            <input onChange={primaryBankInput} className="signupForm__input-row1" value={primaryBank} name="primaryBank" type="text" required />
                         </label>
                     </div>
                     <button onClick={signupButton} type="submit" className="loginButton">Sign Up</button>
@@ -150,17 +150,17 @@ const SignUpPage = (props) => {
                         </label>
                         <label className="signupForm__label">
                             Password
-                            <input onChange={passwordInput} className="signupForm__input-row1" value={password} name="lastName" type="text" required />
+                            <input onChange={passwordInput} className="signupForm__input-row1" value={password} name="password" type="password" required />
                         </label>
                         <label className="signupForm__label">
                             Confirm Password
-                            <input onChange={confirmPasswordInput} className="signupForm__input-row1" value={confirmPassword} name="email" type="email" required />
+                            <input onChange={confirmPasswordInput} className="signupForm__input-row1" value={confirmPassword} name="confirmPassword" type="password" required />
                         </label>
                     </div>
                     <div className="signupForm__row1">
                         <label className="signupForm__label">
                             Primary Bank
-                            <input onChange={primaryBankInput} className="signupForm__input-row1" value={primaryBank} name="firstName" type="text" required />
+                            <input onChange={primaryBankInput} className="signupForm__input-row1" value={primaryBank} name="primaryBank" type="text" required />
                         </label>
                     </div>
                     <button onClick={signupButton} type="submit" className="loginButton">Sign Up</button>
