@@ -25,7 +25,7 @@ const Banking = () => {
             }
         }
         bankinfo();
-    }, [])
+    }, [user.id])
 
     return (
         <>
