@@ -115,4 +115,5 @@ _Ehubb's first Full-Stack Application!_
 - Homepage Component
     - Banking Component
     - Stock Market Component
+    - User Account Component
 ---
