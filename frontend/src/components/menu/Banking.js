@@ -6,36 +6,51 @@ const Banking = () => {
     const token = useSelector(state => state.auth.token);
     const user = useSelector(state => state.auth.userData);
     //This useEffect and useState is temporary. I need to set up another slice of state in the store. I'm just too tired rn lol
-    const [bankInfo, setBankInfo] = useState({})
+    // const [bankInfo, setBankInfo] = useState({})
     // console.log(user)
 
-    useEffect(() => {
-        const bankinfo = async () => {
-            try{
-                const res = await fetch(`http://localhost:5000/api/bank_info/info/${user.id}/${token}`);
+    // const bankinfo = async () => {
+    //     try {
+    //         const res = await fetch(`http://localhost:5000/api/bank_info/info/${user.id}/${token}`);
+
+    //         if (!res.ok) {
+    //             throw res;
+    //         }
+    //         const { BankInfo } = await res.json();
+    //         setBankInfo(BankInfo);
+
+    //     } catch (err) {
+    //         console.error(err);
+    //     }
+    // }
+    // bankinfo();
+    // useEffect(() => {
+    //     const bankinfo = async () => {
+    //         try{
+    //             const res = await fetch(`http://localhost:5000/api/bank_info/info/${user.id}/${token}`);
     
-                if (!res.ok) {
-                    throw res;
-                }
-                const { BankInfo } = await res.json();
-                setBankInfo(BankInfo);
+    //             if (!res.ok) {
+    //                 throw res;
+    //             }
+    //             const { BankInfo } = await res.json();
+    //             setBankInfo(BankInfo);
     
-            } catch (err) {
-                console.error(err);
-            }
-        }
-        bankinfo();
-    }, [user.id])
+    //         } catch (err) {
+    //             console.error(err);
+    //         }
+    //     }
+    //     bankinfo();
+    // }, [user.id])
 
     return (
         <>
         <div className="menuSelection__backgroundDiv">
             <div className="menuSelection__mainDiv">
                 <div className="inner__mainDiv">
-                    <div className="bankName__div">{user.primaryBank}</div>
+                    {/* <div className="bankName__div">{user.primaryBank}</div> */}
                     <div className="bankInfo__div">Bank Information</div>
-                    <div className="bankInfo__balance">Balance: ${bankInfo.accountBalance}</div>
-                    <div className="bankInfo__balance">Monthly Income: ${bankInfo.monthlyIncome}</div>
+                    {/* <div className="bankInfo__balance">Balance: ${bankInfo.accountBalance}</div>
+                    <div className="bankInfo__balance">Monthly Income: ${bankInfo.monthlyIncome}</div> */}
                 </div>
             </div>
         </div>
