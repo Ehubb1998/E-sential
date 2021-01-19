@@ -418,3 +418,15 @@ body {
     padding-top: 3px;
     margin-right: 9px;
 }
+.credits__container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    border: 2px solid white;
+    border-radius: 15px;
+    padding: 8px;
+}
+.imageCredits {
+    color:rgb(0, 200, 5);
+    text-decoration: none;
+}

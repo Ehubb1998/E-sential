@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { NavLink } from "react-router-dom";
 import splashPageImg1 from "../assets/splashPage-1.png";
 import splashPageImg2 from "../assets/splashPage-img2.jpeg";
 import splashPageImg3 from "../assets/splashPage-img3.png";
@@ -36,16 +37,21 @@ const SplashPage = (props) => {
                 </div>
                 <div className="splashPage__footer">
                     <div className="footer__credits">
-                        <a href="https://ehubb1998.github.io/Ehubb/" className="credits__name">Elijah Hubbard</a>
-                        <a onMouseEnter={overGitHub} onMouseLeave={leftGitHub} href="https://github.com/Ehubb1998" className="credits__github">
-                            {overGithub === false ? <FontAwesomeIcon icon={faGithub} color="white" /> : <FontAwesomeIcon icon={faGithub} color="green" />}
-                        </a>
-                        <a onMouseEnter={overLinked} onMouseLeave={leftLinked} href="https://www.linkedin.com/in/elijah-h-090a2518b/" className="credits__github">
-                            {overLinkedIn === false ? <FontAwesomeIcon icon={faLinkedinIn} color="white" /> : <FontAwesomeIcon icon={faLinkedinIn} color="green" />}
-                        </a>
+                        <div className="credits__container">
+                            <a href="https://ehubb1998.github.io/Ehubb/" className="credits__name">Elijah Hubbard</a>
+                            <a onMouseEnter={overGitHub} onMouseLeave={leftGitHub} href="https://github.com/Ehubb1998" className="credits__github">
+                                {overGithub === false ? <FontAwesomeIcon icon={faGithub} color="white" /> : <FontAwesomeIcon icon={faGithub} color="green" />}
+                            </a>
+                            <a onMouseEnter={overLinked} onMouseLeave={leftLinked} href="https://www.linkedin.com/in/elijah-h-090a2518b/" className="credits__github">
+                                {overLinkedIn === false ? <FontAwesomeIcon icon={faLinkedinIn} color="white" /> : <FontAwesomeIcon icon={faLinkedinIn} color="green" />}
+                            </a>
+                        </div>
                     </div>
                     <p className="footer__info">© E-sential. All rights reserved.</p>
                     <p className="footer__info2">RISK DISCLOSURE! This app is strictly for educational purposes. This is not a real time stock trading brokerage</p>
+                    <div style={{ display: "flex", justifyContent: "center" }}>
+                        <NavLink style={{ marginLeft: "" }} className="imageCredits" to="/credits">Content Credits</NavLink>
+                    </div>
                 </div>
             </div>
         </div>

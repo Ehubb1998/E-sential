@@ -9,6 +9,7 @@ import LoginPage from "./components/auth/LoginPage";
 import SignUpPage from "./components/auth/SignUpPage";
 import ProtectedRoute from "./components/auth/ProtectedRoute";
 import SplashPage from "./components/SplashPage";
+import ContentCredits from "./components/ContentCredits";
 
 
 const App = () => {
@@ -41,6 +42,10 @@ const App = () => {
         </Route>
         <Route path="/login" exact={true} render={() => <LoginPage isLoggedIn={token} />} />
         <Route path="/signup" exact={true} render={() => <SignUpPage isLoggedIn={token} />} />
+        <Route path="/credits" exact={true}>
+          <NavBar isLoggedIn={token} />
+          <ContentCredits />
+        </Route>
         <ProtectedRoute path={"/homepage"} exact={true} isLoggedIn={token}>
           <NavBar isLoggedIn={token} />
           <Homepage />
