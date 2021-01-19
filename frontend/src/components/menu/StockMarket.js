@@ -1,6 +1,12 @@
 const StockMarket = () => {
     return (
-        <h1>Stock Market</h1>
+        <>
+        <div className="menuSelection__backgroundDiv">
+            <div className="menuSelection__mainDiv">
+                <div className="inner__mainDiv">Stock Market</div>
+            </div>
+        </div>
+        </>
     )
 }
 

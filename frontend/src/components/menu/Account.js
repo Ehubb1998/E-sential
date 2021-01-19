@@ -1,6 +1,12 @@
 const Account = () => {
     return (
-        <h1>Account</h1>
+        <>
+        <div className="menuSelection__backgroundDiv">
+            <div className="menuSelection__mainDiv">
+                <div className="inner__mainDiv">Account Information</div>
+            </div>
+        </div>
+        </>
     )
 }
 
