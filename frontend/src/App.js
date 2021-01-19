@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import { currentUser } from "./store/actions/auth";
@@ -20,21 +20,24 @@ const App = () => {
   const userId = window.localStorage.getItem("ESENTIAL_USER_ID");
   const dispatch = useDispatch();
 
-  const userData = async () => {
-    try {
-      const request = await fetch(`http://localhost:5000/api/user/${userId}/${token}`);
-
-      if (!request.ok) {
-        throw request;
+  
+  useEffect(() => {
+    const userData = async () => {
+      try {
+        const request = await fetch(`http://localhost:5000/api/user/${userId}/${token}`);
+  
+        if (!request.ok) {
+          throw request;
+        }
+  
+        const { userData } = await request.json();
+        dispatch(currentUser(userData));
+      } catch (err) {
+        console.error(err);
       }
-
-      const { userData } = await request.json();
-      dispatch(currentUser(userData));
-    } catch (err) {
-      console.error(err);
     }
-  }
-  userData();
+    userData();
+  }, [])
 
   return (
     <BrowserRouter>

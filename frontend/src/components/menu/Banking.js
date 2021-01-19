@@ -3,10 +3,12 @@ import { useSelector } from "react-redux";
 
 
 const Banking = () => {
-    const token = useSelector(state => state.auth.token);
-    const user = useSelector(state => state.auth.userData);
+    // const storeToken = useSelector(state => state.auth.token);
+    // const storeUser = useSelector(state => state.auth.userData);
     //This useEffect and useState is temporary. I need to set up another slice of state in the store. I'm just too tired rn lol
-    // const [bankInfo, setBankInfo] = useState({})
+    // const [bankInfo, setBankInfo] = useState({});
+    // const [token, setToken] = useState("");
+    // const [user, setUser] = useState({});
     // console.log(user)
 
     // const bankinfo = async () => {
@@ -34,13 +36,17 @@ const Banking = () => {
     //             }
     //             const { BankInfo } = await res.json();
     //             setBankInfo(BankInfo);
+    //             setToken(storeToken);
+    //             setUser(storeUser);
+    //             console.log("In useEffect: " + storeUser);
     
     //         } catch (err) {
     //             console.error(err);
     //         }
     //     }
     //     bankinfo();
-    // }, [user.id])
+    // }, [])
+    // console.log(user.primaryBank);
 
     return (
         <>
