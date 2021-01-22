@@ -10,9 +10,6 @@ import SignUpPage from "./components/auth/SignUpPage";
 import ProtectedRoute from "./components/auth/ProtectedRoute";
 import SplashPage from "./components/SplashPage";
 import ContentCredits from "./components/ContentCredits";
-// import Banking from "./components/menu/Banking";
-// import StockMarket from "./components/menu/StockMarket";
-// import Account from "./components/menu/Account";
 
 
 const App = () => {
