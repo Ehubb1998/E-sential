@@ -14,7 +14,7 @@ export const signUp = (firstName, lastName, email, primaryBank, job, hashedPassw
     return async (dispatch) => {
         try {
             const newUser = {firstName: firstName, lastName: lastName, email: email, primaryBank: primaryBank, job: job, hashedPassword: hashedPassword, confirmedPassword: confirmedPassword, rememberMe: rememberMe}
-            const res = await fetch("http://localhost:5000/api/auth/signup", {
+            const res = await fetch("/api/auth/signup", {
                 method: "POST",
                 body: JSON.stringify(newUser),
                 headers: {
@@ -46,7 +46,7 @@ export const logIn = (email, password, rememberMe) => {
     return async (dispatch) => {
         try {
             const userLogin = {email: email, password: password, rememberMe: rememberMe}
-            const res = await fetch("http://localhost:5000/api/auth/login", {
+            const res = await fetch("/api/auth/login", {
                 method: "POST",
                 body: JSON.stringify(userLogin),
                 headers: {
@@ -77,7 +77,7 @@ export const logIn = (email, password, rememberMe) => {
 export const demo = () => {
     return async (dispatch) => {
         try {
-            const res = await fetch("http://localhost:5000/api/auth/login", {
+            const res = await fetch("/api/auth/login", {
                 method: "POST",
                 body: JSON.stringify({ email: "demo@demo.com", password: "Windows8.1", rememberMe: "True" }),
                 headers: {

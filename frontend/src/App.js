@@ -21,7 +21,7 @@ const App = () => {
   useEffect(() => {
     const userData = async () => {
       try {
-        const request = await fetch(`http://localhost:5000/api/user/${userId}/${token}`);
+        const request = await fetch(`/api/user/${userId}/${token}`);
   
         if (!request.ok) {
           throw request;

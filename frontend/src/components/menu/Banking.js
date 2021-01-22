@@ -11,7 +11,7 @@ const Banking = () => {
     useEffect(() => {
         const bankinfo = async () => {
             try{
-                const res = await fetch(`http://localhost:5000/api/bank_info/info/${storeUser.id}/${storeToken}`);
+                const res = await fetch(`/api/bank_info/info/${storeUser.id}/${storeToken}`);
     
                 if (!res.ok) {
                     throw res;
