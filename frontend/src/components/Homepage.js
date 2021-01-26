@@ -6,6 +6,7 @@ import Account from "./menu/Account";
 const Homepage = () => {
     const [menuSelection, setMenuSelection] = useState("banking");
 
+
     const bankingSelection = () => {
         setMenuSelection("banking");
     }

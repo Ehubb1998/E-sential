@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import { currentUser } from "./store/actions/auth";
+import { bankData } from "./store/actions/bankInfo";
 
 import Homepage from "./components/Homepage";
 import NavBar from "./components/NavBar";
@@ -21,14 +22,20 @@ const App = () => {
   useEffect(() => {
     const userData = async () => {
       try {
-        const request = await fetch(`/api/user/${userId}/${token}`);
+        const userdata = await fetch(`/api/user/${userId}/${token}`);
+        const bankdata = await fetch(`/api/bank_info/info/${userId}/${token}`);
   
-        if (!request.ok) {
-          throw request;
+        if (!userdata.ok) {
+          throw userdata;
+        }
+        if (!bankdata.ok) {
+          throw bankdata;
         }
   
-        const { userData } = await request.json();
+        const { userData } = await userdata.json();
+        const { BankInfo } = await bankdata.json();
         dispatch(currentUser(userData));
+        dispatch(bankData(BankInfo));
       } catch (err) {
         console.error(err);
       }
