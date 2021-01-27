@@ -45,7 +45,7 @@ def plan_info(*args, **kwargs):
         plans = Plan.query.filter(Plan.user_id == id).all()
 
         if not plans:
-            return make_response(jsonify("You do not have any plans"), 404, {"WWW-Authenticate": "Basic realm='Invalid'"})
+            return make_response(jsonify("You do not have any plans"), 404)
 
         info = [plan.plan() for plan in plans]
         return jsonify({"Plans": info})

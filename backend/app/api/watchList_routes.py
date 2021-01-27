@@ -28,7 +28,7 @@ def watchList_info(*args, **kwargs):
     watchLists = WatchList.query.filter(WatchList.user_id == id).all()
 
     if not watchLists:
-        return make_response(jsonify("You do not have any stocks in your Watch List"), 404, {"WWW-Authenticate": "Basic realm='Invalid'"})
+        return make_response(jsonify("You do not have any stocks in your Watch List"), 404)
 
     info = [watchList.watch_list() for watchList in watchLists]
     return jsonify({"Watch List": info})
@@ -42,7 +42,7 @@ def delete_watchList(user, amount):
         watchLists = WatchList.query.filter(WatchList.user_id == user_id).all()
 
         if not watchLists:
-            return make_response(jsonify("You do not have any stocks in your Watch List"), 404, {"WWW-Authenticate": "Basic realm='Invalid'"})
+            return make_response(jsonify("You do not have any stocks in your Watch List"), 404)
 
         for watchList in watchLists:
             db.session.delete(watchList)

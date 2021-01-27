@@ -31,7 +31,7 @@ def bank_info(*args, **kwargs):
     bank = BankInfo.query.filter(BankInfo.user_id == id).first()
 
     if not bank:
-        return make_response(jsonify("Please add Bank Information"), 404, {"WWW-Authenticate": "Basic realm='Bank Info Required'"})
+        return make_response(jsonify("Please add Bank Information"), 404)
     info = bank.bank_info()
 
     return jsonify({ "BankInfo": info })

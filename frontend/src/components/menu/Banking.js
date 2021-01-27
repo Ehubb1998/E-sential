@@ -1,5 +1,13 @@
 import React from "react";
 import { useSelector } from "react-redux";
+import BankofAmerica from "../../assets/bankOfAmerica.svg";
+import CapitalOne from "../../assets/capitalOne.png";
+import ChaseBank from "../../assets/chaseBank.png";
+import CitiBank from "../../assets/citiBank.png";
+import FifthThirdBank from "../../assets/fifthThirdBank.png";
+import PNCBank from "../../assets/pncBank.jpg";
+import Truist from "../../assets/truist.png";
+import WellsFargo from "../../assets/wellsFargo.png";
 
 
 const Banking = () => {
@@ -12,10 +20,17 @@ const Banking = () => {
         <div className="menuSelection__backgroundDiv">
             <div className="menuSelection__mainDiv">
                 <div className="inner__mainDiv">
-                    {storeUser ? <div className="bankName__div">{storeUser.primaryBank}</div> : <></>}
+                    {storeUser && storeUser.primaryBank === "Bank of America" ? <div className="bankName__div"><img className="bankName__div-image" src={BankofAmerica} alt="" /></div> : <></>}
+                    {storeUser && storeUser.primaryBank === "Capital One" ? <div className="bankName__div"><img className="bankName__div-image" src={CapitalOne} alt="" /></div> : <></>}
+                    {storeUser && storeUser.primaryBank === "Chase" ? <div className="bankName__div"><img className="bankName__div-image" src={ChaseBank} alt="" /></div> : <></>}
+                    {storeUser && storeUser.primaryBank === "Wells Fargo" ? <div className="bankName__div"><img className="bankName__div-image" src={WellsFargo} alt="" /></div> : <></>}
+                    {storeUser && storeUser.primaryBank === "Citi Bank" ? <div className="bankName__div"><img className="bankName__div-image" src={CitiBank} alt="" /></div> : <></>}
+                    {storeUser && storeUser.primaryBank === "Fifth Third Bank" ? <div className="bankName__div"><img className="bankName__div-image" src={FifthThirdBank} alt="" /></div> : <></>}
+                    {storeUser && storeUser.primaryBank === "PNC Bank" ? <div className="bankName__div"><img className="bankName__div-image" src={PNCBank} alt="" /></div> : <></>}
+                    {storeUser && storeUser.primaryBank === "Truist" ? <div className="bankName__div"><img className="bankName__div-image" src={Truist} alt="" /></div> : <></>}
                     <div className="bankInfo__div">Bank Information</div>
-                    {bankInfo ? <div className="bankInfo__balance">Balance: ${bankInfo.accountBalance}</div> : <></>}
-                    {bankInfo ? <div className="bankInfo__balance">Monthly Income: ${bankInfo.monthlyIncome}</div> : <></>}
+                    {bankInfo ? <div className="bankInfo__balance">Balance: <span className="bankInfo__balance-span">${bankInfo.accountBalance}</span></div> : <></>}
+                    {bankInfo ? <div className="bankInfo__balance">Monthly Income: <span className="bankInfo__balance-span">${bankInfo.monthlyIncome}</span></div> : <></>}
                 </div>
             </div>
         </div>

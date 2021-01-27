@@ -48,7 +48,7 @@ def edit_user():
         db.session.commit()
         return "Job Successfully Updated"
 
-    return make_response(jsonify("Edit Info Required"), 404, {"WWW-Authenticate": "Basic realm='Edit Info Required'"})
+    return make_response(jsonify("Edit Info Required"), 404)
 
 
 @user_routes.route("/edit/password", methods=["PUT"])

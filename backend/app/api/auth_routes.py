@@ -60,16 +60,16 @@ def signup():
     email_result = validate_signup_email(email)
 
     if email == '' or firstName == '' or lastName == '' or primaryBank == '' or job == '':
-        return make_response(jsonify("Please fill out all required fields"), 401, {"WWW-Authenticate": "Basic realm='Sign Up failed'"})
+        return make_response(jsonify("Please fill out all required fields"), 401)
 
     if password != confirmedPassword:
-        return make_response(jsonify("Password and Confirmed Password must match"), 401, {"WWW-Authenticate": "Basic realm='Sign Up failed'"})
+        return make_response(jsonify("Password and Confirmed Password must match"), 401)
 
     if password_result == False:
-        return make_response(jsonify("Please follow Password requirements"), 401, {"WWW-Authenticate": "Basic realm='Sign Up failed'"})
+        return make_response(jsonify("Please follow Password requirements"), 401)
 
     if email_result == False:
-        return make_response(jsonify("Sorry, that email already exists"), 401, {"WWW-Authenticate": "Basic realm='Sign Up failed'"})
+        return make_response(jsonify("Sorry, that email already exists"), 401)
 
 
     # if email == '' and firstName == '' and lastName == '' and primaryBank == '' and job == '' and password_result == False:
@@ -247,7 +247,7 @@ def signup():
     db.session.commit()
 
     user_dict = user.profile_dict()
-    if rememberMe == True:
+    if rememberMe == "True":
         token = jwt.encode({
             "email": request.json["email"],
             "exp": datetime.datetime.utcnow() + datetime.timedelta(weeks=1040)
@@ -274,7 +274,7 @@ def login():
     if user:
         password_results = user.check_password(password)
         if password_results == True:
-            if rememberMe == True:
+            if rememberMe == "True":
                 token = jwt.encode({
                     "email": request.json["email"],
                     "exp": datetime.datetime.utcnow() + datetime.timedelta(weeks=1040)
@@ -292,6 +292,6 @@ def login():
                 return jsonify({"token": token, "userData": user_dict})
         else:
 
-            return make_response(jsonify("Incorrect Password"), 401, {"WWW-Authenticate": "Basic realm='Login Required'"})
+            return make_response(jsonify("Incorrect Password"), 401)
     else:
-        return make_response(jsonify("The provided Email does not exist"), 401, {"WWW-Authenticate": "Basic realm='Login Required'"})
+        return make_response(jsonify("The provided Email does not exist"), 401)

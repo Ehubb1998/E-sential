@@ -61,7 +61,7 @@ const LoginPage = (props) => {
                         </label>
                         <button type="submit" onClick={loginButton} className="loginButton">Sign In</button>
                     </form>
-                    <button type="submit" onClick={demoButton} className="demoButton">Demo</button>
+                    <button onClick={demoButton} className="demoButton">Demo</button>
                     <label className="checkboxContainer">Remember Me
                     <input onClick={clickedRememberMe} type="checkbox" />
                         <span className="checkmark"></span>
@@ -86,9 +86,9 @@ const LoginPage = (props) => {
                             Password
                             <input onChange={passwordInput} className="loginForm__input" value={password} name="password" type="password" required />
                         </label>
-                        <button type="submit" onClick={loginButton} className="loginButton">Sign In</button>
+                        <button onClick={loginButton} type="submit" className="loginButton">Sign In</button>
                     </form>
-                    <button type="submit" onClick={demoButton} className="demoButton">Demo</button>
+                    <button onClick={demoButton} className="demoButton">Demo</button>
                     <label className="checkboxContainer">Remember Me
                         <input onClick={clickedRememberMe} type="checkbox" />
                         <span className="checkmark"></span>

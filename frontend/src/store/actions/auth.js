@@ -65,7 +65,7 @@ export const logIn = (email, password, rememberMe) => {
             window.localStorage.setItem("ESENTIAL_USER_ID", id);
 
             window.location.href = "/homepage";
-
+            
         } catch (err) {
             const error = await err.json();
             errorMsg = error;

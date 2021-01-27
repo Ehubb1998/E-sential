@@ -25,7 +25,7 @@ const SignUpPage = (props) => {
 
     const signupButton = (e) => {
         e.preventDefault();
-        dispatch(signUp(firstName, lastName, email, primaryBank, job, password, confirmPassword, rememberMe))
+        dispatch(signUp(firstName, lastName, email, primaryBank, job, password, confirmPassword, rememberMe));
     }
     const demoButton = (e) => {
         e.preventDefault();
@@ -42,6 +42,7 @@ const SignUpPage = (props) => {
     }
     const primaryBankInput = (e) => {
         setPrimaryBank(e.target.value)
+        console.log(primaryBank)
     }
     const jobInput = (e) => {
         setJob(e.target.value)
@@ -104,11 +105,21 @@ const SignUpPage = (props) => {
                     <div className="signupForm__row1">
                         <label className="signupForm__label">
                             Primary Bank
-                            <input onChange={primaryBankInput} className="signupForm__input-row1" value={primaryBank} name="primaryBank" type="text" required />
+                            {/* <input onChange={primaryBankInput} className="signupForm__input-row1" value={primaryBank} name="primaryBank" type="text" required /> */}
+                            <select className="signupForm__select">
+                                <option onChange={primaryBankInput} value="Wells Fargo">Wells Fargo</option>
+                                <option onChange={primaryBankInput} value="Bank of America">Bank of America</option>
+                                <option onChange={primaryBankInput} value="Capital One">Capital One</option>
+                                <option onChange={primaryBankInput} value="Chase">Chase</option>
+                                <option onChange={primaryBankInput} value="Citi Bank">Citi Bank</option>
+                                <option onChange={primaryBankInput} value="Fifth Third Bank">Fifth Third Bank</option>
+                                <option onChange={primaryBankInput} value="PNC Bank">PNC Bank</option>
+                                <option onChange={primaryBankInput} value="Truist">Truist</option>
+                            </select>
                         </label>
                     </div>
                     <button onClick={signupButton} type="submit" className="loginButton">Sign Up</button>
-                    <button onClick={demoButton} type="submit" className="demoButton">Demo</button>
+                    <button onClick={demoButton} className="demoButton">Demo</button>
                     <label style={{ marginTop: "38px" }} className="checkboxContainer">Remember Me
                         <input onClick={clickedRememberMe} type="checkbox" />
                         <span className="checkmark"></span>
@@ -160,11 +171,21 @@ const SignUpPage = (props) => {
                     <div className="signupForm__row1">
                         <label className="signupForm__label">
                             Primary Bank
-                            <input onChange={primaryBankInput} className="signupForm__input-row1" value={primaryBank} name="primaryBank" type="text" required />
+                            {/* <input onChange={primaryBankInput} className="signupForm__input-row1" value={primaryBank} name="primaryBank" type="text" required /> */}
+                            <select className="signupForm__select">
+                                <option onChange={primaryBankInput} value="Wells Fargo">Wells Fargo</option>
+                                <option onChange={primaryBankInput} value="Bank of America">Bank of America</option>
+                                <option onChange={primaryBankInput} value="Capital One">Capital One</option>
+                                <option onChange={primaryBankInput} value="Chase">Chase</option>
+                                <option onChange={primaryBankInput} value="Citi Bank">Citi Bank</option>
+                                <option onChange={primaryBankInput} value="Fifth Third Bank">Fifth Third Bank</option>
+                                <option onChange={primaryBankInput} value="PNC Bank">PNC Bank</option>
+                                <option onChange={primaryBankInput} value="Truist">Truist</option>
+                            </select>
                         </label>
                     </div>
                     <button onClick={signupButton} type="submit" className="loginButton">Sign Up</button>
-                    <button onClick={demoButton} type="submit" className="demoButton">Demo</button>
+                    <button onClick={demoButton} className="demoButton">Demo</button>
                     <label style={{ marginTop: "38px" }} className="checkboxContainer">Remember Me
                         <input onClick={clickedRememberMe} type="checkbox" />
                         <span className="checkmark"></span>

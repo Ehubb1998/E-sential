@@ -20,6 +20,9 @@ const App = () => {
 
   
   useEffect(() => {
+    if (!userId) {
+      return;
+    }
     const userData = async () => {
       try {
         const userdata = await fetch(`/api/user/${userId}/${token}`);
@@ -41,7 +44,7 @@ const App = () => {
       }
     }
     userData();
-  }, [])
+  }, [token, dispatch, userId])
 
   return (
     <BrowserRouter>

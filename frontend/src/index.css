@@ -314,6 +314,16 @@ body {
     font-size: 15px;
     margin-right: 100px;
 }
+.signupForm__select {
+    display: block;
+    padding: 10px 10px;
+    margin: 10px 0px;
+    width: 230px;
+    border: 3px solid rgba(4, 13, 20, 0.1);
+    border-radius: 4px;
+    font-size: 15px;
+    margin-right: 100px;
+}
 .checkboxContainer__signup {
   display: block;
   position: relative;
@@ -505,14 +515,27 @@ body {
 .bankName__div {
     font-size: 30px;
     font-weight: 600;
+    height: 75px;
+    width: 350px;
+}
+.bankName__div-image {
+    max-width: 100%;
+    max-height: 100%;
 }
 .bankInfo__div {
     border-top: 2px solid black;
     font-size: 22px;
     font-weight: 500;
     padding-top: 30px;
+    text-align: center;
 }
 .bankInfo__balance {
-    font-size: 17px;
+    font-size: 20px;
     margin-top: 10px;
+    margin-bottom: 30px;
+    display: flex;
+    justify-content: space-between;
+}
+.bankInfo__balance-span {
+    margin-right: 40px;
 }

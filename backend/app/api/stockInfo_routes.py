@@ -44,7 +44,7 @@ def new_stock_info():
         info = new_info.stock_info()
         return jsonify({"StockInfo": info})
     else:
-        return make_response(jsonify("Invalid Company Stock Symbol"), 404, {"WWW-Authenticate": "Basic realm='Invalid'"})
+        return make_response(jsonify("Invalid Company Stock Symbol"), 404)
 
 
 @stockInfo_routes.route("/info/<id>/<token>/<allOrOne>/<stock>")
@@ -58,7 +58,7 @@ def stock_info(*args, **kwargs):
         stock = StockInfo.query.filter((StockInfo.user_id == id) & (StockInfo.stock == stock)).first()
 
         if not stock:
-            return make_response(jsonify(f"You do not own any {stock} stock"), 404, {"WWW-Authenticate": "Basic realm='Invalid'"})
+            return make_response(jsonify(f"You do not own any {stock} stock"), 404)
 
         info = stock.stock_info()
         return jsonify({"StockInfo": info})
@@ -66,7 +66,7 @@ def stock_info(*args, **kwargs):
         stocks = StockInfo.query.filter(StockInfo.user_id == id).all()
 
         if not stocks:
-            return make_response(jsonify("You do not own stocks"), 404, {"WWW-Authenticate": "Basic realm='Invalid'"})
+            return make_response(jsonify("You do not own stocks"), 404)
 
         info = [stock.stock_info() for stock in stocks]
         return jsonify({"StockInfo": info})
@@ -82,7 +82,7 @@ def edit_stock_info():
     stock = StockInfo.query.filter((StockInfo.user_id == user_id) & (StockInfo.stock == stock_name)).first()
 
     if not stock:
-        return make_response(jsonify(f"You do not own any {stock_name} stock"), 404, {"WWW-Authenticate": "Basic realm='Invalid'"})
+        return make_response(jsonify(f"You do not own any {stock_name} stock"), 404)
 
     stock.numShares = edit_value
     db.session.add(stock)
