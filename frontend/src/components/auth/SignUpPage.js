@@ -42,7 +42,6 @@ const SignUpPage = (props) => {
     }
     const primaryBankInput = (e) => {
         setPrimaryBank(e.target.value)
-        console.log(primaryBank)
     }
     const jobInput = (e) => {
         setJob(e.target.value)
@@ -106,15 +105,15 @@ const SignUpPage = (props) => {
                         <label className="signupForm__label">
                             Primary Bank
                             {/* <input onChange={primaryBankInput} className="signupForm__input-row1" value={primaryBank} name="primaryBank" type="text" required /> */}
-                            <select className="signupForm__select">
-                                <option onChange={primaryBankInput} value="Wells Fargo">Wells Fargo</option>
-                                <option onChange={primaryBankInput} value="Bank of America">Bank of America</option>
-                                <option onChange={primaryBankInput} value="Capital One">Capital One</option>
-                                <option onChange={primaryBankInput} value="Chase">Chase</option>
-                                <option onChange={primaryBankInput} value="Citi Bank">Citi Bank</option>
-                                <option onChange={primaryBankInput} value="Fifth Third Bank">Fifth Third Bank</option>
-                                <option onChange={primaryBankInput} value="PNC Bank">PNC Bank</option>
-                                <option onChange={primaryBankInput} value="Truist">Truist</option>
+                            <select onChange={primaryBankInput} className="signupForm__select">
+                                <option value="Wells Fargo">Wells Fargo</option>
+                                <option value="Bank of America">Bank of America</option>
+                                <option value="Capital One">Capital One</option>
+                                <option value="Chase">Chase</option>
+                                <option value="Citi Bank">Citi Bank</option>
+                                <option value="Fifth Third Bank">Fifth Third Bank</option>
+                                <option value="PNC Bank">PNC Bank</option>
+                                <option value="Truist">Truist</option>
                             </select>
                         </label>
                     </div>
@@ -172,15 +171,15 @@ const SignUpPage = (props) => {
                         <label className="signupForm__label">
                             Primary Bank
                             {/* <input onChange={primaryBankInput} className="signupForm__input-row1" value={primaryBank} name="primaryBank" type="text" required /> */}
-                            <select className="signupForm__select">
-                                <option onChange={primaryBankInput} value="Wells Fargo">Wells Fargo</option>
-                                <option onChange={primaryBankInput} value="Bank of America">Bank of America</option>
-                                <option onChange={primaryBankInput} value="Capital One">Capital One</option>
-                                <option onChange={primaryBankInput} value="Chase">Chase</option>
-                                <option onChange={primaryBankInput} value="Citi Bank">Citi Bank</option>
-                                <option onChange={primaryBankInput} value="Fifth Third Bank">Fifth Third Bank</option>
-                                <option onChange={primaryBankInput} value="PNC Bank">PNC Bank</option>
-                                <option onChange={primaryBankInput} value="Truist">Truist</option>
+                            <select onChange={primaryBankInput} className="signupForm__select">
+                                <option value="Wells Fargo">Wells Fargo</option>
+                                <option value="Bank of America">Bank of America</option>
+                                <option value="Capital One">Capital One</option>
+                                <option value="Chase">Chase</option>
+                                <option value="Citi Bank">Citi Bank</option>
+                                <option value="Fifth Third Bank">Fifth Third Bank</option>
+                                <option value="PNC Bank">PNC Bank</option>
+                                <option value="Truist">Truist</option>
                             </select>
                         </label>
                     </div>
