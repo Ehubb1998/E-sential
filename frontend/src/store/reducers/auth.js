@@ -1,4 +1,4 @@
-import { HANDLE_ERRORS, CURRENT_USER, UPDATE_TOKEN_VALUE, CLEAR_ERRORS } from "../actions/auth"
+import { HANDLE_ERRORS, UPDATE_TOKEN_VALUE, CLEAR_ERRORS } from "../actions/auth"
 
 const initialState = {
     token: ""
@@ -10,12 +10,6 @@ const authReducer = (state = initialState, action) => {
             return {
                 ...state,
                 msg: action.msg
-            }
-        }
-        case CURRENT_USER: {
-            return {
-                ...state,
-                userData: action.user
             }
         }
         case UPDATE_TOKEN_VALUE: {

@@ -29,24 +29,24 @@ def edit_user():
     if edit == "password":
         password_results = user.check_password(edit_value)
         if password_results == True:
-            return "Password Matches"
+            return jsonify("Password Matches")
         else:
-            return "Incorrect Password"
+            return jsonify("Incorrect Password")
     if edit == "email":
         user.setEmail = edit_value
         db.session.add(user)
         db.session.commit()
-        return "Email Successfully Updated"
+        return jsonify({"userData": user.profile_dict()})
     if edit == "bank":
         user.setBank = edit_value
         db.session.add(user)
         db.session.commit()
-        return "Primary Bank Successfully Updated"
+        return jsonify({"userData": user.profile_dict()})
     if edit == "job":
         user.setJob = edit_value
         db.session.add(user)
         db.session.commit()
-        return "Job Successfully Updated"
+        return jsonify({"userData": user.profile_dict()})
 
     return make_response(jsonify("Edit Info Required"), 404)
 

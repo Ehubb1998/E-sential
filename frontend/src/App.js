@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
-import { currentUser } from "./store/actions/auth";
+import { currentUser } from "./store/actions/userData";
 import { bankData } from "./store/actions/bankInfo";
 
 import Homepage from "./components/Homepage";

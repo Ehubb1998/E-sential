@@ -507,6 +507,10 @@ body {
     margin-left: 30px;
     margin-top: 33px;
     border-radius: 15px;
+    background-image: url("./assets/bankComponent.jpg");
+    background-repeat: no-repeat;
+    background-size: 1200px 520px;
+    background-position: 30px 70px;
 }
 .inner__mainDiv {
     margin-left: 40px;
