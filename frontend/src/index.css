@@ -553,3 +553,33 @@ body {
 .bankInfo__balance-span {
     margin-right: 40px;
 }
+
+/* Account */
+.accountName__div {
+    font-size: 36px;
+    font-weight: 600;
+    height: 75px;
+    width: 100%;
+    font-family: Gill Sans, sans-serif;
+}
+.accountInformation__div {
+    margin-top: 40px;
+    font-family: Gill Sans, sans-serif;
+    font-size: 20px;
+}
+.account_editSelection {
+    padding-left: 40px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+    cursor: pointer;
+}
+.account_editSelection:hover {
+    background-color: lightgray;
+    display: flex;
+    justify-content: space-between;
+}
+.editSelection__span {
+    padding-right: 25px;
+}
