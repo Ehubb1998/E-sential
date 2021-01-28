@@ -579,6 +579,7 @@ body {
     background-color: lightgray;
     display: flex;
     justify-content: space-between;
+    font-weight: 600;
 }
 .editSelection__span {
     padding-right: 25px;
@@ -593,7 +594,7 @@ body {
     cursor: pointer;
 }
 .backButton:hover {
-    color:rgb(0, 200, 5)
+    color:rgb(0, 200, 5);
 }
 .editInput__div {
     margin-left: 40px;
