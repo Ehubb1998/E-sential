@@ -583,3 +583,43 @@ body {
 .editSelection__span {
     padding-right: 25px;
 }
+.editDiv {
+    display: flex;
+}
+.editTitle {
+    margin-left: 447px;
+}
+.backButton {
+    cursor: pointer;
+}
+.backButton:hover {
+    color:rgb(0, 200, 5)
+}
+.editInput__div {
+    margin-left: 40px;
+}
+.editInput {
+    padding: 10px 10px;
+    margin: 10px 0px;
+    margin-left: 5px;
+    width: 230px;
+    height: 10px;
+    border: 3px solid rgba(4, 13, 20, 0.1);
+    border-radius: 4px;
+    font-size: 15px;
+    margin-right: 15px;
+}
+.submitChanges {
+    position: absolute;
+    background-color: rgb(0, 200, 5);
+    width: 140px;
+    height: 44px;
+    padding: 10px 10px;
+    font-size: 13px;
+    font-weight: 600;
+    color: white;
+    border-radius: 4px;
+    border: none;
+    margin-top: 5px;
+    cursor: pointer;
+}
