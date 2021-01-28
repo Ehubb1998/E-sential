@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { updateEmail, updatePrimaryBank } from "../../store/actions/userData";
+import { updateEmail, updatePrimaryBank, updateJob } from "../../store/actions/userData";
 
 
 const Account = () => {
@@ -15,6 +15,8 @@ const Account = () => {
     const [email, setEmail] = useState("");
     const [clickedEditBank, setClickedEditBank] = useState(false);
     const [primaryBank, setPrimaryBank] = useState("");
+    const [clickedEditJob, setClickedEditJob] = useState(false);
+    const [job, setJob] = useState("");
 
     useEffect(() => {
         if (user) {
@@ -66,12 +68,27 @@ const Account = () => {
     }
     const primaryBankInput = (e) => {
         setPrimaryBank(e.target.value);
-        console.log(e.target.value)
     }
     const submitBankChanges = () => {
         dispatch(updatePrimaryBank(user.id, token, primaryBank));
         setClickedEditBank(false);
         setPrimaryBank("");
+    }
+    const editJob = () => {
+        setClickedEditJob(true);
+        setOverJobDiv(false);
+    }
+    const jobBackButton = () => {
+        setClickedEditJob(false);
+        setJob("");
+    }
+    const jobInput = (e) => {
+        setJob(e.target.value);
+    }
+    const submitJobChanges = () => {
+        dispatch(updateJob(user.id, token, job));
+        setClickedEditJob(false);
+        setJob("");
     }
 
 
@@ -120,6 +137,24 @@ const Account = () => {
         </div>
     )
 
+    const updateJobJSX = (
+        <div className="menuSelection__backgroundDiv">
+            <div className="menuSelection__mainDiv">
+                <div className="inner__mainDiv">
+                    {user ? <div className="accountName__div">{user.firstName} {user.lastName} • {user.job}</div> : <></>}
+                    <div className="bankInfo__div editDiv"><span onClick={jobBackButton} className="backButton">&lt; Back</span><span className="editTitle">Edit Job</span></div>
+                </div>
+                <div className="accountInformation__div">
+                    <div className="editInput__div">
+                        Edit Job:
+                        <input onChange={jobInput} className="editInput" value={job} name="job" type="text" />
+                        <button onClick={submitJobChanges} className="submitChanges">Submit</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    )
+
     if (clickedEditEmail === true) {
         return (
             updateEmailJSX
@@ -128,6 +163,11 @@ const Account = () => {
     if (clickedEditBank === true) {
         return (
             updatePrimaryBankJSX
+        )
+    }
+    if (clickedEditJob === true) {
+        return (
+            updateJobJSX
         )
     }
 
@@ -142,7 +182,7 @@ const Account = () => {
                 <div className="accountInformation__div">
                     {overEmailDiv === false ? <div onMouseEnter={overEmail} className="account_editSelection"><span>Email: {user.email}</span></div> : <div onClick={editEmail} onMouseLeave={leftEmail} className="account_editSelection"><span>Email: {user.email}</span><span className="editSelection__span">Edit &gt;</span></div>}
                     {overBankDiv === false ? <div onMouseEnter={overBank} className="account_editSelection"><span>Primary Bank: {user.primaryBank}</span></div> : <div onClick={editBank} onMouseLeave={leftBank} className="account_editSelection"><span>Primary Bank: {user.primaryBank}</span><span className="editSelection__span">Edit &gt;</span></div>}
-                    {overJobDiv === false ? <div onMouseEnter={overJob} className="account_editSelection"><span>Job: {user.job}</span></div> : <div onMouseLeave={leftJob} className="account_editSelection"><span>Job: {user.job}</span><span className="editSelection__span">Edit &gt;</span></div>}
+                    {overJobDiv === false ? <div onMouseEnter={overJob} className="account_editSelection"><span>Job: {user.job}</span></div> : <div onClick={editJob} onMouseLeave={leftJob} className="account_editSelection"><span>Job: {user.job}</span><span className="editSelection__span">Edit &gt;</span></div>}
                     <div className="account_editSelection"><span>Change Password</span></div>
                 </div>
             </div>
