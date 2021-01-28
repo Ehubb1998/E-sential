@@ -121,7 +121,8 @@ export const updatePassword = (id, token, value) => {
             }
 
             const result = await res.json();
-            if (result === "Password Sucessfully Updated") {
+
+            if (result === "Password Successfully Updated") {
                 window.localStorage.setItem("PASSWORD_RESULT", "true");
             } else {
                 window.localStorage.setItem("PASSWORD_RESULT", "false");

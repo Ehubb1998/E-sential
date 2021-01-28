@@ -113,20 +113,25 @@ const Account = () => {
     const confirmPasswordInput = (e) => {
         setConfirmPasswordI(e.target.value);
     }
-    const submitConfirmPasswordChanges = () => {
-        dispatch(confirmPassword(user.id, token, confirmPasswordI));
+    const confirmPasswordResults = () => {
         const results = window.localStorage.getItem("PASSWORD_RESULTS");
-        console.log(results);
+
         if (results === "false") {
             setWrongCP(true);
             window.localStorage.removeItem("PASSWORD_RESULTS");
             return;
-        } 
+        }
         if (results === "true") {
             setPasswordResult(true);
             setWrongCP(false);
             window.localStorage.removeItem("PASSWORD_RESULTS");
         }
+    }
+    const submitConfirmPasswordChanges = () => {
+        dispatch(confirmPassword(user.id, token, confirmPasswordI));
+        setTimeout(() => {
+            confirmPasswordResults()
+        }, 500);
     }
     const passwordInput = (e) => {
         setPassword(e.target.value);
@@ -134,19 +139,30 @@ const Account = () => {
     const cpPasswordInput = (e) => {
         setCpPassword(e.target.value);
     }
+    const updatedPasswordResults = () => {
+        const result = window.localStorage.getItem("PASSWORD_RESULT");
+
+        if (result === "true") {
+            window.localStorage.removeItem("PASSWORD_RESULT");
+            setJustChangedPassword(true);
+            setPasswordResult(false);
+            setClickedEditPassword(false);
+            setWrongCP(false);
+            setMatchError(false);
+            setCpPassword("");
+            setConfirmPasswordI("");
+            setPassword("");
+        }
+    }
     const submitPasswordChanges = () => {
-        if (password !== cpPassword) {
+        if (password !== cpPassword || password === "" || password === null) {
             setMatchError(true);
             return;
         }
         dispatch(updatePassword(user.id, token, password));
-        const result = window.localStorage.getItem("PASSWORD_RESULT");
-        if (result === "true") {
-            setJustChangedPassword(true);
-            window.localStorage.removeItem("PASSWORD_RESULT");
-            setPasswordResult(false);
-            setClickedEditPassword(false);
-        }
+        setTimeout(() => {
+            updatedPasswordResults();
+        }, 500);
     }
 
 
