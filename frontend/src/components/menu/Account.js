@@ -44,6 +44,7 @@ const Account = () => {
     }
     const emailBackButton = () => {
         setClickedEditEmail(false);
+        setEmail("");
     }
     const emailInput = (e) => {
         setEmail(e.target.value);
@@ -51,6 +52,7 @@ const Account = () => {
     const submitEmailChanges = () => {
         dispatch(updateEmail(user.id, token, email));
         setClickedEditEmail(false);
+        setEmail("");
     }
 
     const updateEmailJSX = (
