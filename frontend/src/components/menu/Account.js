@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { updateEmail, updatePrimaryBank, updateJob } from "../../store/actions/userData";
+import { updateEmail, updatePrimaryBank, updateJob, confirmPassword, updatePassword } from "../../store/actions/userData";
 
 
 const Account = () => {
@@ -17,6 +17,14 @@ const Account = () => {
     const [primaryBank, setPrimaryBank] = useState("");
     const [clickedEditJob, setClickedEditJob] = useState(false);
     const [job, setJob] = useState("");
+    const [clickedEditPassword, setClickedEditPassword] = useState(false);
+    const [confirmPasswordI, setConfirmPasswordI] = useState("");
+    const [passwordResult, setPasswordResult] = useState(false);
+    const [wrongCP, setWrongCP] = useState(false);
+    const [cpPassword, setCpPassword] = useState("");
+    const [password, setPassword] = useState("");
+    const [matchError, setMatchError] = useState(false);
+    const [justChangedPassword, setJustChangedPassword] = useState(false);
 
     useEffect(() => {
         if (user) {
@@ -90,6 +98,56 @@ const Account = () => {
         setClickedEditJob(false);
         setJob("");
     }
+    const editPassword = () => {
+        setClickedEditPassword(true);
+    }
+    const passwordBackButton = () => {
+        setClickedEditPassword(false);
+        setPasswordResult(false);
+        setWrongCP(false);
+        setMatchError(false);
+        setCpPassword("");
+        setConfirmPasswordI("");
+        setPassword("");
+    }
+    const confirmPasswordInput = (e) => {
+        setConfirmPasswordI(e.target.value);
+    }
+    const submitConfirmPasswordChanges = () => {
+        dispatch(confirmPassword(user.id, token, confirmPasswordI));
+        const results = window.localStorage.getItem("PASSWORD_RESULTS");
+        console.log(results);
+        if (results === "false") {
+            setWrongCP(true);
+            window.localStorage.removeItem("PASSWORD_RESULTS");
+            return;
+        } 
+        if (results === "true") {
+            setPasswordResult(true);
+            setWrongCP(false);
+            window.localStorage.removeItem("PASSWORD_RESULTS");
+        }
+    }
+    const passwordInput = (e) => {
+        setPassword(e.target.value);
+    }
+    const cpPasswordInput = (e) => {
+        setCpPassword(e.target.value);
+    }
+    const submitPasswordChanges = () => {
+        if (password !== cpPassword) {
+            setMatchError(true);
+            return;
+        }
+        dispatch(updatePassword(user.id, token, password));
+        const result = window.localStorage.getItem("PASSWORD_RESULT");
+        if (result === "true") {
+            setJustChangedPassword(true);
+            window.localStorage.removeItem("PASSWORD_RESULT");
+            setPasswordResult(false);
+            setClickedEditPassword(false);
+        }
+    }
 
 
     const updateEmailJSX = (
@@ -155,6 +213,65 @@ const Account = () => {
         </div>
     )
 
+    const confirmPasswordJSX = (
+        <div className="menuSelection__backgroundDiv">
+            <div className="menuSelection__mainDiv">
+                <div className="inner__mainDiv">
+                    {user ? <div className="accountName__div">{user.firstName} {user.lastName} • {user.job}</div> : <></>}
+                    <div className="bankInfo__div editDiv"><span onClick={passwordBackButton} className="backButton">&lt; Back</span><span className="editTitle">Edit Password</span></div>
+                </div>
+                <div className="accountInformation__div">
+                    {wrongCP === true ? <div className="wrongCP__message">Incorrect Password</div> : <></>}
+                    <div className="editInput__div">
+                        Please Enter Current Password:
+                        {wrongCP === true ? <input onChange={confirmPasswordInput} className="wrongCP" value={confirmPasswordI} name="cp" type="password" /> : <input onChange={confirmPasswordInput} className="editInput" value={confirmPasswordI} name="cp" type="password" />}
+                        <button onClick={submitConfirmPasswordChanges} className="submitChanges">Confirm</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    )
+
+    const updatePasswordJSX = (
+        <div className="menuSelection__backgroundDiv">
+            <div className="menuSelection__mainDiv">
+                <div className="inner__mainDiv">
+                    {user ? <div className="accountName__div">{user.firstName} {user.lastName} • {user.job}</div> : <></>}
+                    <div className="bankInfo__div editDiv"><span onClick={passwordBackButton} className="backButton">&lt; Back</span><span className="editTitle">Edit Password</span></div>
+                </div>
+                <div className="accountInformation__div">
+                    {matchError === true ? <div className="wrongCP__message">Passwords must match</div> : <></>}
+                    <div className="editInput__div">
+                        Edit Password:
+                        {matchError === true ? <input onChange={passwordInput} className="wrongCP" value={password} name="password" type="password" /> : <input onChange={passwordInput} className="editInput" value={password} name="password" type="password" />}
+                    </div>
+                    <div className="editInput__div">
+                        Confirm Password:
+                        {matchError === true ? <input onChange={cpPasswordInput} className="wrongCP" value={cpPassword} name="cpPassword" type="password" /> : <input onChange={cpPasswordInput} className="editInput" value={cpPassword} name="cpPassword" type="password" />}
+                        <button onClick={submitPasswordChanges} className="submitChanges">Submit</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    )
+
+    const changedPassword = (
+        <div className="menuSelection__backgroundDiv">
+            <div className="menuSelection__mainDiv">
+                <div className="inner__mainDiv">
+                    {userData && user ? <div className="accountName__div">{user.firstName} {user.lastName} • {user.job}</div> : <></>}
+                    <div className="bankInfo__div">Account Information</div>
+                </div>
+                <div className="accountInformation__div">
+                    {overEmailDiv === false ? <div onMouseEnter={overEmail} className="account_editSelection"><span>Email: {user.email}</span></div> : <div onClick={editEmail} onMouseLeave={leftEmail} className="account_editSelection"><span>Email: {user.email}</span><span className="editSelection__span">Edit &gt;</span></div>}
+                    {overBankDiv === false ? <div onMouseEnter={overBank} className="account_editSelection"><span>Primary Bank: {user.primaryBank}</span></div> : <div onClick={editBank} onMouseLeave={leftBank} className="account_editSelection"><span>Primary Bank: {user.primaryBank}</span><span className="editSelection__span">Edit &gt;</span></div>}
+                    {overJobDiv === false ? <div onMouseEnter={overJob} className="account_editSelection"><span>Job: {user.job}</span></div> : <div onClick={editJob} onMouseLeave={leftJob} className="account_editSelection"><span>Job: {user.job}</span><span className="editSelection__span">Edit &gt;</span></div>}
+                    <div onClick={editPassword} className="account_editSelection"><span>Change Password</span><span className="changedPassword">Password Successfully Changed</span></div>
+                </div>
+            </div>
+        </div>
+    )
+
     if (clickedEditEmail === true) {
         return (
             updateEmailJSX
@@ -170,6 +287,24 @@ const Account = () => {
             updateJobJSX
         )
     }
+    if (passwordResult === true) {
+        return (
+            updatePasswordJSX
+        )
+    }
+    if (clickedEditPassword === true) {
+        return (
+            confirmPasswordJSX
+        )
+    }
+    if (justChangedPassword === true) {
+        setTimeout(() => {
+            setJustChangedPassword(false);
+        }, 3000)
+        return (
+            changedPassword
+        )
+    }
 
     return (
         <>
@@ -183,7 +318,7 @@ const Account = () => {
                     {overEmailDiv === false ? <div onMouseEnter={overEmail} className="account_editSelection"><span>Email: {user.email}</span></div> : <div onClick={editEmail} onMouseLeave={leftEmail} className="account_editSelection"><span>Email: {user.email}</span><span className="editSelection__span">Edit &gt;</span></div>}
                     {overBankDiv === false ? <div onMouseEnter={overBank} className="account_editSelection"><span>Primary Bank: {user.primaryBank}</span></div> : <div onClick={editBank} onMouseLeave={leftBank} className="account_editSelection"><span>Primary Bank: {user.primaryBank}</span><span className="editSelection__span">Edit &gt;</span></div>}
                     {overJobDiv === false ? <div onMouseEnter={overJob} className="account_editSelection"><span>Job: {user.job}</span></div> : <div onClick={editJob} onMouseLeave={leftJob} className="account_editSelection"><span>Job: {user.job}</span><span className="editSelection__span">Edit &gt;</span></div>}
-                    <div className="account_editSelection"><span>Change Password</span></div>
+                    <div onClick={editPassword} className="account_editSelection"><span>Change Password</span></div>
                 </div>
             </div>
         </div>
