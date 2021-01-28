@@ -5,6 +5,9 @@ export const currentUser = (user) => ({ type: CURRENT_USER, user });
 export const updatePrimaryBank = (id, token, value) => {
     return async (dispatch) => {
         try {
+            if (value === "") {
+                value = "Wells Fargo"
+            }
             const res = await fetch("/api/user/edit", {
                 method: "PUT",
                 body: JSON.stringify({ userId: id, whatToEdit: "bank", editValue: value, token: token }),

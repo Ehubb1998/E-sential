@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { updateEmail } from "../../store/actions/userData";
+import { updateEmail, updatePrimaryBank } from "../../store/actions/userData";
 
 
 const Account = () => {
@@ -13,6 +13,8 @@ const Account = () => {
     const [overJobDiv, setOverJobDiv] = useState(false);
     const [clickedEditEmail, setClickedEditEmail] = useState(false);
     const [email, setEmail] = useState("");
+    const [clickedEditBank, setClickedEditBank] = useState(false);
+    const [primaryBank, setPrimaryBank] = useState("");
 
     useEffect(() => {
         if (user) {
@@ -54,6 +56,24 @@ const Account = () => {
         setClickedEditEmail(false);
         setEmail("");
     }
+    const editBank = () => {
+        setClickedEditBank(true);
+        setOverBankDiv(false);
+    }
+    const bankBackButton = () => {
+        setClickedEditBank(false);
+        setPrimaryBank("");
+    }
+    const primaryBankInput = (e) => {
+        setPrimaryBank(e.target.value);
+        console.log(e.target.value)
+    }
+    const submitBankChanges = () => {
+        dispatch(updatePrimaryBank(user.id, token, primaryBank));
+        setClickedEditBank(false);
+        setPrimaryBank("");
+    }
+
 
     const updateEmailJSX = (
         <div className="menuSelection__backgroundDiv">
@@ -72,10 +92,42 @@ const Account = () => {
             </div>
         </div>
     )
+    
+    const updatePrimaryBankJSX = (
+        <div className="menuSelection__backgroundDiv">
+            <div className="menuSelection__mainDiv">
+                <div className="inner__mainDiv">
+                    {user ? <div className="accountName__div">{user.firstName} {user.lastName} • {user.job}</div> : <></>}
+                    <div className="bankInfo__div editDiv"><span onClick={bankBackButton} className="backButton">&lt; Back</span><span className="editTitle">Edit Primary Bank</span></div>
+                </div>
+                <div className="accountInformation__div">
+                    <div className="editInput__div">
+                        Edit Primary Bank:
+                        <select onChange={primaryBankInput} className="editPrimaryBank">
+                            <option value="Wells Fargo">Wells Fargo</option>
+                            <option value="Bank of America">Bank of America</option>
+                            <option value="Capital One">Capital One</option>
+                            <option value="Chase">Chase</option>
+                            <option value="Citi Bank">Citi Bank</option>
+                            <option value="Fifth Third Bank">Fifth Third Bank</option>
+                            <option value="PNC Bank">PNC Bank</option>
+                            <option value="Truist">Truist</option>
+                        </select>
+                        <button style={{ marginTop: "10px" }} onClick={submitBankChanges} className="submitChanges">Submit</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    )
 
     if (clickedEditEmail === true) {
         return (
             updateEmailJSX
+        )
+    }
+    if (clickedEditBank === true) {
+        return (
+            updatePrimaryBankJSX
         )
     }
 
@@ -89,7 +141,7 @@ const Account = () => {
                 </div>
                 <div className="accountInformation__div">
                     {overEmailDiv === false ? <div onMouseEnter={overEmail} className="account_editSelection"><span>Email: {user.email}</span></div> : <div onClick={editEmail} onMouseLeave={leftEmail} className="account_editSelection"><span>Email: {user.email}</span><span className="editSelection__span">Edit &gt;</span></div>}
-                    {overBankDiv === false ? <div onMouseEnter={overBank} className="account_editSelection"><span>Primary Bank: {user.primaryBank}</span></div> : <div onMouseLeave={leftBank} className="account_editSelection"><span>Primary Bank: {user.primaryBank}</span><span className="editSelection__span">Edit &gt;</span></div>}
+                    {overBankDiv === false ? <div onMouseEnter={overBank} className="account_editSelection"><span>Primary Bank: {user.primaryBank}</span></div> : <div onClick={editBank} onMouseLeave={leftBank} className="account_editSelection"><span>Primary Bank: {user.primaryBank}</span><span className="editSelection__span">Edit &gt;</span></div>}
                     {overJobDiv === false ? <div onMouseEnter={overJob} className="account_editSelection"><span>Job: {user.job}</span></div> : <div onMouseLeave={leftJob} className="account_editSelection"><span>Job: {user.job}</span><span className="editSelection__span">Edit &gt;</span></div>}
                     <div className="account_editSelection"><span>Change Password</span></div>
                 </div>
