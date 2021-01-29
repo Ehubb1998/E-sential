@@ -69,7 +69,8 @@ const Account = () => {
     }
     const submitEmailChanges = () => {
         dispatch(updateEmail(user.id, token, email));
-        setClickedEditEmail(false);
+        // setClickedEditEmail(false);
+        setReverseEmailTransition(true);
         setEmail("");
     }
     const editBank = () => {
