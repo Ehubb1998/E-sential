@@ -744,3 +744,14 @@ body {
 }
 
 /* Stock Market */
+.buyStockDiv {
+    position: absolute;
+    background-color: rgba(255, 255, 255, 0.6);
+    backdrop-filter: saturate(180%) blur(20px);
+    /* background-color: rgb(0, 0, 0, 0.2);
+    backdrop-filter: saturate(180%) blur(20px); */
+    color: darkgrey;
+    margin-left: 136px;
+    bottom: 300px;
+    font-size: 75px;
+}
