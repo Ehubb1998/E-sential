@@ -660,6 +660,17 @@ body {
 .overflowHidden {
     overflow: hidden;
 }
+.blockContainer {
+    position: relative;
+    height: 1000px;
+    width: 1178px;
+}
+.blockDiv {
+    position: absolute;
+    background-color: rgb(255,255,255);
+    height: 1000px;
+    width: 1178px;
+}
 .acountPageTransition {
   /* display: inline-block; */
   vertical-align: middle;
@@ -672,14 +683,50 @@ body {
   transition-property: transform;
 }
 .acountPageTransition-active {
-  -webkit-transform: translateX(-290px);
-  transform: translateX(-290px);
+    -webkit-transform: translateX(-1218px);
+    transform: translateX(-1218px);
+}
+.acountPageTransition-reverse {
+  /* display: inline-block; */
+  vertical-align: middle;
+  -webkit-transform: perspective(1px) translateZ(0);
+  transform: perspective(1px) translateZ(0);
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+  -webkit-transition-duration: 0.2s;
+  transition-duration: 0.2s;
+  -webkit-transition-property: transform;
+  transition-property: transform;
+}
+.acountPageTransition-active-reverse {
+    -webkit-transform: translateX(1218px);
+    transform: translateX(1218px);
 }
 .editPageTransition {
   /* display: inline-block; */
   vertical-align: middle;
-  -webkit-transform: perspective(1px) translateZ(0) translateX(1178px);
-  transform: perspective(1px) translateZ(0) translateX(1178px);
+  -webkit-transform: perspective(1px) translateX(1178px);
+  transform: perspective(1px) translateX(1178px);
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+  -webkit-transition-duration: 0.2s;
+  transition-duration: 0.2s;
+  -webkit-transition-property: transform;
+  transition-property: transform;
+}
+.editPageTransition2 {
+  /* display: inline-block; */
+  vertical-align: middle;
+  -webkit-transform: perspective(1px) translateX(1178px);
+  transform: perspective(1px) translateX(1178px);
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+  -webkit-transition-duration: 0.1s;
+  transition-duration: 0.1s;
+  -webkit-transition-property: transform;
+  transition-property: transform;
+}
+.editPageTransition-reverse {
+  vertical-align: middle;
+  -webkit-transform: perspective(1px) translateX(-1178px);
+  transform: perspective(1px) translateX(-1178px);
   box-shadow: 0 0 1px rgba(0, 0, 0, 0);
   -webkit-transition-duration: 0.2s;
   transition-duration: 0.2s;
@@ -687,6 +734,10 @@ body {
   transition-property: transform;
 }
 .editPageTransition-active {
+  -webkit-transform: translateX(0px);
+  transform: translateX(0px);
+}
+.editPageTransition-active-reverse {
   -webkit-transform: translateX(0px);
   transform: translateX(0px);
 }

@@ -24,7 +24,11 @@ const Account = () => {
     const [password, setPassword] = useState("");
     const [matchError, setMatchError] = useState(false);
     const [justChangedPassword, setJustChangedPassword] = useState(false);
-    const [enterTransition, setEnterTransition] = useState(false);
+    const [enterEmailTransition, setEnterEmailTransition] = useState(false);
+    const [hiddenEmailComponent, setHiddenEmailComponent] = useState(false);
+    const [reverseEmailTransition, setReverseEmailTransition] = useState(false);
+    const [reverseHiddenEmail, setReverseHiddenEmail] = useState(false);
+    const [reverseSetter, setReverseSetter] = useState(false);
 
     useEffect(() => {
         if (user) {
@@ -51,12 +55,13 @@ const Account = () => {
         setOverJobDiv(false);
     }
     const editEmail = () => {
-        setEnterTransition(true);
+        setEnterEmailTransition(true);
         // setClickedEditEmail(true);
         setOverEmailDiv(false);
     }
     const emailBackButton = () => {
-        setClickedEditEmail(false);
+        // setClickedEditEmail(false);
+        setReverseEmailTransition(true);
         setEmail("");
     }
     const emailInput = (e) => {
@@ -166,11 +171,11 @@ const Account = () => {
         }, 500);
     }
 
-    if (enterTransition === true) {
+    if (enterEmailTransition === true) {
         setTimeout(() => {
-            setClickedEditEmail(true);
-            setEnterTransition(false);
-        }, 100)
+            setHiddenEmailComponent(true);
+            setEnterEmailTransition(false);
+        }, 80)
         return (
             <>
             <div className="menuSelection__backgroundDiv">
@@ -190,6 +195,106 @@ const Account = () => {
             </>
         )
     }
+    if (hiddenEmailComponent === true) {
+        setTimeout(() => {
+            // debugger;
+            setClickedEditEmail(true);
+            setHiddenEmailComponent(false);
+        }, 80)
+        // debugger;
+        return (
+            <div className="menuSelection__backgroundDiv">
+                <div className="menuSelection__mainDiv overflowHidden">
+                    <div className="inner__mainDiv">
+                        {user ? <div className="accountName__div">{user.firstName} {user.lastName} • {user.job}</div> : <></>}
+                        <div className="blockContainer">
+                            <div className="blockDiv"></div>
+                            <div className="bankInfo__div editDiv editPageTransition"><span onClick={emailBackButton} className="backButton">&lt; Back</span><span className="editTitle">Edit Email</span></div>
+                        </div>
+                    </div>
+                    <div className="accountInformation__div editPageTransition">
+                        <div className="editInput__div">
+                            Edit Email:
+                            <input onChange={emailInput} className="editInput" value={email} name="email" type="email" />
+                            <button onClick={submitEmailChanges} className="submitChanges">Submit</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        )
+    }
+
+    if (reverseEmailTransition === true) {
+        setTimeout(() => {
+            setReverseHiddenEmail(true);
+            setReverseEmailTransition(false);
+            setClickedEditEmail(false);
+        }, 80)
+        return (
+            <div className="menuSelection__backgroundDiv">
+                <div className="menuSelection__mainDiv overflowHidden">
+                    <div className="inner__mainDiv">
+                        {userData && user ? <div className="accountName__div">{user.firstName} {user.lastName} • {user.job}</div> : <></>}
+                        <div className="bankInfo__div acountPageTransition-reverse acountPageTransition-active-reverse">Account Information</div>
+                    </div>
+                    <div className="accountInformation__div acountPageTransition-reverse acountPageTransition-active-reverse">
+                        {overEmailDiv === false ? <div onMouseEnter={overEmail} className="account_editSelection"><span>Email: {user.email}</span></div> : <div onClick={editEmail} onMouseLeave={leftEmail} className="account_editSelection"><span>Email: {user.email}</span><span className="editSelection__span">Edit &gt;</span></div>}
+                        {overBankDiv === false ? <div onMouseEnter={overBank} className="account_editSelection"><span>Primary Bank: {user.primaryBank}</span></div> : <div onClick={editBank} onMouseLeave={leftBank} className="account_editSelection"><span>Primary Bank: {user.primaryBank}</span><span className="editSelection__span">Edit &gt;</span></div>}
+                        {overJobDiv === false ? <div onMouseEnter={overJob} className="account_editSelection"><span>Job: {user.job}</span></div> : <div onClick={editJob} onMouseLeave={leftJob} className="account_editSelection"><span>Job: {user.job}</span><span className="editSelection__span">Edit &gt;</span></div>}
+                        <div onClick={editPassword} className="account_editSelection"><span>Change Password</span></div>
+                    </div>
+                </div>
+            </div>
+        )
+    }
+
+    if (reverseHiddenEmail === true) {
+        setTimeout(() => {
+            setReverseHiddenEmail(false);
+            setReverseSetter(true);
+        }, 80)
+        return (
+            <div className="menuSelection__backgroundDiv">
+                <div className="menuSelection__mainDiv overflowHidden">
+                    <div className="inner__mainDiv">
+                        {userData && user ? <div className="accountName__div">{user.firstName} {user.lastName} • {user.job}</div> : <></>}
+                        <div className="blockContainer">
+                            <div className="blockDiv"></div>
+                            <div className="bankInfo__div editPageTransition-reverse">Account Information</div>
+                        </div>
+                    </div>
+                    <div className="accountInformation__div editPageTransition-reverse">
+                        {overEmailDiv === false ? <div onMouseEnter={overEmail} className="account_editSelection"><span>Email: {user.email}</span></div> : <div onClick={editEmail} onMouseLeave={leftEmail} className="account_editSelection"><span>Email: {user.email}</span><span className="editSelection__span">Edit &gt;</span></div>}
+                        {overBankDiv === false ? <div onMouseEnter={overBank} className="account_editSelection"><span>Primary Bank: {user.primaryBank}</span></div> : <div onClick={editBank} onMouseLeave={leftBank} className="account_editSelection"><span>Primary Bank: {user.primaryBank}</span><span className="editSelection__span">Edit &gt;</span></div>}
+                        {overJobDiv === false ? <div onMouseEnter={overJob} className="account_editSelection"><span>Job: {user.job}</span></div> : <div onClick={editJob} onMouseLeave={leftJob} className="account_editSelection"><span>Job: {user.job}</span><span className="editSelection__span">Edit &gt;</span></div>}
+                        <div onClick={editPassword} className="account_editSelection"><span>Change Password</span></div>
+                    </div>
+                </div>
+            </div>
+        )
+    }
+
+    if (reverseSetter === true) {
+        setTimeout(() => {
+            setReverseSetter(false);
+        }, 80)
+        return (
+            <div className="menuSelection__backgroundDiv">
+                <div className="menuSelection__mainDiv overflowHidden">
+                    <div className="inner__mainDiv">
+                        {userData && user ? <div className="accountName__div">{user.firstName} {user.lastName} • {user.job}</div> : <></>}
+                        <div className="bankInfo__div editPageTransition-reverse editPageTransition-active-reverse">Account Information</div>
+                    </div>
+                    <div className="accountInformation__div editPageTransition-reverse editPageTransition-active-reverse">
+                        {overEmailDiv === false ? <div onMouseEnter={overEmail} className="account_editSelection"><span>Email: {user.email}</span></div> : <div onClick={editEmail} onMouseLeave={leftEmail} className="account_editSelection"><span>Email: {user.email}</span><span className="editSelection__span">Edit &gt;</span></div>}
+                        {overBankDiv === false ? <div onMouseEnter={overBank} className="account_editSelection"><span>Primary Bank: {user.primaryBank}</span></div> : <div onClick={editBank} onMouseLeave={leftBank} className="account_editSelection"><span>Primary Bank: {user.primaryBank}</span><span className="editSelection__span">Edit &gt;</span></div>}
+                        {overJobDiv === false ? <div onMouseEnter={overJob} className="account_editSelection"><span>Job: {user.job}</span></div> : <div onClick={editJob} onMouseLeave={leftJob} className="account_editSelection"><span>Job: {user.job}</span><span className="editSelection__span">Edit &gt;</span></div>}
+                        <div onClick={editPassword} className="account_editSelection"><span>Change Password</span></div>
+                    </div>
+                </div>
+            </div>
+        )
+    }
 
     const updateEmailJSX = (
         <div className="menuSelection__backgroundDiv">
@@ -198,7 +303,7 @@ const Account = () => {
                     {user ? <div className="accountName__div">{user.firstName} {user.lastName} • {user.job}</div> : <></>}
                     <div className="bankInfo__div editDiv editPageTransition editPageTransition-active"><span onClick={emailBackButton} className="backButton">&lt; Back</span><span className="editTitle">Edit Email</span></div>
                 </div>
-                <div className="accountInformation__div editPageTransition editPageTransition-active">
+                <div className="accountInformation__div editPageTransition2 editPageTransition-active">
                     <div className="editInput__div">
                         Edit Email:
                             <input onChange={emailInput} className="editInput" value={email} name="email" type="email" />
