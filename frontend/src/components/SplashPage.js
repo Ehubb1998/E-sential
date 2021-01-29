@@ -6,12 +6,13 @@ import splashPageImg1 from "../assets/splashPage-1.png";
 import splashPageImg2 from "../assets/splashPage-img2.jpeg";
 import splashPageImg3 from "../assets/splashPage-img3.png";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faGithub, faLinkedinIn } from "@fortawesome/free-brands-svg-icons";
+import { faGithub, faLinkedinIn, faAngellist } from "@fortawesome/free-brands-svg-icons";
 
 const SplashPage = (props) => {
     const dispatch = useDispatch();
     const [overGithub, setOverGithub] = useState(false);
     const [overLinkedIn, setOverLinkedIn] = useState(false);
+    const [overAngel, setOverAngel] = useState(false);
 
     (function () {
         dispatch(clearErrors())
@@ -27,6 +28,12 @@ const SplashPage = (props) => {
     }
     const leftLinked = () => {
         setOverLinkedIn(false)
+    }
+    const overAngelIcon = () => {
+        setOverAngel(true)
+    }
+    const leftAngel= () => {
+        setOverAngel(false)
     }
     if (props.isLoggedIn) {
         return <Redirect to='/homepage' />;
@@ -54,6 +61,9 @@ const SplashPage = (props) => {
                             </a>
                             <a onMouseEnter={overLinked} onMouseLeave={leftLinked} href="https://www.linkedin.com/in/elijah-h-090a2518b/" className="credits__github">
                                 {overLinkedIn === false ? <FontAwesomeIcon icon={faLinkedinIn} color="white" /> : <FontAwesomeIcon icon={faLinkedinIn} color="green" />}
+                            </a>
+                            <a onMouseEnter={overAngelIcon} onMouseLeave={leftAngel} href="https://angel.co/u/elijah-hubbard" className="credits__github">
+                                {overAngel === false ? <FontAwesomeIcon icon={faAngellist} color="white" /> : <FontAwesomeIcon icon={faAngellist} color="green" />}
                             </a>
                         </div>
                     </div>

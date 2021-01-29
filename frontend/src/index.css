@@ -552,6 +552,7 @@ body {
 }
 .bankInfo__balance-span {
     margin-right: 40px;
+    font-weight: 600;
 }
 
 /* Account */
@@ -741,3 +742,5 @@ body {
   -webkit-transform: translateX(0px);
   transform: translateX(0px);
 }
+
+/* Stock Market */
