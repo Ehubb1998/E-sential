@@ -45,6 +45,12 @@ const Account = () => {
     const [reverseJobTransition, setReverseJobTransition] = useState(false);
     const [reverseHiddenJob, setReverseHiddenJob] = useState(false);
 
+    //Password Transition
+    const [enterPasswordTransition, setEnterPasswordTransition] = useState(false);
+    const [hiddenPasswordComponent, setHiddenPasswordComponent] = useState(false);
+    const [reversePasswordTransition, setReversePasswordTransition] = useState(false);
+    const [reverseHiddenPassword, setReverseHiddenPassword] = useState(false);
+
     useEffect(() => {
         if (user) {
             setUserData(user)
@@ -127,10 +133,12 @@ const Account = () => {
         setJob("");
     }
     const editPassword = () => {
-        setClickedEditPassword(true);
+        // setClickedEditPassword(true);
+        setEnterPasswordTransition(true);
     }
     const passwordBackButton = () => {
-        setClickedEditPassword(false);
+        // setClickedEditPassword(false);
+        setReversePasswordTransition(true);
         setPasswordResult(false);
         setWrongCP(false);
         setMatchError(false);
@@ -174,7 +182,8 @@ const Account = () => {
             window.localStorage.removeItem("PASSWORD_RESULT");
             setJustChangedPassword(true);
             setPasswordResult(false);
-            setClickedEditPassword(false);
+            // setClickedEditPassword(false);
+            setReversePasswordTransition(true);
             setWrongCP(false);
             setMatchError(false);
             setCpPassword("");
@@ -514,6 +523,138 @@ const Account = () => {
         )
     }
 
+    //Password Transition
+    if (enterPasswordTransition === true) {
+        setTimeout(() => {
+            setHiddenPasswordComponent(true);
+            setEnterPasswordTransition(false);
+        }, 80)
+        return (
+            <>
+                <div className="menuSelection__backgroundDiv">
+                    <div className="menuSelection__mainDiv overflowHidden">
+                        <div className="inner__mainDiv">
+                            {userData && user ? <div className="accountName__div">{user.firstName} {user.lastName} • {user.job}</div> : <></>}
+                            <div className="bankInfo__div acountPageTransition acountPageTransition-active">Account Information</div>
+                        </div>
+                        <div className="accountInformation__div acountPageTransition acountPageTransition-active">
+                            {overEmailDiv === false ? <div onMouseEnter={overEmail} className="account_editSelection"><span>Email: {user.email}</span></div> : <div onClick={editEmail} onMouseLeave={leftEmail} className="account_editSelection"><span>Email: {user.email}</span><span className="editSelection__span">Edit &gt;</span></div>}
+                            {overBankDiv === false ? <div onMouseEnter={overBank} className="account_editSelection"><span>Primary Bank: {user.primaryBank}</span></div> : <div onClick={editBank} onMouseLeave={leftBank} className="account_editSelection"><span>Primary Bank: {user.primaryBank}</span><span className="editSelection__span">Edit &gt;</span></div>}
+                            {overJobDiv === false ? <div onMouseEnter={overJob} className="account_editSelection"><span>Job: {user.job}</span></div> : <div onClick={editJob} onMouseLeave={leftJob} className="account_editSelection"><span>Job: {user.job}</span><span className="editSelection__span">Edit &gt;</span></div>}
+                            <div onClick={editPassword} className="account_editSelection"><span>Change Password</span></div>
+                        </div>
+                    </div>
+                </div>
+            </>
+        )
+    }
+    if (hiddenPasswordComponent === true) {
+        setTimeout(() => {
+            // debugger;
+            setClickedEditPassword(true);
+            setHiddenPasswordComponent(false);
+        }, 80)
+        // debugger;
+        return (
+            <div className="menuSelection__backgroundDiv">
+                <div className="menuSelection__mainDiv overflowHidden">
+                    <div className="inner__mainDiv">
+                        {user ? <div className="accountName__div">{user.firstName} {user.lastName} • {user.job}</div> : <></>}
+                        <div className="blockContainer">
+                            <div className="blockDiv"></div>
+                            <div className="bankInfo__div editDiv editPageTransition"><span onClick={emailBackButton} className="backButton">&lt; Back</span><span className="editTitle">Edit Password</span></div>
+                        </div>
+                    </div>
+                    <div className="accountInformation__div editPageTransition">
+                        {wrongCP === true ? <div className="wrongCP__message">Incorrect Password</div> : <></>}
+                        <div className="editInput__div">
+                            Please Enter Current Password:
+                        {wrongCP === true ? <input onChange={confirmPasswordInput} className="wrongCP" value={confirmPasswordI} name="cp" type="password" /> : <input onChange={confirmPasswordInput} className="editInput" value={confirmPasswordI} name="cp" type="password" />}
+                            <button onClick={submitConfirmPasswordChanges} className="submitChanges">Confirm</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        )
+    }
+
+    if (reversePasswordTransition === true) {
+        setTimeout(() => {
+            setReverseHiddenPassword(true);
+            setReversePasswordTransition(false);
+            setClickedEditPassword(false);
+        }, 80)
+        return (
+            <div className="menuSelection__backgroundDiv">
+                <div className="menuSelection__mainDiv overflowHidden">
+                    <div className="inner__mainDiv">
+                        {userData && user ? <div className="accountName__div">{user.firstName} {user.lastName} • {user.job}</div> : <></>}
+                        <div className="bankInfo__div acountPageTransition-reverse acountPageTransition-active-reverse">Account Information</div>
+                    </div>
+                    <div className="accountInformation__div acountPageTransition-reverse acountPageTransition-active-reverse">
+                        {overEmailDiv === false ? <div onMouseEnter={overEmail} className="account_editSelection"><span>Email: {user.email}</span></div> : <div onClick={editEmail} onMouseLeave={leftEmail} className="account_editSelection"><span>Email: {user.email}</span><span className="editSelection__span">Edit &gt;</span></div>}
+                        {overBankDiv === false ? <div onMouseEnter={overBank} className="account_editSelection"><span>Primary Bank: {user.primaryBank}</span></div> : <div onClick={editBank} onMouseLeave={leftBank} className="account_editSelection"><span>Primary Bank: {user.primaryBank}</span><span className="editSelection__span">Edit &gt;</span></div>}
+                        {overJobDiv === false ? <div onMouseEnter={overJob} className="account_editSelection"><span>Job: {user.job}</span></div> : <div onClick={editJob} onMouseLeave={leftJob} className="account_editSelection"><span>Job: {user.job}</span><span className="editSelection__span">Edit &gt;</span></div>}
+                        <div onClick={editPassword} className="account_editSelection"><span>Change Password</span></div>
+                    </div>
+                </div>
+            </div>
+        )
+    }
+
+    if (reverseHiddenPassword === true) {
+        setTimeout(() => {
+            setReverseHiddenPassword(false);
+            setReverseSetter(true);
+        }, 80)
+        return (
+            <div className="menuSelection__backgroundDiv">
+                <div className="menuSelection__mainDiv overflowHidden">
+                    <div className="inner__mainDiv">
+                        {userData && user ? <div className="accountName__div">{user.firstName} {user.lastName} • {user.job}</div> : <></>}
+                        <div className="blockContainer">
+                            <div className="blockDiv"></div>
+                            <div className="bankInfo__div editPageTransition-reverse">Account Information</div>
+                        </div>
+                    </div>
+                    <div className="accountInformation__div editPageTransition-reverse">
+                        {overEmailDiv === false ? <div onMouseEnter={overEmail} className="account_editSelection"><span>Email: {user.email}</span></div> : <div onClick={editEmail} onMouseLeave={leftEmail} className="account_editSelection"><span>Email: {user.email}</span><span className="editSelection__span">Edit &gt;</span></div>}
+                        {overBankDiv === false ? <div onMouseEnter={overBank} className="account_editSelection"><span>Primary Bank: {user.primaryBank}</span></div> : <div onClick={editBank} onMouseLeave={leftBank} className="account_editSelection"><span>Primary Bank: {user.primaryBank}</span><span className="editSelection__span">Edit &gt;</span></div>}
+                        {overJobDiv === false ? <div onMouseEnter={overJob} className="account_editSelection"><span>Job: {user.job}</span></div> : <div onClick={editJob} onMouseLeave={leftJob} className="account_editSelection"><span>Job: {user.job}</span><span className="editSelection__span">Edit &gt;</span></div>}
+                        <div onClick={editPassword} className="account_editSelection"><span>Change Password</span></div>
+                    </div>
+                </div>
+            </div>
+        )
+    }
+
+    const changedPassword = (
+        <div className="menuSelection__backgroundDiv">
+            <div className="menuSelection__mainDiv overflowHidden">
+                <div className="inner__mainDiv">
+                    {userData && user ? <div className="accountName__div">{user.firstName} {user.lastName} • {user.job}</div> : <></>}
+                    <div className="bankInfo__div editPageTransition-reverse editPageTransition-active-reverse">Account Information</div>
+                </div>
+                <div className="accountInformation__div editPageTransition-reverse editPageTransition-active-reverse">
+                    {overEmailDiv === false ? <div onMouseEnter={overEmail} className="account_editSelection"><span>Email: {user.email}</span></div> : <div onClick={editEmail} onMouseLeave={leftEmail} className="account_editSelection"><span>Email: {user.email}</span><span className="editSelection__span">Edit &gt;</span></div>}
+                    {overBankDiv === false ? <div onMouseEnter={overBank} className="account_editSelection"><span>Primary Bank: {user.primaryBank}</span></div> : <div onClick={editBank} onMouseLeave={leftBank} className="account_editSelection"><span>Primary Bank: {user.primaryBank}</span><span className="editSelection__span">Edit &gt;</span></div>}
+                    {overJobDiv === false ? <div onMouseEnter={overJob} className="account_editSelection"><span>Job: {user.job}</span></div> : <div onClick={editJob} onMouseLeave={leftJob} className="account_editSelection"><span>Job: {user.job}</span><span className="editSelection__span">Edit &gt;</span></div>}
+                    <div onClick={editPassword} className="account_editSelection"><span>Change Password</span><span className="changedPassword">Password Successfully Changed</span></div>
+                </div>
+            </div>
+        </div>
+    )
+
+    if (justChangedPassword === true) {
+        setTimeout(() => {
+            setJustChangedPassword(false);
+            setReverseSetter(false);
+        }, 3000)
+        return (
+            changedPassword
+        )
+    }
+
     if (reverseSetter === true) {
         setTimeout(() => {
             setReverseSetter(false);
@@ -601,12 +742,12 @@ const Account = () => {
 
     const confirmPasswordJSX = (
         <div className="menuSelection__backgroundDiv">
-            <div className="menuSelection__mainDiv">
+            <div className="menuSelection__mainDiv overflowHidden">
                 <div className="inner__mainDiv">
                     {user ? <div className="accountName__div">{user.firstName} {user.lastName} • {user.job}</div> : <></>}
-                    <div className="bankInfo__div editDiv"><span onClick={passwordBackButton} className="backButton">&lt; Back</span><span className="editTitle">Edit Password</span></div>
+                    <div className="bankInfo__div editDiv editPageTransition editPageTransition-active"><span onClick={passwordBackButton} className="backButton">&lt; Back</span><span className="editTitle">Edit Password</span></div>
                 </div>
-                <div className="accountInformation__div">
+                <div className="accountInformation__div editPageTransition2 editPageTransition-active">
                     {wrongCP === true ? <div className="wrongCP__message">Incorrect Password</div> : <></>}
                     <div className="editInput__div">
                         Please Enter Current Password:
@@ -620,12 +761,12 @@ const Account = () => {
 
     const updatePasswordJSX = (
         <div className="menuSelection__backgroundDiv">
-            <div className="menuSelection__mainDiv">
+            <div className="menuSelection__mainDiv overflowHidden">
                 <div className="inner__mainDiv">
                     {user ? <div className="accountName__div">{user.firstName} {user.lastName} • {user.job}</div> : <></>}
-                    <div className="bankInfo__div editDiv"><span onClick={passwordBackButton} className="backButton">&lt; Back</span><span className="editTitle">Edit Password</span></div>
+                    <div className="bankInfo__div editDiv editPageTransition editPageTransition-active"><span onClick={passwordBackButton} className="backButton">&lt; Back</span><span className="editTitle">Edit Password</span></div>
                 </div>
-                <div className="accountInformation__div">
+                <div className="accountInformation__div editPageTransition2 editPageTransition-active">
                     {matchError === true ? <div className="wrongCP__message">Passwords must match</div> : <></>}
                     <div className="editInput__div">
                         Edit Password:
@@ -641,22 +782,6 @@ const Account = () => {
         </div>
     )
 
-    const changedPassword = (
-        <div className="menuSelection__backgroundDiv">
-            <div className="menuSelection__mainDiv">
-                <div className="inner__mainDiv">
-                    {userData && user ? <div className="accountName__div">{user.firstName} {user.lastName} • {user.job}</div> : <></>}
-                    <div className="bankInfo__div">Account Information</div>
-                </div>
-                <div className="accountInformation__div">
-                    {overEmailDiv === false ? <div onMouseEnter={overEmail} className="account_editSelection"><span>Email: {user.email}</span></div> : <div onClick={editEmail} onMouseLeave={leftEmail} className="account_editSelection"><span>Email: {user.email}</span><span className="editSelection__span">Edit &gt;</span></div>}
-                    {overBankDiv === false ? <div onMouseEnter={overBank} className="account_editSelection"><span>Primary Bank: {user.primaryBank}</span></div> : <div onClick={editBank} onMouseLeave={leftBank} className="account_editSelection"><span>Primary Bank: {user.primaryBank}</span><span className="editSelection__span">Edit &gt;</span></div>}
-                    {overJobDiv === false ? <div onMouseEnter={overJob} className="account_editSelection"><span>Job: {user.job}</span></div> : <div onClick={editJob} onMouseLeave={leftJob} className="account_editSelection"><span>Job: {user.job}</span><span className="editSelection__span">Edit &gt;</span></div>}
-                    <div onClick={editPassword} className="account_editSelection"><span>Change Password</span><span className="changedPassword">Password Successfully Changed</span></div>
-                </div>
-            </div>
-        </div>
-    )
 
     if (clickedEditEmail === true) {
         return (
@@ -681,14 +806,6 @@ const Account = () => {
     if (clickedEditPassword === true) {
         return (
             confirmPasswordJSX
-        )
-    }
-    if (justChangedPassword === true) {
-        setTimeout(() => {
-            setJustChangedPassword(false);
-        }, 3000)
-        return (
-            changedPassword
         )
     }
 
