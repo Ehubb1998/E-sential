@@ -655,3 +655,38 @@ body {
     color: rgb(0, 200, 5);
     margin-left: 10px;
 }
+
+/* Sliding Animation */
+.overflowHidden {
+    overflow: hidden;
+}
+.acountPageTransition {
+  /* display: inline-block; */
+  vertical-align: middle;
+  -webkit-transform: perspective(1px) translateZ(0);
+  transform: perspective(1px) translateZ(0);
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+  -webkit-transition-duration: 0.2s;
+  transition-duration: 0.2s;
+  -webkit-transition-property: transform;
+  transition-property: transform;
+}
+.acountPageTransition-active {
+  -webkit-transform: translateX(-290px);
+  transform: translateX(-290px);
+}
+.editPageTransition {
+  /* display: inline-block; */
+  vertical-align: middle;
+  -webkit-transform: perspective(1px) translateZ(0) translateX(1178px);
+  transform: perspective(1px) translateZ(0) translateX(1178px);
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+  -webkit-transition-duration: 0.2s;
+  transition-duration: 0.2s;
+  -webkit-transition-property: transform;
+  transition-property: transform;
+}
+.editPageTransition-active {
+  -webkit-transform: translateX(0px);
+  transform: translateX(0px);
+}
