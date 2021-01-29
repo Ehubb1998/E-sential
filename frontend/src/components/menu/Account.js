@@ -6,6 +6,7 @@ const Account = () => {
     const dispatch = useDispatch();
     const user = useSelector(state => state.userDataReducer.userData);
     const token = useSelector(state => state.auth.token);
+
     const [userData, setUserData] = useState({});
     const [overEmailDiv, setOverEmailDiv] = useState(false);
     const [overBankDiv, setOverBankDiv] = useState(false);
@@ -24,11 +25,19 @@ const Account = () => {
     const [password, setPassword] = useState("");
     const [matchError, setMatchError] = useState(false);
     const [justChangedPassword, setJustChangedPassword] = useState(false);
+
+    //Email Transition
     const [enterEmailTransition, setEnterEmailTransition] = useState(false);
     const [hiddenEmailComponent, setHiddenEmailComponent] = useState(false);
     const [reverseEmailTransition, setReverseEmailTransition] = useState(false);
     const [reverseHiddenEmail, setReverseHiddenEmail] = useState(false);
     const [reverseSetter, setReverseSetter] = useState(false);
+
+    //Bank Transition
+    const [enterBankTransition, setEnterBankTransition] = useState(false);
+    const [hiddenBankComponent, setHiddenBankComponent] = useState(false);
+    const [reverseBankTransition, setReverseBankTransition] = useState(false);
+    const [reverseHiddenBank, setReverseHiddenBank] = useState(false);
 
     useEffect(() => {
         if (user) {
@@ -74,11 +83,13 @@ const Account = () => {
         setEmail("");
     }
     const editBank = () => {
-        setClickedEditBank(true);
+        setEnterBankTransition(true);
+        // setClickedEditBank(true);
         setOverBankDiv(false);
     }
     const bankBackButton = () => {
-        setClickedEditBank(false);
+        // setClickedEditBank(false);
+        setReverseBankTransition(true);
         setPrimaryBank("");
     }
     const primaryBankInput = (e) => {
@@ -86,7 +97,8 @@ const Account = () => {
     }
     const submitBankChanges = () => {
         dispatch(updatePrimaryBank(user.id, token, primaryBank));
-        setClickedEditBank(false);
+        // setClickedEditBank(false);
+        setReverseBankTransition(true)
         setPrimaryBank("");
     }
     const editJob = () => {
@@ -172,6 +184,7 @@ const Account = () => {
         }, 500);
     }
 
+    //Email Transition
     if (enterEmailTransition === true) {
         setTimeout(() => {
             setHiddenEmailComponent(true);
@@ -275,6 +288,119 @@ const Account = () => {
         )
     }
 
+    //Bank Transition
+    if (enterBankTransition === true) {
+        setTimeout(() => {
+            setHiddenBankComponent(true);
+            setEnterBankTransition(false);
+        }, 80)
+        return (
+            <>
+            <div className="menuSelection__backgroundDiv">
+                <div className="menuSelection__mainDiv overflowHidden">
+                    <div className="inner__mainDiv">
+                        {userData && user ? <div className="accountName__div">{user.firstName} {user.lastName} • {user.job}</div> : <></>}
+                        <div className="bankInfo__div acountPageTransition acountPageTransition-active">Account Information</div>
+                    </div>
+                    <div className="accountInformation__div acountPageTransition acountPageTransition-active">
+                        {overEmailDiv === false ? <div onMouseEnter={overEmail} className="account_editSelection"><span>Email: {user.email}</span></div> : <div onClick={editEmail} onMouseLeave={leftEmail} className="account_editSelection"><span>Email: {user.email}</span><span className="editSelection__span">Edit &gt;</span></div>}
+                        {overBankDiv === false ? <div onMouseEnter={overBank} className="account_editSelection"><span>Primary Bank: {user.primaryBank}</span></div> : <div onClick={editBank} onMouseLeave={leftBank} className="account_editSelection"><span>Primary Bank: {user.primaryBank}</span><span className="editSelection__span">Edit &gt;</span></div>}
+                        {overJobDiv === false ? <div onMouseEnter={overJob} className="account_editSelection"><span>Job: {user.job}</span></div> : <div onClick={editJob} onMouseLeave={leftJob} className="account_editSelection"><span>Job: {user.job}</span><span className="editSelection__span">Edit &gt;</span></div>}
+                        <div onClick={editPassword} className="account_editSelection"><span>Change Password</span></div>
+                    </div>
+                </div>
+            </div>
+            </>
+        )
+    }
+    if (hiddenBankComponent === true) {
+        setTimeout(() => {
+            // debugger;
+            setClickedEditBank(true);
+            setHiddenBankComponent(false);
+        }, 80)
+        // debugger;
+        return (
+            <div className="menuSelection__backgroundDiv">
+                <div className="menuSelection__mainDiv overflowHidden">
+                    <div className="inner__mainDiv">
+                        {user ? <div className="accountName__div">{user.firstName} {user.lastName} • {user.job}</div> : <></>}
+                        <div className="blockContainer">
+                            <div className="blockDiv"></div>
+                            <div className="bankInfo__div editDiv editPageTransition"><span onClick={emailBackButton} className="backButton">&lt; Back</span><span className="editTitle">Edit Primary Bank</span></div>
+                        </div>
+                    </div>
+                    <div className="accountInformation__div editPageTransition">
+                        <div className="editInput__div">
+                            Edit Primary Bank:
+                        <select onChange={primaryBankInput} className="editPrimaryBank">
+                                <option value="Wells Fargo">Wells Fargo</option>
+                                <option value="Bank of America">Bank of America</option>
+                                <option value="Capital One">Capital One</option>
+                                <option value="Chase">Chase</option>
+                                <option value="Citi Bank">Citi Bank</option>
+                                <option value="Fifth Third Bank">Fifth Third Bank</option>
+                                <option value="PNC Bank">PNC Bank</option>
+                                <option value="Truist">Truist</option>
+                            </select>
+                            <button style={{ marginTop: "10px" }} onClick={submitBankChanges} className="submitChanges">Submit</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        )
+    }
+
+    if (reverseBankTransition === true) {
+        setTimeout(() => {
+            setReverseHiddenBank(true);
+            setReverseBankTransition(false);
+            setClickedEditBank(false);
+        }, 80)
+        return (
+            <div className="menuSelection__backgroundDiv">
+                <div className="menuSelection__mainDiv overflowHidden">
+                    <div className="inner__mainDiv">
+                        {userData && user ? <div className="accountName__div">{user.firstName} {user.lastName} • {user.job}</div> : <></>}
+                        <div className="bankInfo__div acountPageTransition-reverse acountPageTransition-active-reverse">Account Information</div>
+                    </div>
+                    <div className="accountInformation__div acountPageTransition-reverse acountPageTransition-active-reverse">
+                        {overEmailDiv === false ? <div onMouseEnter={overEmail} className="account_editSelection"><span>Email: {user.email}</span></div> : <div onClick={editEmail} onMouseLeave={leftEmail} className="account_editSelection"><span>Email: {user.email}</span><span className="editSelection__span">Edit &gt;</span></div>}
+                        {overBankDiv === false ? <div onMouseEnter={overBank} className="account_editSelection"><span>Primary Bank: {user.primaryBank}</span></div> : <div onClick={editBank} onMouseLeave={leftBank} className="account_editSelection"><span>Primary Bank: {user.primaryBank}</span><span className="editSelection__span">Edit &gt;</span></div>}
+                        {overJobDiv === false ? <div onMouseEnter={overJob} className="account_editSelection"><span>Job: {user.job}</span></div> : <div onClick={editJob} onMouseLeave={leftJob} className="account_editSelection"><span>Job: {user.job}</span><span className="editSelection__span">Edit &gt;</span></div>}
+                        <div onClick={editPassword} className="account_editSelection"><span>Change Password</span></div>
+                    </div>
+                </div>
+            </div>
+        )
+    }
+
+    if (reverseHiddenBank === true) {
+        setTimeout(() => {
+            setReverseHiddenBank(false);
+            setReverseSetter(true);
+        }, 80)
+        return (
+            <div className="menuSelection__backgroundDiv">
+                <div className="menuSelection__mainDiv overflowHidden">
+                    <div className="inner__mainDiv">
+                        {userData && user ? <div className="accountName__div">{user.firstName} {user.lastName} • {user.job}</div> : <></>}
+                        <div className="blockContainer">
+                            <div className="blockDiv"></div>
+                            <div className="bankInfo__div editPageTransition-reverse">Account Information</div>
+                        </div>
+                    </div>
+                    <div className="accountInformation__div editPageTransition-reverse">
+                        {overEmailDiv === false ? <div onMouseEnter={overEmail} className="account_editSelection"><span>Email: {user.email}</span></div> : <div onClick={editEmail} onMouseLeave={leftEmail} className="account_editSelection"><span>Email: {user.email}</span><span className="editSelection__span">Edit &gt;</span></div>}
+                        {overBankDiv === false ? <div onMouseEnter={overBank} className="account_editSelection"><span>Primary Bank: {user.primaryBank}</span></div> : <div onClick={editBank} onMouseLeave={leftBank} className="account_editSelection"><span>Primary Bank: {user.primaryBank}</span><span className="editSelection__span">Edit &gt;</span></div>}
+                        {overJobDiv === false ? <div onMouseEnter={overJob} className="account_editSelection"><span>Job: {user.job}</span></div> : <div onClick={editJob} onMouseLeave={leftJob} className="account_editSelection"><span>Job: {user.job}</span><span className="editSelection__span">Edit &gt;</span></div>}
+                        <div onClick={editPassword} className="account_editSelection"><span>Change Password</span></div>
+                    </div>
+                </div>
+            </div>
+        )
+    }
+
     if (reverseSetter === true) {
         setTimeout(() => {
             setReverseSetter(false);
@@ -317,12 +443,12 @@ const Account = () => {
     
     const updatePrimaryBankJSX = (
         <div className="menuSelection__backgroundDiv">
-            <div className="menuSelection__mainDiv">
+            <div className="menuSelection__mainDiv overflowHidden">
                 <div className="inner__mainDiv">
                     {user ? <div className="accountName__div">{user.firstName} {user.lastName} • {user.job}</div> : <></>}
-                    <div className="bankInfo__div editDiv"><span onClick={bankBackButton} className="backButton">&lt; Back</span><span className="editTitle">Edit Primary Bank</span></div>
+                    <div className="bankInfo__div editDiv editPageTransition editPageTransition-active"><span onClick={bankBackButton} className="backButton">&lt; Back</span><span className="editTitle">Edit Primary Bank</span></div>
                 </div>
-                <div className="accountInformation__div">
+                <div className="accountInformation__div editPageTransition2 editPageTransition-active">
                     <div className="editInput__div">
                         Edit Primary Bank:
                         <select onChange={primaryBankInput} className="editPrimaryBank">
