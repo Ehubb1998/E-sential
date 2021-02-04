@@ -1,11 +1,21 @@
-import { BANKDATA } from "../actions/bankInfo";
+import { BANKDATA, LOADED } from "../actions/bankInfo";
 
-const bankDataReducer = (state={}, action) => {
+const initialState = {
+    bankInfoLoaded: false
+}
+
+const bankDataReducer = (state = initialState, action) => {
     switch (action.type) {
         case BANKDATA: {
             return {
                 ...state,
                 bankData: action.data
+            }
+        }
+        case LOADED: {
+            return {
+                ...state,
+                bankInfoLoaded: action.value
             }
         }
         default: {

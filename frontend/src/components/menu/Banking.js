@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { bankingDataLoaded } from "../../store/actions/bankInfo";
 import BankofAmerica from "../../assets/bankOfAmerica.svg";
 import CapitalOne from "../../assets/capitalOne.png";
 import ChaseBank from "../../assets/chaseBank.png";
@@ -11,10 +12,13 @@ import WellsFargo from "../../assets/wellsFargo.png";
 
 
 const Banking = () => {
+    const dispatch = useDispatch();
     const storeUser = useSelector(state => state.userDataReducer.userData);
     const bankInfo = useSelector(state => state.bankDataReducer.bankData);
+    const loaded = useSelector(state => state.bankDataReducer.bankInfoLoaded);
     const [bankData, setBankData] = useState({});
     const [userData, setUserData] = useState({});
+    const [loaderIcon, setLoaderIcon] = useState(true);
 
     useEffect(() => {
         if (storeUser && bankInfo) {
@@ -23,10 +27,23 @@ const Banking = () => {
         }
     }, [storeUser, bankInfo])
 
+    setTimeout(() => {
+        setLoaderIcon(false);
+        dispatch(bankingDataLoaded(true));
+    }, 1500);
+    
+    const loader = (
+        <div className="loaderIcon__div">
+            <div id="loader">
+                <div className="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+            </div>
+        </div>
+    )
+
     return (
         <>
         <div className="menuSelection__backgroundDiv">
-            <div className="banking__menuSelection__mainDiv">
+            {loaded && (loaded === true || loaderIcon === false) ? <div className="banking__menuSelection__mainDiv">
                 <div className="inner__mainDiv">
                     {userData && storeUser && storeUser.primaryBank === "Bank of America" ? <div className="bankName__div"><img className="bankName__div-image" src={BankofAmerica} alt="" /></div> : <></>}
                     {storeUser && storeUser.primaryBank === "Capital One" ? <div className="bankName__div"><img className="bankName__div-image" src={CapitalOne} alt="" /></div> : <></>}
@@ -40,7 +57,7 @@ const Banking = () => {
                     {bankData && bankInfo ? <div className="bankInfo__balance">Balance: <span className="bankInfo__balance-span">${bankInfo.accountBalance}</span></div> : <></>}
                     {bankInfo ? <div className="bankInfo__balance">Monthly Income: <span className="bankInfo__balance-span">${bankInfo.monthlyIncome}</span></div> : <></>}
                 </div>
-            </div>
+            </div> : loader}
         </div>
         </>
     )

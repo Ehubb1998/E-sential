@@ -1,6 +1,8 @@
 export const BANKDATA = "BANKDATA";
+export const LOADED = "LOADED";
 
 export const bankData = data => ({ type: BANKDATA, data });
+export const bankInfoLoaded = value => ({ type: LOADED, value });
 
 export const updateBalance = (id, token, value) => {
     return async (dispatch) => {
@@ -8,6 +10,30 @@ export const updateBalance = (id, token, value) => {
             const res = await fetch("/api/bank_info/edit", {
                 method: "PUT",
                 body: JSON.stringify({ userId: id, whatToEdit: "balance", editValue: value, token: token }),
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            });
+
+            if (!res.ok) {
+                throw res;
+            }
+
+            const { BankInfo } = await res.json();
+            dispatch(bankData(BankInfo));
+        } catch (err) {
+            const error = await err.json();
+            console.error(error);
+        }
+    }
+}
+
+export const updateIncome = (id, token, value) => {
+    return async (dispatch) => {
+        try {
+            const res = await fetch("/api/bank_info/edit", {
+                method: "PUT",
+                body: JSON.stringify({ userId: id, whatToEdit: "income", editValue: value, token: token }),
                 headers: {
                     "Content-Type": "application/json"
                 }
@@ -50,26 +76,8 @@ export const addBankData = (id, token, accountBalance, monthlyIncome) => {
     }
 }
 
-export const updateIncome = (id, token, value) => {
-    return async (dispatch) => {
-        try {
-            const res = await fetch("/api/bank_info/edit", {
-                method: "PUT",
-                body: JSON.stringify({ userId: id, whatToEdit: "income", editValue: value, token: token }),
-                headers: {
-                    "Content-Type": "application/json"
-                }
-            });
-
-            if (!res.ok) {
-                throw res;
-            }
-
-            const { BankInfo } = await res.json();
-            dispatch(bankData(BankInfo));
-        } catch (err) {
-            const error = await err.json();
-            console.error(error);
-        }
+export const bankingDataLoaded = () => {
+    return (dispatch) => {
+        dispatch(bankInfoLoaded(true));
     }
 }
