@@ -260,6 +260,7 @@ body {
 /* Sign Up Page */
 .signupPage__mainDiv {
     height: 100%;
+    position: relative;
 }
 .signupPic__Container {
     height: 50vh;
@@ -360,6 +361,48 @@ body {
     margin: 0px;
     font-size: 15px;
     padding-top: 5px;
+}
+.bankInfo__container {
+    background: rgba(0, 0, 0, 0.5);
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    z-index: 4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.bankInfo__box {
+    width: 30em;
+    height: 22em;
+    background-color: rgb(255,255,255);
+    border-radius: 15px;
+}
+.bankInfo__title {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 25px;
+    padding-bottom: 17px;
+    border-bottom: 1px solid black;
+}
+.bankInfo__balanceInput {
+    font-size: 16px;
+    font-weight: 400;
+    margin-top: 20px;
+    margin-left: 40px;
+    display: block;
+    font-family: "Capsule Sans Text",system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+}
+.bankInfo__errors {
+    display: block;
+    padding: 10px 10px;
+    margin: 10px 0px;
+    width: 230px;
+    height: 10px;
+    border: 3px solid rgba(233, 5, 5, 0.904);
+    border-radius: 4px;
+    font-size: 15px;
+    margin-right: 100px;
 }
 
 /* Splash Page */

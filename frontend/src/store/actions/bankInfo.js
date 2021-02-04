@@ -26,6 +26,30 @@ export const updateBalance = (id, token, value) => {
     }
 }
 
+export const addBankData = (id, token, accountBalance, monthlyIncome) => {
+    return async () => {
+        try {
+            const res = await fetch("/api/bank_info/", {
+                method: "POST",
+                body: JSON.stringify({ userId: id, token: token, accountBalance: accountBalance, monthlyIncome: monthlyIncome }),
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            });
+
+            if (!res.ok) {
+                throw res;
+            }
+
+            window.location.href = "/homepage";
+            
+        } catch (err) {
+            const error = await err.json();
+            console.error(error);
+        }
+    }
+}
+
 export const updateIncome = (id, token, value) => {
     return async (dispatch) => {
         try {

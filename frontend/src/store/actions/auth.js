@@ -30,8 +30,6 @@ export const signUp = (firstName, lastName, email, primaryBank, job, hashedPassw
             window.localStorage.setItem("ESENTIAL_ACCESS_TOKEN", token);
             window.localStorage.setItem("ESENTIAL_USER_ID", id);
 
-            window.location.href = "/homepage";
-
         } catch (err) {
             const error = await err.json();
             errorMsg = error;

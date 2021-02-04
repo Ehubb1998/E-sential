@@ -3,10 +3,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import signupPic from "../../assets/signupPic.jpeg"
 import { signUp, demo } from "../../store/actions/auth";
+import { addBankData } from "../../store/actions/bankInfo";
 
 const SignUpPage = (props) => {
     const dispatch = useDispatch();
     const errors = useSelector(state => state.auth.msg);
+    const token = useSelector(state => state.auth.token);
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
     const [email, setEmail] = useState("");
@@ -16,15 +18,27 @@ const SignUpPage = (props) => {
     const [confirmPassword, setConfirmPassword] = useState("");
     const [authErrors, setAuthErrors] = useState(false);
     const [rememberMe, setRememberMe] = useState("False");
+    const [signUpSuccessful, setSignUpSuccessful] = useState(false);
+    const [balance, setBalance] = useState("");
+    const [monthlyIncome, setMonthlyIncome] = useState("");
+    const [bankInfoErrors, setBankInfoErrors] = useState(false);
 
     useEffect(() => {
         if (errors) {
             setAuthErrors(true)
         }
-    }, [errors])
+        if (token) {
+            setSignUpSuccessful(true);
+        }
+    }, [errors, token])
 
     const signupButton = (e) => {
         e.preventDefault();
+        if (primaryBank === "") {
+            console.log("inside of this if statement")
+            dispatch(signUp(firstName, lastName, email, "Wells Fargo", job, password, confirmPassword, rememberMe));
+            return;
+        }
         dispatch(signUp(firstName, lastName, email, primaryBank, job, password, confirmPassword, rememberMe));
     }
     const demoButton = (e) => {
@@ -59,17 +73,50 @@ const SignUpPage = (props) => {
             setRememberMe("False")
         }
     }
+    const balanceInput = (e) => {
+        setBalance(e.target.value);
+    }
+    const monthlyInput = (e) => {
+        setMonthlyIncome(e.target.value);
+    }
+    const bankInfoButton = (e) => {
+        e.preventDefault();
+        if (balance === "" || monthlyIncome === "") {
+            setBankInfoErrors(true);
+            console.log("Inside error statement")
+            return;
+        }
+        const userId = window.localStorage.getItem("ESENTIAL_USER_ID");
+        const token = window.localStorage.getItem("ESENTIAL_ACCESS_TOKEN");
+        dispatch(addBankData(userId, token, balance, monthlyIncome));
+    }
     if (props.isLoggedIn) {
         return <Redirect to='/homepage' />;
     }
 
-    const signupErrors = (
+    const addBankInfo = (
         <div className="signupPage__mainDiv">
+            <div className="bankInfo__container">
+                <div className="bankInfo__box">
+                    <div className="bankInfo__title">Bank Information</div>
+                    <div className="bankInfo__balanceDiv">
+                        <p style={{ margin: "0px", fontSize: "13px", marginLeft: "150px", marginTop: "7px", color: "red", fontWeight: "600" }}>DO NOT USE the "," symbol!!</p>
+                        <label className="bankInfo__balanceInput">
+                            Balance
+                            {bankInfoErrors ? <input onChange={balanceInput} className="bankInfo__errors" value={balance} name="balance" type="text" required /> : <input onChange={balanceInput} className="signupForm__input-row1" value={balance} name="balance" type="text" required />}
+                        </label>
+                        <label className="bankInfo__balanceInput">
+                            Monthly Income
+                            {bankInfoErrors ? <input onChange={monthlyInput} className="bankInfo__errors" value={monthlyIncome} name="balance" type="text" required /> : <input onChange={monthlyInput} className="signupForm__input-row1" value={monthlyIncome} name="balance" type="text" required />}
+                        </label>
+                        <button onClick={bankInfoButton} style={{ marginTop: "10px", marginLeft: "170px" }} className="loginButton">Continue</button>
+                    </div>
+                </div>
+            </div>
             <div className="signupPic__Container">
                 <img className="signupPic" src={signupPic} alt="signupPic" />
             </div>
             <div className="signupForm__mainDiv">
-                <h6 className="signupErrors">{errors}</h6>
                 <form className="signupForm">
                     Welcome to E-sential! Where your financial prosperity is essential to us
                     <p className="passwordRequirements">Password MUST have 8 or more characters with at least 1 uppercase letter, 1 number, and 1 symbol</p>
@@ -131,11 +178,12 @@ const SignUpPage = (props) => {
 
     return (
         <>
-        {authErrors === false ? <div className="signupPage__mainDiv">
+        {signUpSuccessful === false ? <div className="signupPage__mainDiv">
             <div className="signupPic__Container">
                 <img className="signupPic" src={signupPic} alt="signupPic" />
             </div>
             <div className="signupForm__mainDiv">
+                {authErrors ? <h6 className="signupErrors">{errors}</h6> : <></>}
                 <form className="signupForm">
                     Welcome to E-sential! Where your financial prosperity is essential to us
                     <p className="passwordRequirements">Password MUST have 8 or more characters with at least 1 uppercase letter, 1 number, and 1 symbol</p>
@@ -192,7 +240,7 @@ const SignUpPage = (props) => {
                 </form>
             </div>
             <div className="signup__bottomDiv"></div>
-        </div> : signupErrors}
+        </div> : addBankInfo}
         </>
     )
 }
