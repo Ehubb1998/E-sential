@@ -543,6 +543,7 @@ body {
     margin-left: 30px;
     margin-top: 33px;
     border-radius: 15px;
+    overflow: hidden;
 }
 
 /* Loading Icon */
@@ -893,14 +894,17 @@ body {
 /* Stock Market */
 .buyStockDiv {
     position: absolute;
-    background-color: rgba(255, 255, 255, 0.6);
-    backdrop-filter: saturate(180%) blur(20px);
-    /* background-color: rgb(0, 0, 0, 0.2);
-    backdrop-filter: saturate(180%) blur(20px); */
-    color: darkgrey;
-    margin-left: 130px;
-    bottom: 300px;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.buyStockSpan {
+    opacity: 0.5;
+    color: grey;
     font-size: 75px;
+    margin-bottom: 13%;
 }
 .stockMarket__navDiv {
     height: 48px;
@@ -961,4 +965,14 @@ body {
 .stockMarket__selected {
     color: rgb(0, 200, 5);
     border-bottom: 3px solid rgb(0, 200, 5);
+}
+.stockContent__div {
+    height: 100%;
+    width: 100%;
+    overflow: scroll;
+}
+.noStocks__div {
+    height: 100%;
+    width: 100%;
+    overflow: none;
 }
