@@ -41,13 +41,21 @@ const StockMarket = () => {
         <>
         <div className="menuSelection__backgroundDiv">
             <div className="menuSelection__mainDiv">
-                {portfolioSet === "true" ? <div className="inner__mainDiv">
-                    TEST
-                </div> : noStocks}
+                <div className="stockMarket__navDiv">
+                    <div className="portfolio__menu">Portfolio</div>
+                    <div className="portfolio__menu">Portfolio</div>
+                    <div className="portfolio__menu">Portfolio</div>
+                    <div className="portfolio__menu">Portfolio</div>
+                </div>
             </div>
         </div>
         </>
     )
 }
+
+// For reference
+// {portfolioSet === "true" ? <div className="inner__mainDiv">
+//     TEST
+// </div> : noStocks}
 
 export default StockMarket;

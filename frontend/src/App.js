@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import { currentUser } from "./store/actions/userData";
 import { bankData } from "./store/actions/bankInfo";
-import { portfolio } from "./store/actions/stockInfo";
+import { portfolioData } from "./store/actions/stockInfo";
 
 import Homepage from "./components/Homepage";
 import NavBar from "./components/NavBar";
@@ -28,7 +28,6 @@ const App = () => {
       try {
         const userdata = await fetch(`/api/user/${userId}/${token}`);
         const bankdata = await fetch(`/api/bank_info/info/${userId}/${token}`);
-        const stockData = await fetch(`/api/stock_info/info/${userId}/${token}/all/all`);
   
         if (!userdata.ok) {
           throw userdata;
@@ -36,19 +35,14 @@ const App = () => {
         if (!bankdata.ok) {
           throw bankdata;
         }
-        if (!stockData.ok) {
-          throw stockData;
-        }
   
         const { userData } = await userdata.json();
         const { BankInfo } = await bankdata.json();
-        const { StockInfo } = await stockData.json();
         dispatch(currentUser(userData));
         dispatch(bankData(BankInfo));
-        dispatch(portfolio(StockInfo));
-        window.localStorage.setItem("PORTFOLIO_SET", "true");
+        dispatch(portfolioData(userId, token));
       } catch (err) {
-        console.error(err);
+          console.error(err);
       }
     }
     userData();
