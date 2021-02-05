@@ -5,7 +5,7 @@ const NoStocks = (props) => {
     const portfolio = (
         <div className="buyStockDiv"><span className="buyStockSpan">Buy Stocks to see portfolio</span></div>
     );
-    const watchLater = (
+    const watchList = (
         <div className="buyStockDiv"><span className="buyStockSpan">Add Stocks to your Watch List</span></div>
     );
     const plans = (
@@ -14,7 +14,7 @@ const NoStocks = (props) => {
     return (
         <>
         <div className="stockContent__div">
-            {props.tab === "watchLater" ? watchLater : props.tab === "plans" ? plans : portfolio}
+            {props.tab === "watchList" ? watchList : props.tab === "plans" ? plans : portfolio}
             <Particles
                 className='particles'
                 height="69.2vh"
