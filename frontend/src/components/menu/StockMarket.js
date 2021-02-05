@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import Particles from 'react-particles-js';
 
@@ -6,6 +6,21 @@ import Particles from 'react-particles-js';
 const StockMarket = () => {
     const portfolio = useSelector(state => state.stockDataReducer.portfolioData);
     const portfolioSet = window.localStorage.getItem("PORTFOLIO_SET");
+    const [menuSelection, setMenuSelection] = useState("portfolio");
+
+
+    const portfolioSelection = () => {
+        setMenuSelection("portfolio");
+    }
+    const marketSelection = () => {
+        setMenuSelection("market");
+    }
+    const watchListSelection = () => {
+        setMenuSelection("watchList");
+    }
+    const plansSelection = () => {
+        setMenuSelection("plans");
+    }
 
     const noStocks = (
         <div style={{ position: "relative" }} className="inner__mainDiv">
@@ -42,10 +57,10 @@ const StockMarket = () => {
         <div className="menuSelection__backgroundDiv">
             <div className="menuSelection__mainDiv">
                 <div className="stockMarket__navDiv">
-                    <div className="portfolio__menu">Portfolio</div>
-                    <div className="portfolio__menu">Portfolio</div>
-                    <div className="portfolio__menu">Portfolio</div>
-                    <div className="portfolio__menu">Portfolio</div>
+                    {menuSelection === "portfolio" ? <div className="portfolio__component stockMarket__selected">Portfolio</div> : <div onClick={portfolioSelection} className="portfolio__component">Portfolio</div>}
+                    {menuSelection === "market" ? <div className="market__component stockMarket__selected">Market</div> : <div onClick={marketSelection} className="market__component">Market</div>}
+                    {menuSelection === "watchList" ? <div className="watchList__component stockMarket__selected">Watch List</div> : <div onClick={watchListSelection} className="watchList__component">Watch List</div>}
+                    {menuSelection === "plans" ? <div className="plans__component stockMarket__selected">Plans</div> : <div onClick={plansSelection} className="plans__component">Plans</div>}
                 </div>
             </div>
         </div>

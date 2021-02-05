@@ -912,4 +912,53 @@ body {
     backdrop-filter: saturate(180%) blur(20px);
     position: sticky;
     z-index: 4;
+    border-radius: 15px 15px 0px 0px;
+}
+.portfolio__component {
+    color: black;
+    width: 25%;
+    text-align: center;
+    padding-top: 13px;
+    cursor: pointer;
+    font-size: 18px;
+}
+.portfolio__component:hover {
+    color:rgb(0, 200, 5);
+}
+.market__component {
+    color: black;
+    width: 25%;
+    text-align: center;
+    padding-top: 13px;
+    cursor: pointer;
+    font-size: 18px;
+}
+.market__component:hover {
+    color:rgb(0, 200, 5);
+}
+.watchList__component {
+    color: black;
+    width: 25%;
+    text-align: center;
+    padding-top: 13px;
+    cursor: pointer;
+    font-size: 18px;
+}
+.watchList__component:hover {
+    color:rgb(0, 200, 5);
+}
+.plans__component {
+    color: black;
+    width: 25%;
+    text-align: center;
+    padding-top: 13px;
+    cursor: pointer;
+    font-size: 18px;
+}
+.plans__component:hover {
+    color:rgb(0, 200, 5);
+}
+.stockMarket__selected {
+    color: rgb(0, 200, 5);
+    border-bottom: 3px solid rgb(0, 200, 5);
 }
