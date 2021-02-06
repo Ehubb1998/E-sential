@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
-// import Green from "../../../assets/green.svg";
-// import Red from "../../../assets/red.svg";
 // import NoStocks from "./NoStocks";
 
 const Portfolio = () => {
@@ -13,23 +11,23 @@ const Portfolio = () => {
     // const portfolioSet = window.localStorage.getItem("PORTFOLIO_SET");
 
     const totalDifference = (num) => {
+        const newNum = num.toString();
         if (!total) {
             setTotalValueDifference("0");
-            setDifferenceStatus("up")
+            setDifferenceStatus("up");
         }
-        if (num > total) {
-            let newTotal = num - total;
+        if (newNum > total) {
+            let newTotal = newNum - total;
             setTotalValueDifference(newTotal);
             setDifferenceStatus("up");
         }
-        if (num < total) {
-            let newTotal = total - num;
+        if (newNum < total) {
+            let newTotal = total - newNum;
             setTotalValueDifference(newTotal);
-            setDifferenceStatus("up");
         }
-        if (num === total) {
+        if (newNum === total) {
             setTotalValueDifference("0");
-            setDifferenceStatus("up")
+            setDifferenceStatus("up");
         }
     }
 
@@ -52,7 +50,18 @@ const Portfolio = () => {
 
     useEffect(() => {
         totalValue(portfolio)
-    })
+    });
+
+    const greenArrow = (
+        <svg xmlns="http://www.w3.org/2000/svg" width="33" height="33" fill="rgb(0, 200, 5)" className="bi bi-caret-up-fill" viewBox="0 0 16 16">
+            <path d="M7.247 4.86l-4.796 5.481c-.566.647-.106 1.659.753 1.659h9.592a1 1 0 0 0 .753-1.659l-4.796-5.48a1 1 0 0 0-1.506 0z"/>
+        </svg>
+    );
+    const redArrow = (
+        <svg xmlns="http://www.w3.org/2000/svg" width="33" height="33" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
+            <path d="M7.247 11.14L2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
+        </svg>
+    )
 
     return (
         <>
@@ -61,11 +70,14 @@ const Portfolio = () => {
                 <div className="totalValue__div">
                     {portfolio && portfolioTotalValue ? <div className="totalValue">Total Value • <span style={{ fontWeigth: "400" }}>${portfolioTotalValue}</span></div> : <></>}
                     <div className="differenceInValue__div">
-                        {/* {differenceStatus === "up" ? <div className="differenceSymbol__up"><Green /></div> : <div className="differenceSymbol__down"><Red /></div>} */}
+                        <div style={{ paddingTop: "5px" }}>
+                            {portfolio && differenceStatus === "up" ? greenArrow : redArrow}
+                        </div>
                         {portfolio && totalValueDifference ? <div className="differenceNumber">${totalValueDifference}</div> : <></>}
                     </div>
                 </div>
             </div>
+            <div className="totalValue__bottomBorder"></div>
         </div>
         </>
     )

@@ -976,16 +976,31 @@ body {
 .portfolio__totalValue-container {
     height: 110px;
     width: 100%;
+    display: flex;
+    align-items: center;
 }
 .totalValue__div {
     display: flex;
     justify-content: space-between;
+    width: 100%;
+    height: 100%;
+    align-items: center;
 }
 .totalValue {
-    font-size: 20px;
+    font-size: 23px;
     font-weight: 200;
+    padding-left: 40px;
 }
 .differenceInValue__div {
     display: flex;
     justify-content: flex-start;
+    padding-right: 40px;
+    font-size: 21px;
+    height: 50%;
+    align-items: center;
+}
+.totalValue__bottomBorder {
+    height: 3px;
+    border-bottom: 2px solid black;
+    margin-left: 40px;
 }
