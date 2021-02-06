@@ -971,8 +971,21 @@ body {
     width: 100%;
     overflow: scroll;
 }
-.noStocks__div {
-    height: 100%;
+
+/* Portfolio */
+.portfolio__totalValue-container {
+    height: 110px;
     width: 100%;
-    overflow: none;
+}
+.totalValue__div {
+    display: flex;
+    justify-content: space-between;
+}
+.totalValue {
+    font-size: 20px;
+    font-weight: 200;
+}
+.differenceInValue__div {
+    display: flex;
+    justify-content: flex-start;
 }
