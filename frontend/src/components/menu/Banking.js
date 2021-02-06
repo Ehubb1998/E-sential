@@ -67,8 +67,8 @@ const Banking = () => {
                     {storeUser && storeUser.primaryBank === "PNC Bank" ? <div className="bankName__div"><img className="bankName__div-image" src={PNCBank} alt="" /></div> : <></>}
                     {storeUser && storeUser.primaryBank === "Truist" ? <div className="bankName__div"><img className="bankName__div-image" src={Truist} alt="" /></div> : <></>}
                     <div className="bankInfo__div">Bank Information</div>
-                    {bankData && bankInfo ? <div className="bankInfo__balance">Balance: <span className="bankInfo__balance-span">${bankInfo.accountBalance}</span></div> : <></>}
-                    {bankInfo ? <div className="bankInfo__balance">Monthly Income: <span className="bankInfo__balance-span">${bankInfo.monthlyIncome}</span></div> : <></>}
+                    {bankData && bankInfo ? <div className="bankInfo__balance">Balance: <span className="bankInfo__balance-span">${bankInfo.accountBalance.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</span></div> : <></>}
+                    {bankInfo ? <div className="bankInfo__balance">Monthly Income: <span className="bankInfo__balance-span">${bankInfo.monthlyIncome.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</span></div> : <></>}
                 </div>
             </div> : loader}
         </div>

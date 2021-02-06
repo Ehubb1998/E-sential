@@ -68,12 +68,12 @@ const Portfolio = () => {
         <div className="stockContent__div">
             <div className="portfolio__totalValue-container">
                 <div className="totalValue__div">
-                    {portfolio && portfolioTotalValue ? <div className="totalValue">Total Value • <span style={{ fontWeigth: "400" }}>${portfolioTotalValue}</span></div> : <></>}
+                    {portfolio && portfolioTotalValue ? <div className="totalValue">Total Value • <span style={{ fontWeigth: "400" }}>${portfolioTotalValue.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</span></div> : <></>}
                     <div className="differenceInValue__div">
                         <div style={{ paddingTop: "5px" }}>
                             {portfolio && differenceStatus === "up" ? greenArrow : redArrow}
                         </div>
-                        {portfolio && totalValueDifference ? <div className="differenceNumber">${totalValueDifference}</div> : <></>}
+                        {portfolio && totalValueDifference ? <div className="differenceNumber">${totalValueDifference.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</div> : <></>}
                     </div>
                 </div>
             </div>
