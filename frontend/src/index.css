@@ -1006,5 +1006,15 @@ body {
 }
 .stockChart {
     width: 100%;
-    height: 1000%;
+    /* height: 100%; */
+    margin-top: 23px;
+    margin-left: 40px;
+}
+.individualStocks__portfolio {
+    display: flex;
+    justify-content: flex-start;
+}
+.stockInfo__portfolio-div {
+    background-color: grey;
+    height: 100%;
 }

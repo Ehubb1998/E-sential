@@ -82,21 +82,23 @@ const Portfolio = () => {
             </div>
             <div className="totalValue__bottomBorder"></div>
             <div className="stockChart">
-                <h5>Test</h5>
-                <ResponsiveContainer width={800} height={250}>
-                    <LineChart data={testData} margin={{top:25, bottom: 25}}>
-                        <Line type="linear" dataKey="high" stroke="#00c805" dot={false} isAnimationActive={true} />
-                        <YAxis hide={true} domain={[100, 1100]} />
-                        <Tooltip />
-                    </LineChart>
-                </ResponsiveContainer>
+                <div className="individualStocks__portfolio">
+                    <ResponsiveContainer width={650} height={300}>
+                        <LineChart data={testData} margin={{top:25, bottom: 25}}>
+                            <Line type="linear" dataKey="high" stroke="#00c805" dot={false} isAnimationActive={true} />
+                            <YAxis hide={true} domain={[100, 1100]} />
+                            <Tooltip />
+                        </LineChart>
+                    </ResponsiveContainer>
+                    <div className="stockInfo__portfolio-div">
+                        Test
+                    </div>
+                </div>
                 {/* <LineChart width={500} height={250} data={testData}>
                     <Line type="monotone" dataKey="high" stroke="#00c805" />
                     <Tooltip />
                 </LineChart> */}
-                Test2
             </div>
-            <div style={{ backgroundColor: "yellow", width: "100%", height: "500px" }}></div>
         </div>
         </>
     )
