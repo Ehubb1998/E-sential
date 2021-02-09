@@ -1004,3 +1004,7 @@ body {
     border-bottom: 2px solid black;
     margin-left: 40px;
 }
+.stockChart {
+    width: 100%;
+    height: 1000%;
+}

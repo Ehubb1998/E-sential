@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
+import { LineChart, Line, Tooltip, YAxis, ResponsiveContainer } from 'recharts';
 // import NoStocks from "./NoStocks";
 
 const Portfolio = () => {
@@ -58,10 +59,12 @@ const Portfolio = () => {
         </svg>
     );
     const redArrow = (
-        <svg xmlns="http://www.w3.org/2000/svg" width="33" height="33" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
+        <svg xmlns="http://www.w3.org/2000/svg" width="33" height="33" fill="currentColor" className="bi bi-caret-down-fill" viewBox="0 0 16 16">
             <path d="M7.247 11.14L2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
         </svg>
-    )
+    );
+
+    const testData = [{name: "Elijah", high: 1000, low: 900}, {name: "Hubbard", high: 800, low: 700}, {name: "Shamar", high: 600, low: 500}, {name: "Test", high: 400, low: 300}];
 
     return (
         <>
@@ -78,6 +81,22 @@ const Portfolio = () => {
                 </div>
             </div>
             <div className="totalValue__bottomBorder"></div>
+            <div className="stockChart">
+                <h5>Test</h5>
+                <ResponsiveContainer width={800} height={250}>
+                    <LineChart data={testData} margin={{top:25, bottom: 25}}>
+                        <Line type="linear" dataKey="high" stroke="#00c805" dot={false} isAnimationActive={true} />
+                        <YAxis hide={true} domain={[100, 1100]} />
+                        <Tooltip />
+                    </LineChart>
+                </ResponsiveContainer>
+                {/* <LineChart width={500} height={250} data={testData}>
+                    <Line type="monotone" dataKey="high" stroke="#00c805" />
+                    <Tooltip />
+                </LineChart> */}
+                Test2
+            </div>
+            <div style={{ backgroundColor: "yellow", width: "100%", height: "500px" }}></div>
         </div>
         </>
     )
