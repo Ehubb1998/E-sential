@@ -6,6 +6,7 @@ body {
 
 html, body, #root {
     height: 100%;
+    overflow: scroll;
 }
 
 /* NavBar */
@@ -16,8 +17,6 @@ html, body, #root {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    /* height: 64px; */
-    /* height: 9.1vh; */
     height: 8%;
     position: sticky;
     top: 0;
@@ -25,7 +24,6 @@ html, body, #root {
 }
 
 .logo {
-    /* margin-left: 40px; */
     margin-left: 3.2%;
     height: 75%
 }
@@ -36,16 +34,15 @@ html, body, #root {
 }
 
 .navBar__authDiv {
-    /* margin-right: 40px; */
     margin-right: 3.2%;
+    width: 17%;
 }
 
 .navBar__authDiv-login {
     color: #040d14;
-    /* font-size: 19px; */
     font-size: 1.2em;
     font-weight: 700;
-    margin-right: 2%;
+    margin-right: 3%;
     text-decoration: none;
 }
 .navBar__authDiv-login:hover {
@@ -54,7 +51,7 @@ html, body, #root {
 
 .navBar__authDiv-signup {
     color: #040d14;
-    font-size: 19px;
+    font-size: 1.2em;
     font-weight: 700;
     padding: 12px 38px;
     height: 48px;
@@ -68,7 +65,6 @@ html, body, #root {
 }
 
 .searchWrap {
-    /* margin-left: -70px; */
     margin-left: -5%;
     height: 100%;
     width: 25%;
@@ -90,14 +86,10 @@ html, body, #root {
     background-image: url("./assets/searchIcon.png");
     background-repeat: no-repeat;
     background-size: 5% 40%;
-    /* background-position: 85px 10px; */
     background-position: 35% 54%;
     outline: none;
-    /* width: 250px; */
     width: 78%;
-    /* margin-top: 10px; */
     margin-top: 3.5%;
-    /* margin-bottom: 15px; */
     margin-bottom: 3.8%;
     margin-left: 10%;
     color: #c9cbcc;
@@ -105,14 +97,11 @@ html, body, #root {
 }
 .instaSearch:focus {
     text-align: left;
-    /* padding-left: 30px; */
     padding-left: 10%;
     background: #ffffff;
     background-image: url("./assets/searchIcon.png");
     background-repeat: no-repeat;
-    /* background-size: 13px 13px; */
     background-size: 5% 40%;
-    /* background-position: 15px 10px; */
     background-position: 5% 54%;
     color: #000;
 }
@@ -150,21 +139,21 @@ html, body, #root {
     position:absolute;
     width: 88%;
     height: 91vh;
-    margin-left: 40px;
-    margin-top: 35px;
+    margin-left: 6.2%;
+    margin-top: 5.5%;
     box-shadow: 5px 2px 8px 10px rgba(0,0,0,0.2);
 }
 .loginForm {
-    font-size: 30px;
+    font-size: 1.875em;
     font-weight: 700;
     display: block;
-    margin-top: 130px;
-    margin-left: 35px;
+    margin-top: 23%;
+    margin-left: 6.3%;
 }
 .loginForm__label {
-    font-size: 16px;
+    font-size: 0.53em;
     font-weight: 400;
-    margin-top: 40px;
+    margin-top: 7.6%;
     display: block;
     font-family: "Capsule Sans Text",system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
 }
@@ -172,25 +161,25 @@ html, body, #root {
     display: block;
     padding: 10px 10px;
     margin: 10px 0px;
-    width: 430px;
+    width: 81.5%;
     height: 20px;
     border: 1px solid rgba(4, 13, 20, 0.1);
     border-radius: 4px;
-    font-size: 17px;
+    font-size: 1.06em;
 }
 .loginButton {
     position: absolute;
     background-color: rgb(0, 200, 5);
-    width: 140px;
-    height: 50px;
+    width: 24.8%;
+    height: 7.7%;
     padding: 10px 10px;
-    font-size: 13px;
+    font-size: 0.44em;
     font-weight: 600;
     color: white;
     border-radius: 4px;
     border: none;
-    margin-left: 2px;
-    margin-top: 25px;
+    margin-left: 0.4%;
+    margin-top: 4.43%;
     cursor: pointer;
 }
 .loginButton:hover {
@@ -199,16 +188,16 @@ html, body, #root {
 .demoButton {
     position: absolute;
     background-color: rgb(0, 200, 5);
-    width: 140px;
-    height: 50px;
+    width: 24.8%;
+    height: 7.7%;
     padding: 10px 10px;
-    font-size: 13px;
+    font-size: 0.86em;
     font-weight: 600;
     color: white;
     border-radius: 4px;
     border: none;
-    margin-left: 200px;
-    margin-top: 25px;
+    margin-left: 35.5%;
+    margin-top: 4.43%;
     cursor: pointer;
 }
 .demoButton:hover {
@@ -217,16 +206,16 @@ html, body, #root {
 .checkboxContainer {
   display: block;
   position: relative;
-  padding-left: 35px;
+  padding-left: 6.2%;
   margin-bottom: 12px;
   cursor: pointer;
-  font-size: 20px;
+  font-size: 1.25em;
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
-  margin-left: 360px;
-  margin-top: 47px;
+  margin-left: 64%;
+  margin-top: 8.4%;
 }
 .checkboxContainer input {
   position: absolute;
@@ -432,8 +421,8 @@ html, body, #root {
 
 /* Splash Page */
 .splashPage__backgroundDiv {
-    width: 100vw;
-    height: 100%;
+    width: 100%;
+    /* height: 100%; */
     background-color: rgb(0, 200, 5);
 }
 .splashPage__mainDiv {
@@ -512,7 +501,6 @@ html, body, #root {
 
 /* Homepage */
 .homepage__mainMenuDiv {
-    /* height: 48px; */
     height: 6.7%;
     width: 100%;
     display: flex;
@@ -523,10 +511,8 @@ html, body, #root {
     color: white;
     width: 33.3%;
     text-align: center;
-    /* padding-top: 13px; */
     padding-top: 1.05%;
     cursor: pointer;
-    /* font-size: 18px; */
     font-size: 1.12em;
 }
 .bankingInfo__menu:hover {
@@ -566,14 +552,9 @@ html, body, #root {
     z-index: 3;
     background-color: rgb(255,255,255);
     position: absolute;
-    /* width: 1218px; */
     width: 95.1%;
-    /* height: 547px; */
     height: 76.7%;
-    /* height: 100%; */
-    /* margin-left: 30px; */
     margin-left: 2.5%;
-    /* margin-top: 33px; */
     margin-top: 2.5%;
     border-radius: 15px;
     overflow: hidden;
@@ -694,23 +675,22 @@ html, body, #root {
     z-index: 3;
     background-color: rgb(255,255,255);
     position: absolute;
-    width: 1218px;
-    height: 547px;
-    margin-left: 30px;
-    margin-top: 33px;
+    width: 95.1%;
+    height: 76.7%;
+    margin-left: 2.5%;
+    margin-top: 2.5%;
     border-radius: 15px;
     background-image: url("./assets/bankComponent.jpg");
     background-repeat: no-repeat;
-    background-size: 1200px 520px;
-    background-position: 30px 70px;
+    background-size: 98% 95%;
+    background-position: 100% 249%;
+    box-shadow: 1px 1px 7px 6px rgb(0 0 0 / 20%);
 }
 .inner__mainDiv {
-    margin-left: 40px;
-    margin-top: 30px;
+    margin-left: 3.3%;
+    margin-top: 2.5%;
 }
 .bankName__div {
-    font-size: 30px;
-    font-weight: 600;
     height: 75px;
     width: 350px;
 }
@@ -720,40 +700,40 @@ html, body, #root {
 }
 .bankInfo__div {
     border-top: 2px solid black;
-    font-size: 22px;
+    font-size: 1.375em;
     font-weight: 500;
-    padding-top: 30px;
+    padding-top: 2.5%;
     text-align: center;
 }
 .bankInfo__balance {
-    font-size: 20px;
-    margin-top: 10px;
-    margin-bottom: 30px;
+    font-size: 1.25em;
+    margin-top: 0.9%;
+    margin-bottom: 2.5%;
     display: flex;
     justify-content: space-between;
 }
 .bankInfo__balance-span {
-    margin-right: 40px;
+    margin-right: 3.39%;
     font-weight: 600;
 }
 
 /* Account */
 .accountName__div {
-    font-size: 36px;
+    font-size: 2.25em;
     font-weight: 600;
     height: 75px;
     width: 100%;
     font-family: Gill Sans, sans-serif;
 }
 .accountInformation__div {
-    margin-top: 40px;
+    margin-top: 3.3%;
     font-family: Gill Sans, sans-serif;
-    font-size: 20px;
+    font-size: 1.25em;
 }
 .account_editSelection {
-    padding-left: 40px;
-    padding-top: 15px;
-    padding-bottom: 15px;
+    padding-left: 3.3%;
+    padding-top: 1.24%;
+    padding-bottom: 1.24%;
     border-top: 1px solid black;
     border-bottom: 1px solid black;
     cursor: pointer;
