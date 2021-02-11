@@ -295,26 +295,26 @@ html, body, #root {
     z-index: 3;
     background-color: rgb(255,255,255);
     position: absolute;
-    width: 1218px;
-    height: 580px;
-    margin-left: 30px;
-    margin-top: -250px;
+    width: 95.15%;
+    height: 80.45%;
+    margin-left: 2.35%;
+    margin-top: -19.5%;
     border-radius: 15px;
 }
 .signupForm {
-    font-size: 30px;
+    font-size: 1.875em;
     font-weight: 500;
-    margin-left: 135px;
-    padding-top: 21px;
+    margin-left: 11.1%;
+    padding-top: 1.7%;
 }
 .signupForm__row1 {
     display: flex;
     justify-content: flex-start;
 }
 .signupForm__label {
-    font-size: 16px;
+    font-size: 0.53em;
     font-weight: 400;
-    margin-top: 40px;
+    margin-top: 3.69%;
     display: block;
     font-family: "Capsule Sans Text",system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
 }
@@ -373,8 +373,44 @@ html, body, #root {
 }
 .passwordRequirements {
     margin: 0px;
-    font-size: 15px;
-    padding-top: 5px;
+    font-size: 0.5em;
+    padding-top: 0.5%;
+}
+.signUpButton {
+    position: absolute;
+    background-color: rgb(0, 200, 5);
+    width: 10.8%;
+    height: 7.7%;
+    padding: 10px 10px;
+    font-size: 0.44em;
+    font-weight: 600;
+    color: white;
+    border-radius: 4px;
+    border: none;
+    margin-left: 0.4%;
+    margin-top: 3%;
+    cursor: pointer;
+}
+.signUpButton:hover {
+    background-color: rgb(0, 140, 3);
+}
+.signUpDemo {
+    position: absolute;
+    background-color: rgb(0, 200, 5);
+    width: 10.8%;
+    height: 7.7%;
+    padding: 10px 10px;
+    /* font-size: 0.86em; */
+    font-weight: 600;
+    color: white;
+    border-radius: 4px;
+    border: none;
+    margin-left: 15.5%;
+    margin-top: 4.43%;
+    cursor: pointer;
+}
+.signUpDemo:hover {
+    background-color: rgb(0, 140, 3);
 }
 .bankInfo__container {
     background: rgba(0, 0, 0, 0.5);

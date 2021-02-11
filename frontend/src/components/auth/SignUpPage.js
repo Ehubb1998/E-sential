@@ -35,7 +35,6 @@ const SignUpPage = (props) => {
     const signupButton = (e) => {
         e.preventDefault();
         if (primaryBank === "") {
-            console.log("inside of this if statement")
             dispatch(signUp(firstName, lastName, email, "Wells Fargo", job, password, confirmPassword, rememberMe));
             return;
         }
@@ -164,11 +163,11 @@ const SignUpPage = (props) => {
                             </select>
                         </label>
                     </div>
-                    <button onClick={signupButton} type="submit" className="loginButton">Sign Up</button>
-                    <button onClick={demoButton} className="demoButton">Demo</button>
-                    <label style={{ marginTop: "38px" }} className="checkboxContainer">Remember Me
+                    <button onClick={signupButton} type="submit" className="signUpButton">Sign Up</button>
+                    {/* <button onClick={demoButton} className="signUpDemo">Demo</button> */}
+                    <label style={{ marginTop: "3.6%", fontSize: "1em", marginLeft: "15%", paddingLeft: "3.5%" }} className="checkboxContainer">Remember Me
                         <input onClick={clickedRememberMe} type="checkbox" />
-                        <span className="checkmark"></span>
+                        <span style={{ marginTop: "0.7%" }} className="checkmark"></span>
                     </label>
                 </form>
             </div>
@@ -231,11 +230,11 @@ const SignUpPage = (props) => {
                             </select>
                         </label>
                     </div>
-                    <button onClick={signupButton} type="submit" className="loginButton">Sign Up</button>
-                    <button onClick={demoButton} className="demoButton">Demo</button>
-                    <label style={{ marginTop: "38px" }} className="checkboxContainer">Remember Me
+                    <button onClick={signupButton} type="submit" className="signUpButton">Sign Up</button>
+                    {/* <button onClick={demoButton} className="signUpDemo">Demo</button> */}
+                    <label style={{ marginTop: "3.6%", fontSize: "1em", marginLeft: "15%", paddingLeft: "3.5%" }} className="checkboxContainer">Remember Me
                         <input onClick={clickedRememberMe} type="checkbox" />
-                        <span className="checkmark"></span>
+                        <span style={{ marginTop: "0.7%" }} className="checkmark"></span>
                     </label>
                 </form>
             </div>
