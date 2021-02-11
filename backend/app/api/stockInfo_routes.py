@@ -3,12 +3,49 @@ from app.models import db, StockInfo
 from ..config import Config
 from .check_for_token import check_for_token
 import requests
+import datetime
 
 stockInfo_routes = Blueprint("stockInfo", __name__)
 
-def iex_stock_info(company, postMethod=False):
+def iex_stock_info(company, time_frame, postMethod=False):
     # api_key = Config.IEX_KEY
     test_key = Config.IEX_TEST_KEY
+
+    if time_frame == "today":
+        date = datetime.datetime.now()
+        year = date.year
+        month = date.strftime("%m")
+        day = date.strftime("%d")
+
+        response = requests.get(f"https://sandbox.iexapis.com/stable/stock/{company}/chart/date/{year}{month}{day}", params={"token": test_key})
+        if response:
+            company_chart = response.json()
+            return company_chart
+
+    if time_frame == "week":
+        response = requests.get(f"https://sandbox.iexapis.com/stable/stock/{company}/chart/5d", params={"token": test_key})
+        if response:
+            company_chart = response.json()
+            return company_chart
+
+    if time_frame == "month":
+        response = requests.get(f"https://sandbox.iexapis.com/stable/stock/{company}/chart/1m", params={"token": test_key})
+        if response:
+            company_chart = response.json()
+            return company_chart
+
+    if time_frame == "6months":
+        response = requests.get(f"https://sandbox.iexapis.com/stable/stock/{company}/chart/6m", params={"token": test_key})
+        if response:
+            company_chart = response.json()
+            return company_chart
+
+    if time_frame == "year":
+        response = requests.get(f"https://sandbox.iexapis.com/stable/stock/{company}/chart/1y", params={"token": test_key})
+        if response:
+            company_chart = response.json()
+            return company_chart
+        
     response = requests.get(f"https://sandbox.iexapis.com/stable/stock/{company}/batch", params={"types": "company,chart,news", "token": test_key})
     if response:
         company = response.json()
@@ -70,6 +107,16 @@ def stock_info(*args, **kwargs):
 
         info = [stock.stock_info() for stock in stocks]
         return jsonify({"StockInfo": info})
+
+
+@stockInfo_routes.route("/chart/<timeFrame>/<token>/<stock>")
+@check_for_token
+def stock_chart_data(*args, **kwargs):
+    time_frame = kwargs["timeFrame"]
+    stock = kwargs["stock"]
+    
+    stock_charts = iex_stock_info(stock, time_frame)
+    return jsonify({"StockChart": stock_charts})
 
 
 @stockInfo_routes.route("/edit", methods=["PUT"])

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import signupPic from "../../assets/signupPic.jpeg"
-import { signUp, demo } from "../../store/actions/auth";
+import { signUp } from "../../store/actions/auth";
 import { addBankData } from "../../store/actions/bankInfo";
 
 const SignUpPage = (props) => {
@@ -40,10 +40,10 @@ const SignUpPage = (props) => {
         }
         dispatch(signUp(firstName, lastName, email, primaryBank, job, password, confirmPassword, rememberMe));
     }
-    const demoButton = (e) => {
-        e.preventDefault();
-        dispatch(demo());
-    }
+    // const demoButton = (e) => {
+    //     e.preventDefault();
+    //     dispatch(demo());
+    // }
     const firstNameInput = (e) => {
         setFirstName(e.target.value)
     }

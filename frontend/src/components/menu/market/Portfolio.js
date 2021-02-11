@@ -9,6 +9,7 @@ const Portfolio = () => {
     const [totalValueDifference, setTotalValueDifference] = useState("");
     const [differenceStatus, setDifferenceStatus] = useState("");
     const total = window.localStorage.getItem("TOTAL");
+    const token = window.localStorage.getItem("ESENTIAL_ACCESS_TOKEN");
     // const portfolioSet = window.localStorage.getItem("PORTFOLIO_SET");
 
     const totalDifference = (num) => {
@@ -49,8 +50,24 @@ const Portfolio = () => {
         window.localStorage.setItem("TOTAL", totalValue);
     }
 
+    const stockApi = async (timeFrame, nameOfStock) => {
+        const chartRequests = await fetch(`/api/stock_info/chart/${timeFrame}/${token}/${nameOfStock}`);
+        const { StockChart } = await chartRequests.json();
+        return StockChart;
+    }
+
+    const individualStockData = (portfolioArray, timeFrame="today") => {
+        // let stockDataArray = [];
+        portfolioArray.forEach(async (stock) => {
+            let stockName = stock.stock;
+            const stockChart = await stockApi(timeFrame, stockName);
+            console.log(stockChart);
+        })
+    }
+
     useEffect(() => {
-        totalValue(portfolio)
+        totalValue(portfolio);
+        individualStockData(portfolio);
     });
 
     const greenArrow = (
@@ -83,13 +100,22 @@ const Portfolio = () => {
             <div className="totalValue__bottomBorder"></div>
             <div className="stockChart">
                 <div className="individualStocks__portfolio">
-                    <ResponsiveContainer width="55%">
-                        <LineChart data={testData} margin={{top:25, bottom: 25}}>
-                            <Line type="linear" dataKey="high" stroke="#00c805" dot={false} isAnimationActive={true} />
-                            <YAxis hide={true} domain={[100, 1100]} />
-                            <Tooltip />
-                        </LineChart>
-                    </ResponsiveContainer>
+                    <div className="stockChart__div">
+                        <ResponsiveContainer height="90%">
+                            <LineChart data={testData} margin={{top:25, bottom: 25}}>
+                                <Line type="linear" dataKey="high" stroke="#00c805" dot={false} isAnimationActive={true} />
+                                <YAxis hide={true} domain={[100, 1100]} />
+                                <Tooltip />
+                            </LineChart>
+                        </ResponsiveContainer>
+                        <div className="stockChart__timeFrame">
+                            <div id="timeFrame__today" className="timeFrames">1D</div>
+                            <div id="timeFrame__week" className="timeFrames">1W</div>
+                            <div id="timeFrame__month" className="timeFrames">1M</div>
+                            <div id="timeFrame__6months" className="timeFrames">6M</div>
+                            <div id="timeFrame__year" className="timeFrames">1Y</div>
+                        </div>
+                    </div>
                     <div className="stockInfo__portfolio-div">
                         Test
                     </div>

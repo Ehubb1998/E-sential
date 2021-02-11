@@ -1063,9 +1063,26 @@ html, body, #root {
 .individualStocks__portfolio {
     display: flex;
     justify-content: flex-start;
-    height: 300px;
+    height: 48vh;
 }
 .stockInfo__portfolio-div {
     background-color: grey;
     height: 100%;
+}
+.stockChart__div {
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.stockChart__timeFrame {
+    border-bottom: 1px solid darkgrey;
+    font-weight: 600;
+    font-size: 1em;
+    display: flex;
+    padding-bottom: 1.5%;
+}
+.timeFrames {
+    margin-left: 3%;
+    cursor: pointer;
 }
