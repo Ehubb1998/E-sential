@@ -17,7 +17,7 @@ const NavBar = (props) => {
     let notLoggedIn = (
         <nav role="navigation" className="navBar">
             <NavLink to="/" className="logo">
-                <img src={Logo} alt="logo" height="44px" />
+                <img src={Logo} alt="logo" className="logo__pic" />
             </NavLink>
             <div className="navBar__authDiv">
                 <NavLink to="/login" className="navBar__authDiv-login">Log In</NavLink>
@@ -28,10 +28,10 @@ const NavBar = (props) => {
     let loggedIn = (
         <nav role="navigation" className="navBar">
             <NavLink to="/homepage" className="logo">
-                <img src={Logo} alt="logo" height="44px" />
+                <img src={Logo} alt="logo" className="logo__pic" />
             </NavLink>
             <div className="searchWrap">
-                <form action="index.php" method="post">
+                <form style={{ height: "100%" }} action="index.php" method="post">
                     <span className="searchIcon"></span>
                     <input onChange={searchBox} type="text" name="subject" className="instaSearch" value={searchInput} placeholder="Search" />
                 </form>

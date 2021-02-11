@@ -4,6 +4,10 @@ body {
     margin: 0;
 }
 
+html, body, #root {
+    height: 100%;
+}
+
 /* NavBar */
 .navBar {
     box-shadow: 0px 1px 4px 0px rgba(0,0,0,0.2);
@@ -12,26 +16,36 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    height: 64px;
+    /* height: 64px; */
+    /* height: 9.1vh; */
+    height: 8%;
     position: sticky;
     top: 0;
     z-index: 4;
-    /* height: 15vh; */
 }
 
 .logo {
-    margin-left: 40px;
+    /* margin-left: 40px; */
+    margin-left: 3.2%;
+    height: 75%
+}
+
+.logo__pic {
+    max-width: 100%;
+    max-height: 100%;
 }
 
 .navBar__authDiv {
-    margin-right: 40px;
+    /* margin-right: 40px; */
+    margin-right: 3.2%;
 }
 
 .navBar__authDiv-login {
     color: #040d14;
-    font-size: 19px;
+    /* font-size: 19px; */
+    font-size: 1.2em;
     font-weight: 700;
-    margin-right: 24px;
+    margin-right: 2%;
     text-decoration: none;
 }
 .navBar__authDiv-login:hover {
@@ -54,15 +68,18 @@ body {
 }
 
 .searchWrap {
-    margin-left: -70px;
+    /* margin-left: -70px; */
+    margin-left: -5%;
+    height: 100%;
+    width: 25%;
 }
 
 .instaSearch {
     font-family: proxima-nove, 'Helvetica Neue', Arial, Helvetica, sans-serif;
-    font-size: 15px;
+    font-size: 1em;
     font-weight:300;
     letter-spacing: .5px;
-    height:30px;
+    height: 50%;
     -moz-border-radius: 15px;
     -webkit-border-radius: 15px;
     -khtml-border-radius: 15px;
@@ -72,23 +89,31 @@ body {
     background: #fafafa;
     background-image: url("./assets/searchIcon.png");
     background-repeat: no-repeat;
-    background-size: 13px 13px;
-    background-position: 85px 10px;
+    background-size: 5% 40%;
+    /* background-position: 85px 10px; */
+    background-position: 35% 54%;
     outline: none;
-    width: 250px;
-    margin-top: 10px;
-    margin-bottom: 15px;
+    /* width: 250px; */
+    width: 78%;
+    /* margin-top: 10px; */
+    margin-top: 3.5%;
+    /* margin-bottom: 15px; */
+    margin-bottom: 3.8%;
+    margin-left: 10%;
     color: #c9cbcc;
     /* transition: all 0.05s ease-in-out; */
 }
 .instaSearch:focus {
     text-align: left;
-    padding-left: 30px;
+    /* padding-left: 30px; */
+    padding-left: 10%;
     background: #ffffff;
     background-image: url("./assets/searchIcon.png");
     background-repeat: no-repeat;
-    background-size: 13px 13px;
-    background-position: 15px 10px;
+    /* background-size: 13px 13px; */
+    background-size: 5% 40%;
+    /* background-position: 15px 10px; */
+    background-position: 5% 54%;
     color: #000;
 }
  
@@ -487,7 +512,8 @@ body {
 
 /* Homepage */
 .homepage__mainMenuDiv {
-    height: 48px;
+    /* height: 48px; */
+    height: 6.7%;
     width: 100%;
     display: flex;
     justify-content: flex-start;
@@ -497,9 +523,11 @@ body {
     color: white;
     width: 33.3%;
     text-align: center;
-    padding-top: 13px;
+    /* padding-top: 13px; */
+    padding-top: 1.05%;
     cursor: pointer;
-    font-size: 18px;
+    /* font-size: 18px; */
+    font-size: 1.12em;
 }
 .bankingInfo__menu:hover {
     background-color: rgb(51, 51, 53);
@@ -509,9 +537,9 @@ body {
     color: white;
     width: 33.3%;
     text-align: center;
-    padding-top: 13px;
+    padding-top: 1.05%;
     cursor: pointer;
-    font-size: 18px;
+    font-size: 1.12em;
 }
 .stockMarket__menu:hover {
     background-color: rgb(51, 51, 53);
@@ -521,9 +549,9 @@ body {
     color: white;
     width: 33.3%;
     text-align: center;
-    padding-top: 13px;
+    padding-top: 1.05%;
     cursor: pointer;
-    font-size: 18px;
+    font-size: 1.12em;
 }
 .userAccount__menu:hover {
     background-color: rgb(51, 51, 53);
@@ -538,12 +566,18 @@ body {
     z-index: 3;
     background-color: rgb(255,255,255);
     position: absolute;
-    width: 1218px;
-    height: 547px;
-    margin-left: 30px;
-    margin-top: 33px;
+    /* width: 1218px; */
+    width: 95.1%;
+    /* height: 547px; */
+    height: 76.7%;
+    /* height: 100%; */
+    /* margin-left: 30px; */
+    margin-left: 2.5%;
+    /* margin-top: 33px; */
+    margin-top: 2.5%;
     border-radius: 15px;
     overflow: hidden;
+    box-shadow: 1px 1px 7px 6px rgba(0,0,0,0.2);
 }
 
 /* Loading Icon */
@@ -653,7 +687,7 @@ body {
 /* Banking */
 .menuSelection__backgroundDiv {
     width: 100%;
-    height: 84.5vh;
+    height: 85.3%;
     background-color: rgb(0, 200, 5);
 }
 .banking__menuSelection__mainDiv {
@@ -907,7 +941,7 @@ body {
     margin-bottom: 13%;
 }
 .stockMarket__navDiv {
-    height: 48px;
+    height: 8.6%;
     width: 100%;
     display: flex;
     justify-content: flex-start;
@@ -922,9 +956,9 @@ body {
     color: black;
     width: 25%;
     text-align: center;
-    padding-top: 13px;
+    padding-top: 1.1%;
     cursor: pointer;
-    font-size: 18px;
+    font-size: 1.12em;
 }
 .portfolio__component:hover {
     color:rgb(0, 200, 5);
@@ -933,9 +967,9 @@ body {
     color: black;
     width: 25%;
     text-align: center;
-    padding-top: 13px;
+    padding-top: 1.1%;
     cursor: pointer;
-    font-size: 18px;
+    font-size: 1.12em;
 }
 .market__component:hover {
     color:rgb(0, 200, 5);
@@ -944,9 +978,9 @@ body {
     color: black;
     width: 25%;
     text-align: center;
-    padding-top: 13px;
+    padding-top: 1.1%;
     cursor: pointer;
-    font-size: 18px;
+    font-size: 1.12em;
 }
 .watchList__component:hover {
     color:rgb(0, 200, 5);
@@ -955,9 +989,9 @@ body {
     color: black;
     width: 25%;
     text-align: center;
-    padding-top: 13px;
+    padding-top: 1.1%;
     cursor: pointer;
-    font-size: 18px;
+    font-size: 1.12em;
 }
 .plans__component:hover {
     color:rgb(0, 200, 5);
@@ -974,7 +1008,7 @@ body {
 
 /* Portfolio */
 .portfolio__totalValue-container {
-    height: 110px;
+    height: 19%;
     width: 100%;
     display: flex;
     align-items: center;
@@ -987,32 +1021,33 @@ body {
     align-items: center;
 }
 .totalValue {
-    font-size: 23px;
+    font-size: 1.44em;
     font-weight: 200;
-    padding-left: 40px;
+    padding-left: 3.3%;
 }
 .differenceInValue__div {
     display: flex;
     justify-content: flex-start;
-    padding-right: 40px;
-    font-size: 21px;
+    padding-right: 3.3%;
+    font-size: 1.3em;
     height: 50%;
     align-items: center;
 }
 .totalValue__bottomBorder {
     height: 3px;
     border-bottom: 2px solid black;
-    margin-left: 40px;
+    margin-left: 3.3%;
 }
 .stockChart {
     width: 100%;
-    /* height: 100%; */
-    margin-top: 23px;
-    margin-left: 40px;
+    height: 100%;
+    margin-top: 2%;
+    margin-left: 3.3%;
 }
 .individualStocks__portfolio {
     display: flex;
     justify-content: flex-start;
+    height: 300px;
 }
 .stockInfo__portfolio-div {
     background-color: grey;

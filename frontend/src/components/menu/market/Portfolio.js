@@ -83,7 +83,7 @@ const Portfolio = () => {
             <div className="totalValue__bottomBorder"></div>
             <div className="stockChart">
                 <div className="individualStocks__portfolio">
-                    <ResponsiveContainer width={650} height={300}>
+                    <ResponsiveContainer width="55%">
                         <LineChart data={testData} margin={{top:25, bottom: 25}}>
                             <Line type="linear" dataKey="high" stroke="#00c805" dot={false} isAnimationActive={true} />
                             <YAxis hide={true} domain={[100, 1100]} />
