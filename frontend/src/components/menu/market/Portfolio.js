@@ -146,7 +146,7 @@ const Portfolio = () => {
                             </div>
                             <div className="yourShares">
                                 <span>3 Shares</span>
-                                <span>@ $250/share</span>
+                                <span>@$250/share</span>
                             </div>
                             <div className="totalDifference__portfolio">
                                 <span>+ $210</span>
