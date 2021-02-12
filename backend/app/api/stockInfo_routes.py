@@ -12,7 +12,6 @@ def iex_stock_info(company, time_frame, postMethod=False):
     test_key = Config.IEX_TEST_KEY
 
     if time_frame == "today":
-        print("INSIDE OF TODAY IF STATEMENT")
         date = datetime.datetime.now()
         year = date.year
         month = date.strftime("%m")

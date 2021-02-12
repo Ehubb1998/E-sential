@@ -1084,7 +1084,7 @@ html, body, #root {
     flex-direction: column;
     justify-content: space-between;
 }
-.stockname__portfolio {
+.stockName__portfolio {
     font-weight: 600;
     font-size: 1.3em;
 }
@@ -1130,4 +1130,10 @@ html, body, #root {
     justify-content: center;
     font-size: 1.5em;
     margin-top: 2%;
+}
+.profit__difference {
+    color:rgb(0, 200, 5);
+}
+.lost__difference {
+    color: #ff4400;
 }

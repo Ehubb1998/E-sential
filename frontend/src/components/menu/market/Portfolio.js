@@ -87,6 +87,14 @@ const Portfolio = () => {
             const stockChart = await stockApi(timeFrame, stockName);
             const companyInfo = await stockApi("company", stockName);
             stockChart["company"] = companyInfo.companyName;
+            stockChart["symbol"] = companyInfo.symbol;
+            stockChart["purchasedPPS"] = stock.pps;
+            stockChart["numShares"] = stock.shares;
+            let lastObj = stockChart[stockChart.length - 1];
+            let currentPPS = lastObj.close;
+            stockChart["currentPPS"] = currentPPS;
+            stockChart["totalValue"] = stockChart.purchasedPPS * stockChart.numShares;
+            stockChart["difference"] = stockChart.numShares * stockChart.currentPPS;
             stockDataArray.push(stockChart);
         });
         stockCharts = stockDataArray;
@@ -110,7 +118,7 @@ const Portfolio = () => {
         </svg>
     );
 
-    const testData = [{name: "Elijah", high: 1000, low: 900}, {name: "Hubbard", high: 800, low: 700}, {name: "Shamar", high: 600, low: 500}, {name: "Test", high: 400, low: 300}];
+    // const testData = [{name: "Elijah", high: 1000, low: 900}, {name: "Hubbard", high: 800, low: 700}, {name: "Shamar", high: 600, low: 500}, {name: "Test", high: 400, low: 300}];
 
     return (
         <>
@@ -128,49 +136,46 @@ const Portfolio = () => {
             </div>
             <div className="totalValue__bottomBorder"></div>
             <div className="stockChart">
-                {/* {stockCharts.map((chart) => { */}
-                <div className="individualStocks__portfolio">
-                    <div className="stockChart__div">
-                        <div className="stockname__portfolio">Apple</div>
-                        <ResponsiveContainer height="78%">
-                            <LineChart data={testData} margin={{top:25, bottom: 25}}>
-                                <Line type="linear" dataKey="label" stroke="#00c805" dot={false} isAnimationActive={true} />
-                                <YAxis hide={true} domain={["dataMin", "dataMax"]} />
-                                <Tooltip />
-                            </LineChart>
-                        </ResponsiveContainer>
-                        <div className="stockChart__timeFrame">
-                            {timeSelection === "today" ? <div style={{ marginLeft: "0px" }} className="timeFrames selected__timeFrame">1D</div> : <div onClick={todaySelection} style={{ marginLeft: "0px" }} id="timeFrame__today" className="timeFrames">1D</div>}
-                            {timeSelection === "week" ? <div className="timeFrames selected__timeFrame">1W</div> : <div onClick={weekSelection} id="timeFrame__week" className="timeFrames">1W</div>}
-                            {timeSelection === "month" ? <div className="timeFrames selected__timeFrame">1M</div> : <div onClick={monthSelection} id="timeFrame__month" className="timeFrames">1M</div>}
-                            {timeSelection === "6months" ? <div className="timeFrames selected__timeFrame">6M</div> : <div onClick={sixMonthsSelection} id="timeFrame__6months" className="timeFrames">6M</div>}
-                            {timeSelection === "year" ? <div className="timeFrames selected__timeFrame">1Y</div> : <div onClick={yearSelection} id="timeFrame__year" className="timeFrames">1Y</div>}
+                {portfolio ? stockCharts.map((chart) => (
+                    <div key={chart.company} className="individualStocks__portfolio">
+                        <div className="stockChart__div">
+                            <div className="stockName__portfolio">{chart.company}</div>
+                            <ResponsiveContainer height="78%">
+                                <LineChart data={chart} margin={{top:25, bottom: 25}}>
+                                    <Line type="linear" dataKey="label" stroke="#00c805" dot={false} isAnimationActive={true} />
+                                    <YAxis hide={true} domain={["dataMin", "dataMax"]} />
+                                    <Tooltip />
+                                </LineChart>
+                            </ResponsiveContainer>
+                            <div className="stockChart__timeFrame">
+                                {timeSelection === "today" ? <div style={{ marginLeft: "0px" }} className="timeFrames selected__timeFrame">1D</div> : <div onClick={todaySelection} style={{ marginLeft: "0px" }} id="timeFrame__today" className="timeFrames">1D</div>}
+                                {timeSelection === "week" ? <div className="timeFrames selected__timeFrame">1W</div> : <div onClick={weekSelection} id="timeFrame__week" className="timeFrames">1W</div>}
+                                {timeSelection === "month" ? <div className="timeFrames selected__timeFrame">1M</div> : <div onClick={monthSelection} id="timeFrame__month" className="timeFrames">1M</div>}
+                                {timeSelection === "6months" ? <div className="timeFrames selected__timeFrame">6M</div> : <div onClick={sixMonthsSelection} id="timeFrame__6months" className="timeFrames">6M</div>}
+                                {timeSelection === "year" ? <div className="timeFrames selected__timeFrame">1Y</div> : <div onClick={yearSelection} id="timeFrame__year" className="timeFrames">1Y</div>}
+                            </div>
+                        </div>
+                        <div className="stockInfo__portfolio-div">
+                            <div className="stockInfo__name">
+                                <span>{chart.symbol}</span>
+                                <span>${chart.currentPPS}</span>
+                            </div>
+                            <div className="stockInfo__shares-div">
+                                <div className="totalValue__portfolio">
+                                    <span>Total Value</span>
+                                    <span>${chart.totalValue}</span>
+                                </div>
+                                <div className="yourShares">
+                                    <span>{chart.numShares} Shares</span>
+                                    <span>@${chart.purchasedPPS}/share</span>
+                                </div>
+                                <div className="totalDifference__portfolio">
+                                    {chart.difference > chart.totalValue ? <span className="profit__difference">+ ${chart.difference}</span> : <span className="lost__difference">- ${chart.difference}</span>}
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div className="stockInfo__portfolio-div">
-                        <div className="stockInfo__name">
-                            <span>Test</span>
-                            <span>$320</span>
-                        </div>
-                        <div className="stockInfo__shares-div">
-                            <div className="totalValue__portfolio">
-                                <span>Total Value</span>
-                                <span>$750</span>
-                            </div>
-                            <div className="yourShares">
-                                <span>3 Shares</span>
-                                <span>@$250/share</span>
-                            </div>
-                            <div className="totalDifference__portfolio">
-                                <span>+ $210</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                {/* <LineChart width={500} height={250} data={testData}>
-                    <Line type="monotone" dataKey="high" stroke="#00c805" />
-                    <Tooltip />
-                </LineChart> */}
+                )) : <></>}
             </div>
         </div>
         </>
