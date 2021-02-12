@@ -1084,6 +1084,10 @@ html, body, #root {
     flex-direction: column;
     justify-content: space-between;
 }
+.stockname__portfolio {
+    font-weight: 600;
+    font-size: 1.3em;
+}
 .stockChart__timeFrame {
     border-bottom: 1px solid darkgrey;
     font-weight: 600;
@@ -1106,9 +1110,6 @@ html, body, #root {
     padding: 8%;
     border-bottom: 1px solid black;
 }
-/* .stockInfo__shares-div {
-    margin-top: 10%;
-} */
 .totalValue__portfolio {
     display: flex;
     justify-content: space-between;

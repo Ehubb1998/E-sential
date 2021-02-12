@@ -12,12 +12,13 @@ def iex_stock_info(company, time_frame, postMethod=False):
     test_key = Config.IEX_TEST_KEY
 
     if time_frame == "today":
+        print("INSIDE OF TODAY IF STATEMENT")
         date = datetime.datetime.now()
         year = date.year
         month = date.strftime("%m")
         day = date.strftime("%d")
 
-        response = requests.get(f"https://sandbox.iexapis.com/stable/stock/{company}/chart/date/{year}{month}{day}", params={"token": test_key})
+        response = requests.get(f"https://sandbox.iexapis.com/stable/stock/{company}/chart/date/{year}{month}11", params={"token": test_key})
         if response:
             company_chart = response.json()
             return company_chart
@@ -45,17 +46,23 @@ def iex_stock_info(company, time_frame, postMethod=False):
         if response:
             company_chart = response.json()
             return company_chart
+
+    if time_frame == "company":
+        response = requests.get(f"https://sandbox.iexapis.com/stable/stock/{company}/company", params={"token": test_key})
+        if response:
+            company_chart = response.json()
+            return company_chart
         
-    response = requests.get(f"https://sandbox.iexapis.com/stable/stock/{company}/batch", params={"types": "company,chart,news", "token": test_key})
-    if response:
-        company = response.json()
-        if postMethod == True:
-            chart = company["chart"][1]
-            return chart["close"]
-        else:
-            return company
-    else: 
-        return "Invalid Company Stock Symbol"
+    # response = requests.get(f"https://sandbox.iexapis.com/stable/stock/{company}/batch", params={"types": "company,chart,news", "token": test_key})
+    # if response:
+    #     company = response.json()
+    #     if postMethod == True:
+    #         chart = company["chart"][1]
+    #         return chart["close"]
+    #     else:
+    #         return company
+    # else: 
+    #     return "Invalid Company Stock Symbol"
 
 
 @stockInfo_routes.route("/", methods=["POST"])
@@ -64,7 +71,7 @@ def new_stock_info():
     user_id = request.json["userId"]
     company = request.json["companyName"]
     num_shares = request.json["numShares"]
-    stock_price = iex_stock_info(company, postMethod=True)
+    stock_price = iex_stock_info(company, "na", postMethod=True)
 
     if stock_price != "Invalid Company Stock Symbol":
 
@@ -115,6 +122,10 @@ def stock_chart_data(*args, **kwargs):
     time_frame = kwargs["timeFrame"]
     stock = kwargs["stock"]
     
+    if time_frame == "company":
+        stock_charts = iex_stock_info(stock, time_frame)
+        return jsonify({"CompanyInfo": stock_charts})
+        
     stock_charts = iex_stock_info(stock, time_frame)
     return jsonify({"StockChart": stock_charts})
 

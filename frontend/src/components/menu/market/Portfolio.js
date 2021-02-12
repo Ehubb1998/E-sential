@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
 import { LineChart, Line, Tooltip, YAxis, ResponsiveContainer } from 'recharts';
 // import NoStocks from "./NoStocks";
@@ -12,6 +12,8 @@ const Portfolio = () => {
     const token = window.localStorage.getItem("ESENTIAL_ACCESS_TOKEN");
     // const portfolioSet = window.localStorage.getItem("PORTFOLIO_SET");
     const [timeSelection, setTimeSelection] = useState("today");
+    const ref = useRef([]);
+    let stockCharts = ref.current;
 
 
     const todaySelection = () => {
@@ -70,23 +72,32 @@ const Portfolio = () => {
 
     const stockApi = async (timeFrame, nameOfStock) => {
         const chartRequests = await fetch(`/api/stock_info/chart/${timeFrame}/${token}/${nameOfStock}`);
+        if (timeFrame === "company") {
+            const { CompanyInfo } = await chartRequests.json();
+            return CompanyInfo
+        }
         const { StockChart } = await chartRequests.json();
         return StockChart;
     }
 
     const individualStockData = (portfolioArray, timeFrame) => {
-        // let stockDataArray = [];
+        let stockDataArray = [];
         portfolioArray.forEach(async (stock) => {
             let stockName = stock.stock;
             const stockChart = await stockApi(timeFrame, stockName);
-            console.log(stockChart);
-        })
+            const companyInfo = await stockApi("company", stockName);
+            stockChart["company"] = companyInfo.companyName;
+            stockDataArray.push(stockChart);
+        });
+        stockCharts = stockDataArray;
+        console.log(stockCharts);
     }
 
     useEffect(() => {
         totalValue(portfolio);
         individualStockData(portfolio, timeSelection);
-    });
+    }, []);
+
 
     const greenArrow = (
         <svg xmlns="http://www.w3.org/2000/svg" width="33" height="33" fill="rgb(0, 200, 5)" className="bi bi-caret-up-fill" viewBox="0 0 16 16">
@@ -117,12 +128,14 @@ const Portfolio = () => {
             </div>
             <div className="totalValue__bottomBorder"></div>
             <div className="stockChart">
+                {/* {stockCharts.map((chart) => { */}
                 <div className="individualStocks__portfolio">
                     <div className="stockChart__div">
-                        <ResponsiveContainer height="90%">
+                        <div className="stockname__portfolio">Apple</div>
+                        <ResponsiveContainer height="78%">
                             <LineChart data={testData} margin={{top:25, bottom: 25}}>
-                                <Line type="linear" dataKey="high" stroke="#00c805" dot={false} isAnimationActive={true} />
-                                <YAxis hide={true} domain={[100, 1100]} />
+                                <Line type="linear" dataKey="label" stroke="#00c805" dot={false} isAnimationActive={true} />
+                                <YAxis hide={true} domain={["dataMin", "dataMax"]} />
                                 <Tooltip />
                             </LineChart>
                         </ResponsiveContainer>
