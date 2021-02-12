@@ -11,6 +11,24 @@ const Portfolio = () => {
     const total = window.localStorage.getItem("TOTAL");
     const token = window.localStorage.getItem("ESENTIAL_ACCESS_TOKEN");
     // const portfolioSet = window.localStorage.getItem("PORTFOLIO_SET");
+    const [timeSelection, setTimeSelection] = useState("today");
+
+
+    const todaySelection = () => {
+        setTimeSelection("today");
+    }
+    const weekSelection = () => {
+        setTimeSelection("week");
+    }
+    const monthSelection = () => {
+        setTimeSelection("month");
+    }
+    const sixMonthsSelection = () => {
+        setTimeSelection("6months");
+    }
+    const yearSelection = () => {
+        setTimeSelection("year");
+    }
 
     const totalDifference = (num) => {
         const newNum = num.toString();
@@ -56,7 +74,7 @@ const Portfolio = () => {
         return StockChart;
     }
 
-    const individualStockData = (portfolioArray, timeFrame="today") => {
+    const individualStockData = (portfolioArray, timeFrame) => {
         // let stockDataArray = [];
         portfolioArray.forEach(async (stock) => {
             let stockName = stock.stock;
@@ -67,7 +85,7 @@ const Portfolio = () => {
 
     useEffect(() => {
         totalValue(portfolio);
-        individualStockData(portfolio);
+        individualStockData(portfolio, timeSelection);
     });
 
     const greenArrow = (
@@ -88,7 +106,7 @@ const Portfolio = () => {
         <div className="stockContent__div">
             <div className="portfolio__totalValue-container">
                 <div className="totalValue__div">
-                    {portfolio && portfolioTotalValue ? <div className="totalValue">Total Value • <span style={{ fontWeigth: "400" }}>${portfolioTotalValue.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</span></div> : <></>}
+                    {portfolio && portfolioTotalValue ? <div className="totalValue">Portfolio Value • <span style={{ fontWeigth: "400" }}>${portfolioTotalValue.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</span></div> : <></>}
                     <div className="differenceInValue__div">
                         <div style={{ paddingTop: "5px" }}>
                             {portfolio && differenceStatus === "up" ? greenArrow : redArrow}
@@ -109,15 +127,31 @@ const Portfolio = () => {
                             </LineChart>
                         </ResponsiveContainer>
                         <div className="stockChart__timeFrame">
-                            <div id="timeFrame__today" className="timeFrames">1D</div>
-                            <div id="timeFrame__week" className="timeFrames">1W</div>
-                            <div id="timeFrame__month" className="timeFrames">1M</div>
-                            <div id="timeFrame__6months" className="timeFrames">6M</div>
-                            <div id="timeFrame__year" className="timeFrames">1Y</div>
+                            {timeSelection === "today" ? <div style={{ marginLeft: "0px" }} className="timeFrames selected__timeFrame">1D</div> : <div onClick={todaySelection} style={{ marginLeft: "0px" }} id="timeFrame__today" className="timeFrames">1D</div>}
+                            {timeSelection === "week" ? <div className="timeFrames selected__timeFrame">1W</div> : <div onClick={weekSelection} id="timeFrame__week" className="timeFrames">1W</div>}
+                            {timeSelection === "month" ? <div className="timeFrames selected__timeFrame">1M</div> : <div onClick={monthSelection} id="timeFrame__month" className="timeFrames">1M</div>}
+                            {timeSelection === "6months" ? <div className="timeFrames selected__timeFrame">6M</div> : <div onClick={sixMonthsSelection} id="timeFrame__6months" className="timeFrames">6M</div>}
+                            {timeSelection === "year" ? <div className="timeFrames selected__timeFrame">1Y</div> : <div onClick={yearSelection} id="timeFrame__year" className="timeFrames">1Y</div>}
                         </div>
                     </div>
                     <div className="stockInfo__portfolio-div">
-                        Test
+                        <div className="stockInfo__name">
+                            <span>Test</span>
+                            <span>$320</span>
+                        </div>
+                        <div className="stockInfo__shares-div">
+                            <div className="totalValue__portfolio">
+                                <span>Total Value</span>
+                                <span>$750</span>
+                            </div>
+                            <div className="yourShares">
+                                <span>3 Shares</span>
+                                <span>@ $250/share</span>
+                            </div>
+                            <div className="totalDifference__portfolio">
+                                <span>+ $210</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 {/* <LineChart width={500} height={250} data={testData}>

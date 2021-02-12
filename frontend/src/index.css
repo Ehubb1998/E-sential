@@ -548,6 +548,7 @@ html, body, #root {
     width: 33.3%;
     text-align: center;
     padding-top: 1.05%;
+    padding-bottom: 1.05%;
     cursor: pointer;
     font-size: 1.12em;
 }
@@ -560,6 +561,7 @@ html, body, #root {
     width: 33.3%;
     text-align: center;
     padding-top: 1.05%;
+    padding-bottom: 1.05%;
     cursor: pointer;
     font-size: 1.12em;
 }
@@ -572,6 +574,7 @@ html, body, #root {
     width: 33.3%;
     text-align: center;
     padding-top: 1.05%;
+    padding-bottom: 1.05%;
     cursor: pointer;
     font-size: 1.12em;
 }
@@ -1019,7 +1022,8 @@ html, body, #root {
 .stockContent__div {
     height: 100%;
     width: 100%;
-    overflow: scroll;
+    overflow-x: hidden;
+    overflow-y: scroll;
 }
 
 /* Portfolio */
@@ -1066,8 +1070,13 @@ html, body, #root {
     height: 48vh;
 }
 .stockInfo__portfolio-div {
-    background-color: grey;
-    height: 100%;
+    height: 75%;
+    width: 21%;
+    background-color: rgb(240, 240, 240);
+    border-radius: 5px;
+    margin-left: 9%;
+    margin-top: 3%;
+    box-shadow: 1px 1px 3px 2px rgb(0 0 0 / 20%);
 }
 .stockChart__div {
     width: 60%;
@@ -1080,9 +1089,44 @@ html, body, #root {
     font-weight: 600;
     font-size: 1em;
     display: flex;
-    padding-bottom: 1.5%;
 }
 .timeFrames {
     margin-left: 3%;
     cursor: pointer;
+    padding-bottom: 1.5%;
+}
+.selected__timeFrame {
+    color:rgb(0, 200, 5);
+    border-bottom: 3.5px solid rgb(0, 200, 5);
+}
+.stockInfo__name {
+    display: flex;
+    justify-content: space-between;
+    font-size: 1.5em;
+    padding: 8%;
+    border-bottom: 1px solid black;
+}
+/* .stockInfo__shares-div {
+    margin-top: 10%;
+} */
+.totalValue__portfolio {
+    display: flex;
+    justify-content: space-between;
+    font-size: 1.05em;
+    padding: 8%;
+}
+.yourShares {
+    display: flex;
+    justify-content: space-between;
+    font-size: 1.05em;
+    padding-top: 3%;
+    padding-left: 8%;
+    padding-right: 8%;
+    padding-bottom: 8%;
+}
+.totalDifference__portfolio {
+    display: flex;
+    justify-content: center;
+    font-size: 1.5em;
+    margin-top: 2%;
 }
