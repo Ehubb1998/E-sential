@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { LineChart, Line, Tooltip, YAxis, ResponsiveContainer } from 'recharts';
 // import NoStocks from "./NoStocks";
@@ -12,8 +12,10 @@ const Portfolio = () => {
     const token = window.localStorage.getItem("ESENTIAL_ACCESS_TOKEN");
     // const portfolioSet = window.localStorage.getItem("PORTFOLIO_SET");
     const [timeSelection, setTimeSelection] = useState("today");
-    const ref = useRef([]);
-    let stockCharts = ref.current;
+    const [loading, setLoading] = useState(true);
+    const [stockCharts, setStockCharts] = useState([]);
+    // const ref = useRef([]);
+    // let stockCharts = ref.current;
 
 
     const todaySelection = () => {
@@ -80,12 +82,15 @@ const Portfolio = () => {
         return StockChart;
     }
 
-    const individualStockData = (portfolioArray, timeFrame) => {
+    const individualStockData = async (portfolioArray, timeFrame) => {
         let stockDataArray = [];
-        portfolioArray.forEach(async (stock) => {
+        for (let i = 0; i < portfolioArray.length; i++) {
+            let stock = portfolioArray[i];
             let stockName = stock.stock;
+
             const stockChart = await stockApi(timeFrame, stockName);
             const companyInfo = await stockApi("company", stockName);
+
             stockChart["company"] = companyInfo.companyName;
             stockChart["symbol"] = companyInfo.symbol;
             stockChart["purchasedPPS"] = stock.pps;
@@ -96,14 +101,23 @@ const Portfolio = () => {
             stockChart["totalValue"] = stockChart.purchasedPPS * stockChart.numShares;
             stockChart["difference"] = stockChart.numShares * stockChart.currentPPS;
             stockDataArray.push(stockChart);
-        });
-        stockCharts = stockDataArray;
-        console.log(stockCharts);
+        }
+        // debugger;
+        return stockDataArray;
+        // console.log(stockCharts);
     }
 
     useEffect(() => {
-        totalValue(portfolio);
-        individualStockData(portfolio, timeSelection);
+        const stockFunction = async () => {
+            if (loading === true) {
+                totalValue(portfolio);
+                const stockData = await individualStockData(portfolio, timeSelection);
+                console.log(stockData);
+                setStockCharts(stockData);
+                setLoading(false);
+            }
+        }
+        stockFunction();
     }, []);
 
 
@@ -116,6 +130,11 @@ const Portfolio = () => {
         <svg xmlns="http://www.w3.org/2000/svg" width="33" height="33" fill="currentColor" className="bi bi-caret-down-fill" viewBox="0 0 16 16">
             <path d="M7.247 11.14L2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
         </svg>
+    );
+    const loadingWheel = (
+        <div id="loader">
+            <div className="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+        </div>
     );
 
     // const testData = [{name: "Elijah", high: 1000, low: 900}, {name: "Hubbard", high: 800, low: 700}, {name: "Shamar", high: 600, low: 500}, {name: "Test", high: 400, low: 300}];
@@ -136,7 +155,15 @@ const Portfolio = () => {
             </div>
             <div className="totalValue__bottomBorder"></div>
             <div className="stockChart">
-                {portfolio ? stockCharts.map((chart) => (
+                {/* {console.log(loading)}
+                {console.log(stockCharts)}
+                {console.log("This is right before the ternary " + stockCharts.length)}
+                {console.log("loading === false", loading === false)}
+                {console.log("stockCharts.length", stockCharts.length)}
+                {loading === false && stockCharts.length > 0 ? console.log("It Works") : console.log("It failed")}
+                {console.log("This is right after the ternary " + stockCharts.length)}
+                {console.log(stockCharts)} */}
+                {loading === false ? stockCharts.map((chart) => (
                     <div key={chart.company} className="individualStocks__portfolio">
                         <div className="stockChart__div">
                             <div className="stockName__portfolio">{chart.company}</div>
@@ -175,7 +202,7 @@ const Portfolio = () => {
                             </div>
                         </div>
                     </div>
-                )) : <></>}
+                )) : loadingWheel}
             </div>
         </div>
         </>
