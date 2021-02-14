@@ -620,7 +620,7 @@ html, body, #root {
 .lds-roller {
   display: inline-block;
   position: relative;
-  margin-left: 577px;
+  margin-left: 518px;
   width: 50%;
   padding: 10px;
   height: 50px;
@@ -1068,6 +1068,7 @@ html, body, #root {
     display: flex;
     justify-content: flex-start;
     height: 48vh;
+    /* margin-bottom: 3%; */
 }
 .stockInfo__portfolio-div {
     height: 75%;

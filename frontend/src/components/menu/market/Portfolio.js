@@ -107,6 +107,12 @@ const Portfolio = () => {
         // console.log(stockCharts);
     }
 
+    const numberFormat = (num) => {
+        let roundedNum = Math.round(num);
+        let formattedNum = roundedNum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        return formattedNum;
+    }
+
     useEffect(() => {
         const stockFunction = async () => {
             if (loading === true) {
@@ -155,23 +161,16 @@ const Portfolio = () => {
             </div>
             <div className="totalValue__bottomBorder"></div>
             <div className="stockChart">
-                {/* {console.log(loading)}
-                {console.log(stockCharts)}
-                {console.log("This is right before the ternary " + stockCharts.length)}
-                {console.log("loading === false", loading === false)}
-                {console.log("stockCharts.length", stockCharts.length)}
-                {loading === false && stockCharts.length > 0 ? console.log("It Works") : console.log("It failed")}
-                {console.log("This is right after the ternary " + stockCharts.length)}
-                {console.log(stockCharts)} */}
                 {loading === false ? stockCharts.map((chart) => (
+                    <>
                     <div key={chart.company} className="individualStocks__portfolio">
                         <div className="stockChart__div">
                             <div className="stockName__portfolio">{chart.company}</div>
                             <ResponsiveContainer height="78%">
                                 <LineChart data={chart} margin={{top:25, bottom: 25}}>
-                                    <Line type="linear" dataKey="label" stroke="#00c805" dot={false} isAnimationActive={true} />
-                                    <YAxis hide={true} domain={["dataMin", "dataMax"]} />
-                                    <Tooltip />
+                                    <Line type="linear" dataKey="close" stroke="#00c805" dot={false} strokeWidth={2} isAnimationActive={true} />
+                                    <YAxis hide={true} domain={[dataMin => (Math.round(dataMin)), dataMax => (Math.round(dataMax))]} />
+                                    <Tooltip isAnimationActive={false} offset={-40} position={{ y: -40 }} />
                                 </LineChart>
                             </ResponsiveContainer>
                             <div className="stockChart__timeFrame">
@@ -185,23 +184,25 @@ const Portfolio = () => {
                         <div className="stockInfo__portfolio-div">
                             <div className="stockInfo__name">
                                 <span>{chart.symbol}</span>
-                                <span>${chart.currentPPS}</span>
+                                <span>${numberFormat(chart.currentPPS)}</span>
                             </div>
                             <div className="stockInfo__shares-div">
                                 <div className="totalValue__portfolio">
                                     <span>Total Value</span>
-                                    <span>${chart.totalValue}</span>
+                                    <span>${numberFormat(chart.totalValue)}</span>
                                 </div>
                                 <div className="yourShares">
                                     <span>{chart.numShares} Shares</span>
-                                    <span>@${chart.purchasedPPS}/share</span>
+                                    <span>@${numberFormat(chart.purchasedPPS)}/share</span>
                                 </div>
                                 <div className="totalDifference__portfolio">
-                                    {chart.difference > chart.totalValue ? <span className="profit__difference">+ ${chart.difference}</span> : <span className="lost__difference">- ${chart.difference}</span>}
+                                    {chart.difference > chart.totalValue ? <span className="profit__difference">+ ${numberFormat(chart.difference)}</span> : <span className="lost__difference">- ${numberFormat(chart.difference)}</span>}
                                 </div>
                             </div>
                         </div>
                     </div>
+                    <div style={{ height: "10%", backgroundColor: "white" }}></div>
+                    </>
                 )) : loadingWheel}
             </div>
         </div>
