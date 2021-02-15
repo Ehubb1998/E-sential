@@ -1138,3 +1138,27 @@ html, body, #root {
 .lost__difference {
     color: #ff4400;
 }
+
+/* Market */
+/* .stockChart__container {
+    width: 100%;
+    height: 100%;
+    margin-top: 2%;
+    margin-left: 3.3%;
+} */
+.featuredStocks__container {
+    width: 96.7%;
+    height: 71%;
+    display: flex;
+    flex-wrap: wrap;
+}
+.featuredStocks__div {
+    margin-right: 3%;
+    margin-bottom: 3%;
+    width: 22%;
+    height: 32%;
+    background-color: rgb(240, 240, 240);
+    border-radius: 5%;
+    box-shadow: 1px 1px 3px 2px rgb(0 0 0 / 20%);
+    cursor: pointer;
+}
