@@ -4,7 +4,12 @@ import { useParams, useHistory } from "react-router-dom";
 import StockInfo from "./StockInfo";
 
 const Market = (props) => {
+    let urlStockInfo = false;
     const stockProps = props.stock;
+    if (stockProps) {
+        console.log("Inside of if statement")
+        urlStockInfo = true;
+    }
     // const [expandedDivId, setExpandedDivId] = useState("");
     const [inExpanded, setInExpanded] = useState(false);
     // const [finishedInitial, setFinishedInitial] = useState(false);
@@ -25,15 +30,15 @@ const Market = (props) => {
         <div className="stockContent__div">
             <div className="portfolio__totalValue-container">
                 <div className="totalValue__div">
-                    {inExpanded === false ? <div className="totalValue">Featured Stocks</div> : stockProps === true ? <div className="totalValue">{stock}</div> : <div className="totalValue">{clickedStock}</div>}
+                    {inExpanded === false && urlStockInfo === false ? <div className="totalValue">Featured Stocks</div> : urlStockInfo === true ? <div className="totalValue">{stock}</div> : <div className="totalValue">{clickedStock}</div>}
                 </div>
             </div>
             <div className="totalValue__bottomBorder"></div>
             <div style={{ height: "150%" }} className="stockChart">
                 <div className="featuredStocks__container">
-                    {inExpanded === false ? featuredStocks.map((stock) => (
-                        <div id={stock} onClick={handleClick} className="featuredStocks__div"></div>
-                    )) : stockProps === true ? <StockInfo stock={stock} /> : <StockInfo stock={clickedStock} />}
+                    {inExpanded === false && urlStockInfo === false ? featuredStocks.map((stock) => (
+                        <div key={stock} id={stock} onClick={handleClick} className="featuredStocks__div"></div>
+                    )) : urlStockInfo === true ? <StockInfo stock={stock} /> : <StockInfo stock={clickedStock} />}
                 </div>
             </div>
         </div>

@@ -12,6 +12,7 @@ import WellsFargo from "../../assets/wellsFargo.png";
 
 
 const Banking = () => {
+    window.localStorage.removeItem("component");
     const dispatch = useDispatch();
     const storeUser = useSelector(state => state.userDataReducer.userData);
     const bankInfo = useSelector(state => state.bankDataReducer.bankData);

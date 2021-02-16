@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { updateEmail, updatePrimaryBank, updateJob, confirmPassword, updatePassword } from "../../store/actions/userData";
 
 const Account = () => {
+    window.localStorage.removeItem("component");
     const dispatch = useDispatch();
     const user = useSelector(state => state.userDataReducer.userData);
     const token = useSelector(state => state.auth.token);

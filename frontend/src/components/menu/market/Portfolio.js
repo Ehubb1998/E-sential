@@ -4,6 +4,7 @@ import { LineChart, Line, Tooltip, YAxis, ResponsiveContainer } from 'recharts';
 // import NoStocks from "./NoStocks";
 
 const Portfolio = () => {
+    window.localStorage.removeItem("component");
     const portfolio = useSelector(state => state.stockDataReducer.portfolioData);
     const [portfolioTotalValue, setPortfolioTotalValue] = useState("");
     const [totalValueDifference, setTotalValueDifference] = useState("");
@@ -118,7 +119,7 @@ const Portfolio = () => {
             if (loading === true) {
                 totalValue(portfolio);
                 const stockData = await individualStockData(portfolio, timeSelection);
-                console.log(stockData);
+                // console.log(stockData);
                 setStockCharts(stockData);
                 setLoading(false);
             }
@@ -162,47 +163,47 @@ const Portfolio = () => {
             <div className="totalValue__bottomBorder"></div>
             <div className="stockChart">
                 {loading === false ? stockCharts.map((chart) => (
-                    <>
-                    <div key={chart.company} className="individualStocks__portfolio">
-                        <div className="stockChart__div">
-                            <div className="stockName__portfolio">{chart.company}</div>
-                            <ResponsiveContainer height="78%">
-                                <LineChart data={chart} margin={{top:25, bottom: 25}}>
-                                    <Line type="linear" dataKey="close" stroke="#00c805" dot={false} strokeWidth={2} isAnimationActive={true} />
-                                    <YAxis hide={true} domain={[dataMin => (Math.round(dataMin)), dataMax => (Math.round(dataMax))]} />
-                                    <Tooltip isAnimationActive={false} offset={-40} position={{ y: -40 }} />
-                                </LineChart>
-                            </ResponsiveContainer>
-                            <div className="stockChart__timeFrame">
-                                {timeSelection === "today" ? <div style={{ marginLeft: "0px" }} className="timeFrames selected__timeFrame">1D</div> : <div onClick={todaySelection} style={{ marginLeft: "0px" }} id="timeFrame__today" className="timeFrames">1D</div>}
-                                {timeSelection === "week" ? <div className="timeFrames selected__timeFrame">1W</div> : <div onClick={weekSelection} id="timeFrame__week" className="timeFrames">1W</div>}
-                                {timeSelection === "month" ? <div className="timeFrames selected__timeFrame">1M</div> : <div onClick={monthSelection} id="timeFrame__month" className="timeFrames">1M</div>}
-                                {timeSelection === "6months" ? <div className="timeFrames selected__timeFrame">6M</div> : <div onClick={sixMonthsSelection} id="timeFrame__6months" className="timeFrames">6M</div>}
-                                {timeSelection === "year" ? <div className="timeFrames selected__timeFrame">1Y</div> : <div onClick={yearSelection} id="timeFrame__year" className="timeFrames">1Y</div>}
+                    <span key={chart.company}>
+                        <div className="individualStocks__portfolio">
+                            <div className="stockChart__div">
+                                <div className="stockName__portfolio">{chart.company}</div>
+                                <ResponsiveContainer height="78%">
+                                    <LineChart data={chart} margin={{top:25, bottom: 25}}>
+                                        <Line type="linear" dataKey="close" stroke="#00c805" dot={false} strokeWidth={2} isAnimationActive={true} />
+                                        <YAxis hide={true} domain={[dataMin => (Math.round(dataMin)), dataMax => (Math.round(dataMax))]} />
+                                        <Tooltip isAnimationActive={false} offset={-40} position={{ y: -40 }} />
+                                    </LineChart>
+                                </ResponsiveContainer>
+                                <div className="stockChart__timeFrame">
+                                    {timeSelection === "today" ? <div style={{ marginLeft: "0px" }} className="timeFrames selected__timeFrame">1D</div> : <div onClick={todaySelection} style={{ marginLeft: "0px" }} id="timeFrame__today" className="timeFrames">1D</div>}
+                                    {timeSelection === "week" ? <div className="timeFrames selected__timeFrame">1W</div> : <div onClick={weekSelection} id="timeFrame__week" className="timeFrames">1W</div>}
+                                    {timeSelection === "month" ? <div className="timeFrames selected__timeFrame">1M</div> : <div onClick={monthSelection} id="timeFrame__month" className="timeFrames">1M</div>}
+                                    {timeSelection === "6months" ? <div className="timeFrames selected__timeFrame">6M</div> : <div onClick={sixMonthsSelection} id="timeFrame__6months" className="timeFrames">6M</div>}
+                                    {timeSelection === "year" ? <div className="timeFrames selected__timeFrame">1Y</div> : <div onClick={yearSelection} id="timeFrame__year" className="timeFrames">1Y</div>}
+                                </div>
+                            </div>
+                            <div className="stockInfo__portfolio-div">
+                                <div className="stockInfo__name">
+                                    <span>{chart.symbol}</span>
+                                    <span>${numberFormat(chart.currentPPS)}</span>
+                                </div>
+                                <div className="stockInfo__shares-div">
+                                    <div className="totalValue__portfolio">
+                                        <span>Total Value</span>
+                                        <span>${numberFormat(chart.totalValue)}</span>
+                                    </div>
+                                    <div className="yourShares">
+                                        <span>{chart.numShares} Shares</span>
+                                        <span>@${numberFormat(chart.purchasedPPS)}/share</span>
+                                    </div>
+                                    <div className="totalDifference__portfolio">
+                                        {chart.difference > chart.totalValue ? <span className="profit__difference">+ ${numberFormat(chart.difference)}</span> : <span className="lost__difference">- ${numberFormat(chart.difference)}</span>}
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <div className="stockInfo__portfolio-div">
-                            <div className="stockInfo__name">
-                                <span>{chart.symbol}</span>
-                                <span>${numberFormat(chart.currentPPS)}</span>
-                            </div>
-                            <div className="stockInfo__shares-div">
-                                <div className="totalValue__portfolio">
-                                    <span>Total Value</span>
-                                    <span>${numberFormat(chart.totalValue)}</span>
-                                </div>
-                                <div className="yourShares">
-                                    <span>{chart.numShares} Shares</span>
-                                    <span>@${numberFormat(chart.purchasedPPS)}/share</span>
-                                </div>
-                                <div className="totalDifference__portfolio">
-                                    {chart.difference > chart.totalValue ? <span className="profit__difference">+ ${numberFormat(chart.difference)}</span> : <span className="lost__difference">- ${numberFormat(chart.difference)}</span>}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div style={{ height: "10%", backgroundColor: "white" }}></div>
-                    </>
+                        <div style={{ height: "10%", backgroundColor: "white" }}></div>
+                    </span>
                 )) : loadingWheel}
             </div>
         </div>
