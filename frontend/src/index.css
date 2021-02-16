@@ -1148,7 +1148,7 @@ html, body, #root {
 } */
 .featuredStocks__container {
     width: 96.7%;
-    height: 71%;
+    height: 86%;
     display: flex;
     flex-wrap: wrap;
 }

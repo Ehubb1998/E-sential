@@ -12,7 +12,7 @@ const Market = () => {
                 </div>
             </div>
             <div className="totalValue__bottomBorder"></div>
-            <div style={{ height: "200%" }} className="stockChart">
+            <div style={{ height: "150%" }} className="stockChart">
                 <div className="featuredStocks__container">
                     {featuredStocks.map(() => (
                         <div className="featuredStocks__div"></div>
