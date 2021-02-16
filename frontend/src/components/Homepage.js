@@ -3,8 +3,9 @@ import Banking from "./menu/Banking";
 import StockMarket from "./menu/StockMarket";
 import Account from "./menu/Account";
 
-const Homepage = () => {
+const Homepage = (props) => {
     const [menuSelection, setMenuSelection] = useState("banking");
+    const stockInfo = props.stock;
 
 
     const bankingSelection = () => {
@@ -24,7 +25,7 @@ const Homepage = () => {
             {menuSelection === "stock" ? <div onClick={stockSelection} className="stockMarket__menu selected">Stock Market</div> : <div onClick={stockSelection} className="stockMarket__menu">Stock Market</div>}
             {menuSelection === "account" ? <div onClick={accountSelection} className="userAccount__menu selected">Account</div> : <div onClick={accountSelection} className="userAccount__menu">Account</div>}
         </div>
-        {menuSelection === "stock" ? <StockMarket /> : menuSelection === "account" ? <Account /> : <Banking />}
+        {menuSelection === "stock" || stockInfo === true ? <StockMarket stock={stockInfo} /> : menuSelection === "account" ? <Account /> : <Banking />}
         </>
     )
 }

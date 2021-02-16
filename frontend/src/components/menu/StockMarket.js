@@ -5,8 +5,9 @@ import Portfolio from "./market/Portfolio";
 import WatchList from "./market/WatchList";
 
 
-const StockMarket = () => {
+const StockMarket = (props) => {
     const [menuSelection, setMenuSelection] = useState("portfolio");
+    const stockInfo = props.stock;
 
 
     const portfolioSelection = () => {
@@ -32,7 +33,7 @@ const StockMarket = () => {
                     {menuSelection === "watchList" ? <div className="watchList__component stockMarket__selected">Watch List</div> : <div onClick={watchListSelection} className="watchList__component">Watch List</div>}
                     {menuSelection === "plans" ? <div className="plans__component stockMarket__selected">Plans</div> : <div onClick={plansSelection} className="plans__component">Plans</div>}
                 </div>
-                {menuSelection === "market" ? <Market /> : menuSelection === "watchList" ? <WatchList /> : menuSelection === "plans" ? <Plans /> : <Portfolio />}
+                {menuSelection === "market" || stockInfo === true ? <Market /> : menuSelection === "watchList" ? <WatchList /> : menuSelection === "plans" ? <Plans /> : <Portfolio />}
             </div>
         </div>
         </>

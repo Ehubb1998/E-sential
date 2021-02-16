@@ -65,6 +65,10 @@ const App = () => {
           <NavBar isLoggedIn={token} />
           <Homepage />
         </ProtectedRoute>
+        <ProtectedRoute path="/info/:stock" exact={true} isLoggedIn={token}>
+          <NavBar isLoggedIn={token} />
+          <Homepage stock={true} />
+        </ProtectedRoute>
       </Switch>
     </BrowserRouter>
   );

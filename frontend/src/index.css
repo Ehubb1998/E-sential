@@ -1025,6 +1025,12 @@ html, body, #root {
     overflow-x: hidden;
     overflow-y: scroll;
 }
+.stockContent__div-expanded {
+    height: 100%;
+    width: 100%;
+    overflow-x: hidden;
+    overflow-y: hidden;
+}
 
 /* Portfolio */
 .portfolio__totalValue-container {
@@ -1157,6 +1163,14 @@ html, body, #root {
     margin-bottom: 3%;
     width: 22%;
     height: 32%;
+    background-color: rgb(240, 240, 240);
+    border-radius: 5%;
+    box-shadow: 1px 1px 3px 2px rgb(0 0 0 / 20%);
+    cursor: pointer;
+}
+.featuredStocks__div-expanded {
+    margin-right: 3%;
+    margin-bottom: 3%;
     background-color: rgb(240, 240, 240);
     border-radius: 5%;
     box-shadow: 1px 1px 3px 2px rgb(0 0 0 / 20%);
