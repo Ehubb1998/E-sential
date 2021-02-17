@@ -62,6 +62,7 @@ const Market = (props) => {
                 const stockData = await featuredStockData(featuredStockArray, "today");
                 setMiniStocks(stockData);
                 setLoading(false);
+                console.log("INSIDE OF FUNCTION IN USEEFFECT")
             }
         }
         featuredStocks();
