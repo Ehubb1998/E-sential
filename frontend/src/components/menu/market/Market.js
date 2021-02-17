@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 // import { motion } from "framer-motion";
 import StockInfo from "./StockInfo";
 import MiniStockData from "./MiniStockData";
 
 const Market = (props) => {
+    const history = useHistory();
     let urlStockInfo = false;
     const stockProps = props.stock;
     if (stockProps) {
@@ -18,14 +19,13 @@ const Market = (props) => {
     const [miniStocks, setMiniStocks] = useState([]);
     const featuredStockArray = ["SNAP", "AAPL", "TWTR", "TSLA", "NFLX", "FB", "MSFT", "DIS", "GPRO", "SBUX", "GME", "UBER"];
     const token = window.localStorage.getItem("ESENTIAL_ACCESS_TOKEN");
-
+    
     const { stock } = useParams();
 
     const handleClick = (e) => {
         setInExpanded(true);
         const stockName = e.currentTarget.id;
         setClickedStock(stockName);
-        console.log(stockName);
     }
 
     const stockApi = async (timeFrame, nameOfStock) => {
@@ -65,6 +65,7 @@ const Market = (props) => {
             }
         }
         featuredStocks();
+        // eslint-disable-next-line
     }, []);
 
     const loadingWheel = (
@@ -83,6 +84,7 @@ const Market = (props) => {
             </div>
             <div className="totalValue__bottomBorder"></div>
             <div className="stockChart">
+                {console.log(loading === false && inExpanded === false && urlStockInfo === false)}
                 {loading === false && inExpanded === false && urlStockInfo === false ? <div className="featuredStocks__container">
                     <div className="featuredStocks__row">
                         <div onClick={handleClick} id="SNAP" className="featuredStocks__div hvr-grow"><MiniStockData i={0} stockArray={miniStocks} /></div>
@@ -103,9 +105,6 @@ const Market = (props) => {
                         <div onClick={handleClick} id="UBER" className="featuredStocks__div hvr-grow"><MiniStockData i={11} stockArray={miniStocks} /></div>
                     </div>
                     <div style={{ height: "5vh" }}></div>
-                    {/* {inExpanded === false && urlStockInfo === false ? featuredStocks.map((stock) => (
-                        <div key={stock} id={stock} onClick={handleClick} className="featuredStocks__div"></div>
-                    )) : urlStockInfo === true ? <StockInfo stock={stock} /> : <StockInfo stock={clickedStock} />} */}
                 </div> : urlStockInfo === true ? <StockInfo stock={stock} /> : loading ? loadingWheel : <StockInfo stock={clickedStock} />}
             </div>
         </div>
