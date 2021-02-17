@@ -15,8 +15,6 @@ const Portfolio = () => {
     const [timeSelection, setTimeSelection] = useState("today");
     const [loading, setLoading] = useState(true);
     const [stockCharts, setStockCharts] = useState([]);
-    // const ref = useRef([]);
-    // let stockCharts = ref.current;
 
 
     const todaySelection = () => {
@@ -103,9 +101,7 @@ const Portfolio = () => {
             stockChart["difference"] = stockChart.numShares * stockChart.currentPPS;
             stockDataArray.push(stockChart);
         }
-        // debugger;
         return stockDataArray;
-        // console.log(stockCharts);
     }
 
     const numberFormat = (num) => {
@@ -119,12 +115,12 @@ const Portfolio = () => {
             if (loading === true) {
                 totalValue(portfolio);
                 const stockData = await individualStockData(portfolio, timeSelection);
-                // console.log(stockData);
                 setStockCharts(stockData);
                 setLoading(false);
             }
         }
         stockFunction();
+        // eslint-disable-next-line
     }, []);
 
 

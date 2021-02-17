@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 // import { motion } from "framer-motion";
 import StockInfo from "./StockInfo";
 import MiniStockData from "./MiniStockData";
 
 const Market = (props) => {
+    const history = useHistory();
+    const backButton = window.localStorage.getItem("back");
     let urlStockInfo = false;
     const stockProps = props.stock;
     if (stockProps) {
@@ -18,14 +20,21 @@ const Market = (props) => {
     const [miniStocks, setMiniStocks] = useState([]);
     const featuredStockArray = ["SNAP", "AAPL", "TWTR", "TSLA", "NFLX", "FB", "MSFT", "DIS", "GPRO", "SBUX", "GME", "UBER"];
     const token = window.localStorage.getItem("ESENTIAL_ACCESS_TOKEN");
-
+    
+    if (backButton === "true") {
+        urlStockInfo = false;
+        window.localStorage.removeItem("back");
+        window.localStorage.removeItem("component");
+        setInExpanded(false);
+        console.log("INSIDE OF THIS IF STATEMENT!!!!")
+        console.log(inExpanded);
+    }
     const { stock } = useParams();
 
     const handleClick = (e) => {
         setInExpanded(true);
         const stockName = e.currentTarget.id;
-        setClickedStock(stockName);
-        console.log(stockName);
+        history.replace(`/info/${stockName}`)
     }
 
     const stockApi = async (timeFrame, nameOfStock) => {
@@ -62,10 +71,13 @@ const Market = (props) => {
                 const stockData = await featuredStockData(featuredStockArray, "today");
                 setMiniStocks(stockData);
                 setLoading(false);
+                console.log("INSIDE OF FUNCTION IN USEEFFECT")
             }
         }
         featuredStocks();
-    }, []);
+        console.log("INSIDE OF THE USEEFFECT")
+        // eslint-disable-next-line
+    }, [inExpanded]);
 
     const loadingWheel = (
         <div id="loader">
@@ -83,6 +95,7 @@ const Market = (props) => {
             </div>
             <div className="totalValue__bottomBorder"></div>
             <div className="stockChart">
+                {console.log(loading === false && inExpanded === false && urlStockInfo === false)}
                 {loading === false && inExpanded === false && urlStockInfo === false ? <div className="featuredStocks__container">
                     <div className="featuredStocks__row">
                         <div onClick={handleClick} id="SNAP" className="featuredStocks__div hvr-grow"><MiniStockData i={0} stockArray={miniStocks} /></div>
@@ -103,9 +116,6 @@ const Market = (props) => {
                         <div onClick={handleClick} id="UBER" className="featuredStocks__div hvr-grow"><MiniStockData i={11} stockArray={miniStocks} /></div>
                     </div>
                     <div style={{ height: "5vh" }}></div>
-                    {/* {inExpanded === false && urlStockInfo === false ? featuredStocks.map((stock) => (
-                        <div key={stock} id={stock} onClick={handleClick} className="featuredStocks__div"></div>
-                    )) : urlStockInfo === true ? <StockInfo stock={stock} /> : <StockInfo stock={clickedStock} />} */}
                 </div> : urlStockInfo === true ? <StockInfo stock={stock} /> : loading ? loadingWheel : <StockInfo stock={clickedStock} />}
             </div>
         </div>
