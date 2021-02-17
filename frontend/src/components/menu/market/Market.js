@@ -7,7 +7,6 @@ const Market = (props) => {
     let urlStockInfo = false;
     const stockProps = props.stock;
     if (stockProps) {
-        console.log("Inside of if statement")
         urlStockInfo = true;
     }
     // const [expandedDivId, setExpandedDivId] = useState("");
@@ -34,11 +33,30 @@ const Market = (props) => {
                 </div>
             </div>
             <div className="totalValue__bottomBorder"></div>
-            <div style={{ height: "150%" }} className="stockChart">
+            <div className="stockChart">
                 <div className="featuredStocks__container">
-                    {inExpanded === false && urlStockInfo === false ? featuredStocks.map((stock) => (
+                    <div className="featuredStocks__row">
+                        <div onClick={handleClick} id="SNAP" className="featuredStocks__div"></div>
+                        <div onClick={handleClick} id="AAPL" className="featuredStocks__div"></div>
+                        <div onClick={handleClick} id="TWTR" className="featuredStocks__div"></div>
+                        <div onClick={handleClick} id="TSLA" className="featuredStocks__div"></div>
+                    </div>
+                    <div className="featuredStocks__row">
+                        <div onClick={handleClick} id="NFLX" className="featuredStocks__div"></div>
+                        <div onClick={handleClick} id="FB" className="featuredStocks__div"></div>
+                        <div onClick={handleClick} id="MSFT" className="featuredStocks__div"></div>
+                        <div onClick={handleClick} id="DIS" className="featuredStocks__div"></div>
+                    </div>
+                    <div className="featuredStocks__row">
+                        <div onClick={handleClick} id="GPRO" className="featuredStocks__div"></div>
+                        <div onClick={handleClick} id="SBUX" className="featuredStocks__div"></div>
+                        <div onClick={handleClick} id="GME" className="featuredStocks__div"></div>
+                        <div onClick={handleClick} id="UBER" className="featuredStocks__div"></div>
+                    </div>
+                    <div style={{ height: "5vh" }}></div>
+                    {/* {inExpanded === false && urlStockInfo === false ? featuredStocks.map((stock) => (
                         <div key={stock} id={stock} onClick={handleClick} className="featuredStocks__div"></div>
-                    )) : urlStockInfo === true ? <StockInfo stock={stock} /> : <StockInfo stock={clickedStock} />}
+                    )) : urlStockInfo === true ? <StockInfo stock={stock} /> : <StockInfo stock={clickedStock} />} */}
                 </div>
             </div>
         </div>
