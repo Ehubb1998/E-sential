@@ -65,9 +65,6 @@ const StockMarket = (props) => {
                     {menuSelection === "watchList" || component === "watchList" ? <div className="watchList__component stockMarket__selected">Watch List</div> : <div onClick={watchListSelection} className="watchList__component">Watch List</div>}
                     {menuSelection === "plans" || component === "plans" ? <div className="plans__component stockMarket__selected">Plans</div> : <div onClick={plansSelection} className="plans__component">Plans</div>}
                 </div>
-                {console.log("THIS IS THE stockInfo " + stockInfo)}
-                {console.log("THIS IS THE COMPONENT " + component)}
-                {console.log(component === "market")}
                 {menuSelection === "market" || urlStockInfo === true || backButton === "true" || component === "market" ? <Market stock={stockInfo} /> : menuSelection === "watchList" || component === "watchList" ? <WatchList /> : menuSelection === "plans" || component === "plans" ? <Plans /> : <Portfolio />}
             </div>
         </div>
