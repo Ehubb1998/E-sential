@@ -29,10 +29,6 @@ const StockInfo = (props) => {
         window.localStorage.setItem("back", "true");
         window.localStorage.setItem("component", "market");
         history.replace("/homepage");
-<<<<<<< HEAD
-        console.log(window.localStorage)
-=======
->>>>>>> 1f07115ada55263e83fb4cb0f3791b9813b9be06
     }
 
     const stockApi = async (timeFrame, nameOfStock) => {
@@ -79,11 +75,7 @@ const StockInfo = (props) => {
         <>
         <div className="individualStocks__portfolio">
             <div className="stockChart__div">
-<<<<<<< HEAD
-                <span onClick={backButton} id="backButton" style={{ paddingBottom: "2%" }} className="backButton">&lt; Back</span>
-=======
                 <span onClick={backButton} style={{ paddingBottom: "2%" }} className="backButton">&lt; Back</span>
->>>>>>> 1f07115ada55263e83fb4cb0f3791b9813b9be06
                 <div className="stockName__portfolio">{stock.company}</div>
                 <ResponsiveContainer height="78%">
                     <LineChart data={stock} margin={{top:25, bottom: 25}}>
