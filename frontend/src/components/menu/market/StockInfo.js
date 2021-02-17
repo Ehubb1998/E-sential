@@ -26,7 +26,7 @@ const StockInfo = (props) => {
     const yearSelection = () => {
         setTimeSelection("year");
     }
-    const backButton = () => {
+    const backButtonFunc = () => {
         dispatch(backButton(true));
     }
 
@@ -74,7 +74,7 @@ const StockInfo = (props) => {
         <>
         <div className="individualStocks__portfolio">
             <div className="stockChart__div">
-                <span onClick={backButton} style={{ paddingBottom: "2%" }} className="backButton">&lt; Back</span>
+                <span onClick={backButtonFunc} style={{ paddingBottom: "2%" }} className="backButton">&lt; Back</span>
                 <div className="stockName__portfolio">{stock.company}</div>
                 <ResponsiveContainer height="78%">
                     <LineChart data={stock} margin={{top:25, bottom: 25}}>
