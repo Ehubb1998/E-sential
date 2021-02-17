@@ -9,13 +9,19 @@ import WatchList from "./market/WatchList";
 const StockMarket = (props) => {
     const history = useHistory();
     const [menuSelection, setMenuSelection] = useState("portfolio");
+    const backButton = window.localStorage.getItem("back");
     let urlStockInfo = false;
-    const stockInfo = props.stock;
+    let stockInfo = props.stock;
     let component = props.component;
+
     if (stockInfo) {
         urlStockInfo = true;
     }
     if (urlStockInfo === false) {
+        if (backButton) {
+            stockInfo = "backButton";
+            component = "";
+        }
         component = "";
     }
 
@@ -54,12 +60,15 @@ const StockMarket = (props) => {
         <div className="menuSelection__backgroundDiv">
             <div className="menuSelection__mainDiv">
                 <div className="stockMarket__navDiv">
-                    {(menuSelection === "portfolio" && urlStockInfo === false) || component === "portfolio" ? <div className="portfolio__component stockMarket__selected">Portfolio</div> : <div onClick={portfolioSelection} className="portfolio__component">Portfolio</div>}
-                    {menuSelection === "market" || urlStockInfo === true ? <div className="market__component stockMarket__selected">Market</div> : <div onClick={marketSelection} className="market__component">Market</div>}
+                    {(menuSelection === "portfolio" && urlStockInfo === false && stockInfo !== "backButton") || component === "portfolio" ? <div className="portfolio__component stockMarket__selected">Portfolio</div> : <div onClick={portfolioSelection} className="portfolio__component">Portfolio</div>}
+                    {menuSelection === "market" || urlStockInfo === true || backButton === "true" ? <div className="market__component stockMarket__selected">Market</div> : <div onClick={marketSelection} className="market__component">Market</div>}
                     {menuSelection === "watchList" || component === "watchList" ? <div className="watchList__component stockMarket__selected">Watch List</div> : <div onClick={watchListSelection} className="watchList__component">Watch List</div>}
                     {menuSelection === "plans" || component === "plans" ? <div className="plans__component stockMarket__selected">Plans</div> : <div onClick={plansSelection} className="plans__component">Plans</div>}
                 </div>
-                {menuSelection === "market" || urlStockInfo === true || component === "market" ? <Market stock={stockInfo} /> : menuSelection === "watchList" || component === "watchList" ? <WatchList /> : menuSelection === "plans" || component === "plans" ? <Plans /> : <Portfolio />}
+                {console.log("THIS IS THE stockInfo " + stockInfo)}
+                {console.log("THIS IS THE COMPONENT " + component)}
+                {console.log(component === "market")}
+                {menuSelection === "market" || urlStockInfo === true || backButton === "true" || component === "market" ? <Market stock={stockInfo} /> : menuSelection === "watchList" || component === "watchList" ? <WatchList /> : menuSelection === "plans" || component === "plans" ? <Plans /> : <Portfolio />}
             </div>
         </div>
         </>

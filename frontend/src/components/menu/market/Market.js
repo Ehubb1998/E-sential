@@ -1,18 +1,25 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-// import { motion } from "framer-motion";
+import { useSelector, useDispatch } from "react-redux";
 import StockInfo from "./StockInfo";
 import MiniStockData from "./MiniStockData";
+import { backButton } from "../../../store/actions/stockInfo";
 
 const Market = (props) => {
     let urlStockInfo = false;
     const stockProps = props.stock;
     if (stockProps) {
-        urlStockInfo = true;
+        if (stockProps === "backButton") {
+            window.localStorage.removeItem("back");
+            window.localStorage.removeItem("component");
+        } else {
+            urlStockInfo = true;
+        }
     }
-    // const [expandedDivId, setExpandedDivId] = useState("");
+
+    const dispatch = useDispatch();
+    const backButtonRedux = useSelector(state => state.stockDataReducer.backButton);
     const [inExpanded, setInExpanded] = useState(false);
-    // const [finishedInitial, setFinishedInitial] = useState(false);
     const [clickedStock, setClickedStock] = useState("");
     const [loading, setLoading] = useState(true);
     const [miniStocks, setMiniStocks] = useState([]);
@@ -56,6 +63,10 @@ const Market = (props) => {
     }
 
     useEffect(() => {
+        if (backButtonRedux === true) {
+            setInExpanded(false);
+            dispatch(backButton(false));
+        }
         const featuredStocks = async () => {
             if (loading === true) {
                 const stockData = await featuredStockData(featuredStockArray, "today");
@@ -65,7 +76,7 @@ const Market = (props) => {
         }
         featuredStocks();
         // eslint-disable-next-line
-    }, []);
+    }, [backButtonRedux]);
 
     const loadingWheel = (
         <div id="loader">
@@ -103,7 +114,7 @@ const Market = (props) => {
                         <div onClick={handleClick} id="UBER" className="featuredStocks__div hvr-grow"><MiniStockData i={11} stockArray={miniStocks} /></div>
                     </div>
                     <div style={{ height: "5vh" }}></div>
-                </div> : urlStockInfo === true ? <StockInfo stock={stock} /> : loading ? loadingWheel : <StockInfo stock={clickedStock} />}
+                </div> : urlStockInfo === true ? <StockInfo stock={stock} stockURL={stock} /> : loading ? loadingWheel : <StockInfo stock={clickedStock} />}
             </div>
         </div>
         </>
@@ -113,6 +124,11 @@ const Market = (props) => {
 export default Market;
 
 // Idea to expand div into fullscreen
+// import { motion } from "framer-motion";
+
+// const [expandedDivId, setExpandedDivId] = useState("");
+// const [finishedInitial, setFinishedInitial] = useState(false);
+
 // const testDiv = (
 //     <>
 //     <motion.div

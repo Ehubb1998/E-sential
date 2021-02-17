@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from 'react-redux';
+import { useHistory } from "react-router-dom";
 import { LineChart, Line, Tooltip, YAxis, ResponsiveContainer } from 'recharts';
 import { backButton } from "../../../store/actions/stockInfo";
 
 const StockInfo = (props) => {
     const dispatch = useDispatch();
+    const history = useHistory();
     const stockProp = props.stock;
+    const stockURL = props.stockURL;
     const [stock, setStock] = useState({});
     const [loading, setLoading] = useState(true);
     const [timeSelection, setTimeSelection] = useState("today");
@@ -28,6 +31,11 @@ const StockInfo = (props) => {
     }
     const backButtonFunc = () => {
         dispatch(backButton(true));
+        if (stockURL) {
+            history.replace("/homepage");
+            window.localStorage.setItem("component", "market");
+            window.localStorage.setItem("back", "true");
+        }
     }
 
     const stockApi = async (timeFrame, nameOfStock) => {
