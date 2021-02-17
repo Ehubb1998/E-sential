@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { useParams, useHistory } from "react-router-dom";
+import { useParams } from "react-router-dom";
 // import { motion } from "framer-motion";
 import StockInfo from "./StockInfo";
 import MiniStockData from "./MiniStockData";
 
 const Market = (props) => {
-    const history = useHistory();
     let urlStockInfo = false;
     const stockProps = props.stock;
     if (stockProps) {
@@ -62,7 +61,6 @@ const Market = (props) => {
                 const stockData = await featuredStockData(featuredStockArray, "today");
                 setMiniStocks(stockData);
                 setLoading(false);
-                console.log("INSIDE OF FUNCTION IN USEEFFECT")
             }
         }
         featuredStocks();
@@ -85,7 +83,6 @@ const Market = (props) => {
             </div>
             <div className="totalValue__bottomBorder"></div>
             <div className="stockChart">
-                {console.log(loading === false && inExpanded === false && urlStockInfo === false)}
                 {loading === false && inExpanded === false && urlStockInfo === false ? <div className="featuredStocks__container">
                     <div className="featuredStocks__row">
                         <div onClick={handleClick} id="SNAP" className="featuredStocks__div hvr-grow"><MiniStockData i={0} stockArray={miniStocks} /></div>

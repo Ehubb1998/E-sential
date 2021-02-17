@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useDispatch } from 'react-redux';
 import { LineChart, Line, Tooltip, YAxis, ResponsiveContainer } from 'recharts';
+import { backButton } from "../../../store/actions/stockInfo";
 
 const StockInfo = (props) => {
-    const history = useHistory();
+    const dispatch = useDispatch();
     const stockProp = props.stock;
     const [stock, setStock] = useState({});
     const [loading, setLoading] = useState(true);
@@ -26,9 +27,7 @@ const StockInfo = (props) => {
         setTimeSelection("year");
     }
     const backButton = () => {
-        window.localStorage.setItem("back", "true");
-        window.localStorage.setItem("component", "market");
-        history.replace("/homepage");
+        dispatch(backButton(true));
     }
 
     const stockApi = async (timeFrame, nameOfStock) => {

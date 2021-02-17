@@ -1,7 +1,8 @@
-import { PORTFOLIO, STOCKINFO, WATCHLIST, PLANS } from "../actions/stockInfo";
+import { PORTFOLIO, STOCKINFO, WATCHLIST, PLANS, PORTFOLIOSTOCKCHARTS, FEATUREDSTOCKS, BACKBUTTON } from "../actions/stockInfo";
 
 const initialState = {
-    stockInfoLoaded: false
+    stockInfoLoaded: false,
+    backButton: false
 }
 
 const stockDataReducer = (state = initialState, action) => {
@@ -10,6 +11,24 @@ const stockDataReducer = (state = initialState, action) => {
             return {
                 ...state,
                 portfolioData: action.data
+            }
+        }
+        case PORTFOLIOSTOCKCHARTS: {
+            return {
+                ...state,
+                portfolioStockCharts: action.data
+            }
+        }
+        case FEATUREDSTOCKS: {
+            return {
+                ...state,
+                featuredStocks: action.data
+            }
+        }
+        case BACKBUTTON: {
+            return {
+                ...state,
+                backButton: action.boolean
             }
         }
         case STOCKINFO: {
