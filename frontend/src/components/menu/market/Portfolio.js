@@ -1,22 +1,22 @@
 import React, { useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import PortfolioStockChart from "./PortfolioStockChart";
-import { portfolioStockCharts } from "../../../store/actions/stockInfo";
+// import { portfolioStockCharts } from "../../../store/actions/stockInfo";
 // import NoStocks from "./NoStocks";
 
 const Portfolio = () => {
     window.localStorage.removeItem("component");
-    const dispatch = useDispatch();
+    // const dispatch = useDispatch();
     const portfolio = useSelector(state => state.stockDataReducer.portfolioData);
     const finishedLoading = useSelector(state => state.stockDataReducer.finishedLoading);
-    const portfolioStockChartsRedux = useSelector(state => state.stockDataReducer.portfolioStockCharts);
+    // const portfolioStockChartsRedux = useSelector(state => state.stockDataReducer.portfolioStockCharts);
     const [portfolioTotalValue, setPortfolioTotalValue] = useState("");
     const [totalValueDifference, setTotalValueDifference] = useState("");
     const [differenceStatus, setDifferenceStatus] = useState("");
     const total = window.localStorage.getItem("TOTAL");
     // const portfolioSet = window.localStorage.getItem("PORTFOLIO_SET");
     const [loading, setLoading] = useState(true);
-    const stockChartsArray = [];
+    // const stockChartsArray = [];
 
     const totalDifference = (num) => {
         const newNum = num.toString();
@@ -58,17 +58,34 @@ const Portfolio = () => {
 
     useEffect(() => {
         const stockFunction = async () => {
-            totalValue(portfolio);
+            if (!portfolioTotalValue) {
+                totalValue(portfolio);
+            }
+
+            // const grabStockCharts = () => {
+            //     if (window.localStorage.getItem("done") === "true") {
+            //         // window.localStorage.removeItem("done");
+            //         setLoading(false);
+            //     } else {
+            //         for (let i = 1; i <= portfolio.length; i++) {
+            //             const stockChart = window.localStorage.getItem(`portfolioStockChart${i}`);
+            //             const parsedChart = JSON.parse(stockChart);
+            //             stockChartsArray.push(parsedChart);
+            //             window.localStorage.removeItem(`portfolioStockChart${i}`);
+            //         }
+            //         if (stockChartsArray.length > 0) {
+            //             setLoading(false);
+            //             dispatch(portfolioStockCharts(stockChartsArray));
+            //             window.localStorage.removeItem("count");
+            //             debugger;
+            //         }
+            //     }
+            // }
             if (finishedLoading) {
-                if (window.localStorage.getItem("done") === "true") {
-                    setLoading(false);
-                    window.localStorage.removeItem("done");
-                    window.localStorage.removeItem("count");
-                } else {
-                    setLoading(false);
-                    dispatch(portfolioStockCharts(stockChartsArray));
-                    window.localStorage.removeItem("count");
-                }
+                // grabStockCharts();
+                setLoading(false);
+                window.localStorage.removeItem("count");
+                debugger;
             }
         }
         stockFunction();
@@ -113,7 +130,10 @@ const Portfolio = () => {
                 {loading ? loadingWheel : <></>}
                 {portfolio ? portfolio.map((stock) => (
                     <PortfolioStockChart key={stock.id} stock={stock} portfolioLength={portfolio.length} />
-                )) : portfolioStockChartsRedux && portfolioStockChartsRedux.length === portfolio.length ? portfolioStockChartsRedux.map((stock) => <PortfolioStockChart key={stock.id} stock={stock} portfolioLength={portfolio.length} memory={true} />) : <></>}
+                )) : <></>}
+                {/* {portfolio && finishedLoading === false ? portfolio.map((stock) => (
+                    <PortfolioStockChart key={stock.id} stock={stock} portfolioLength={portfolio.length} />
+                )) : portfolio && finishedLoading && portfolioStockChartsRedux ? portfolioStockChartsRedux.map((stock) => <PortfolioStockChart key={stock[stock.length - 1].id} stock={stock} portfolioLength={portfolio.length} memory={true} />) : <></>} */}
             </div>
         </div>
         </>

@@ -1,14 +1,17 @@
 import React, { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { LineChart, Line, Tooltip, YAxis, ResponsiveContainer } from 'recharts';
-import { portfolioStockCharts, finishedLoading } from "../../../store/actions/stockInfo";
+import { finishedLoading } from "../../../store/actions/stockInfo";
 
 const PortfolioStockChart = (props) => {
     const dispatch = useDispatch();
     const portfolioStock = props.stock;
+    const finishedLoadingRedux = useSelector(state => state.stockDataReducer.finishedLoading);
+    // const portfolioStockChartsRedux = useSelector(state => state.stockDataReducer.portfolioStockCharts);
     const portfolioLength = props.portfolioLength;
-    const memory = props.memory
+    // const memory = props.memory
     const [stockChart, setStockChart] = useState({});
+    const [companyInfo, setCompanyInfo] = useState({});
     const [timeSelection, setTimeSelection] = useState("today");
     const [previousTime, setPreviousTime] = useState("");
     const [loading, setLoading] = useState(true);
@@ -47,46 +50,61 @@ const PortfolioStockChart = (props) => {
         const stockChart = await stockApi(timeFrame, stockName);
         const companyInfo = await stockApi("company", stockName);
 
-        stockChart["company"] = companyInfo.companyName;
-        stockChart["symbol"] = companyInfo.symbol;
-        stockChart["purchasedPPS"] = stock.pps;
-        stockChart["numShares"] = stock.shares;
+        const companyInfoObj = {};
+        companyInfoObj["company"] = companyInfo.companyName;
+        companyInfoObj["symbol"] = companyInfo.symbol;
+        companyInfoObj["purchasedPPS"] = stock.pps;
+        companyInfoObj["numShares"] = stock.shares;
         let lastObj = stockChart[stockChart.length - 1];
         let currentPPS = lastObj.close;
-        stockChart["currentPPS"] = currentPPS;
-        stockChart["totalValue"] = stockChart.purchasedPPS * stockChart.numShares;
-        stockChart["difference"] = stockChart.numShares * stockChart.currentPPS;
+        companyInfoObj["currentPPS"] = currentPPS;
+        companyInfoObj["totalValue"] = companyInfoObj.purchasedPPS * companyInfoObj.numShares;
+        companyInfoObj["difference"] = companyInfoObj.numShares * companyInfoObj.currentPPS;
+        stockChart.unshift(companyInfoObj);
         return stockChart;
     }
 
     useEffect(() => {
         const stockFunction = async () => {
-            if (memory && loading) {
-                console.log("inside of first if statement");
-                setStockChart(portfolioStock);
-                setLoading(false);
-                const count = window.localStorage.getItem("count");
-                const num = Number(count);
-                if (num !== portfolioLength - 1) {
-                    window.localStorage.setItem("count", `${num + 1}`);
-                } else {
-                    window.localStorage.setItem("done", "true");
-                    dispatch(finishedLoading(true));
-                }
-                return;
-            }
+            // if (memory && loading && portfolioStockChartsRedux) {
+            //     const stockCharts = portfolioStock;
+            //     const companyInfoProps = stockCharts.shift();
+            //     setStockChart(portfolioStock);
+            //     setCompanyInfo(companyInfoProps);
+            //     setLoading(false);
+            //     const count = window.localStorage.getItem("count");
+            //     const num = Number(count);
+            //     if (num !== portfolioLength - 1) {
+            //         window.localStorage.setItem("count", `${num + 1}`);
+            //     } else {
+            //         window.localStorage.setItem("done", "true");
+            //         // dispatch(finishedLoading(true));
+            //     }
+            //     return;
+            // }
             if (loading || timeSelection !== previousTime) {
-                const stockData = await individualStockData(portfolioStock, timeSelection);
-                setStockChart(stockData);
-                setLoading(false);
-                const count = window.localStorage.getItem("count");
-                const num = Number(count);
-                if (num !== portfolioLength - 1) {
-                    window.localStorage.setItem("count", `${num + 1}`);
-                    dispatch(portfolioStockCharts(stockData));
+                if (timeSelection !== previousTime && finishedLoadingRedux) {
+                    const stockData = await individualStockData(portfolioStock, timeSelection);
+                    const stockCharts = stockData;
+                    const companyInfoProps = stockCharts.shift();
+                    setStockChart(stockCharts);
+                    setCompanyInfo(companyInfoProps);
+                    setLoading(false);
                 } else {
+                    const stockData = await individualStockData(portfolioStock, timeSelection);
+                    setStockChart(stockData);
+                    setLoading(false);
                     dispatch(finishedLoading(true));
-                    dispatch(portfolioStockCharts(stockData));
+                    const count = window.localStorage.getItem("count");
+                    const num = Number(count);
+                    if (num !== portfolioLength - 1) {
+                        window.localStorage.setItem("count", `${num + 1}`);
+                        debugger;
+                        // window.localStorage.setItem(`portfolioStockChart${num + 1}`, JSON.stringify(stockData));
+                    } else {
+                        dispatch(finishedLoading(true));
+                        // window.localStorage.setItem(`portfolioStockChart${num + 1}`, JSON.stringify(stockData));
+                    }
                 }
             }
             setPreviousTime(timeSelection);
@@ -106,7 +124,7 @@ const PortfolioStockChart = (props) => {
         <>
         <div className="individualStocks__portfolio">
             <div className="stockChart__div">
-                <div className="stockName__portfolio">{stockChart.company}</div>
+                <div className="stockName__portfolio">{companyInfo.company}</div>
                 <ResponsiveContainer height="78%">
                     <LineChart data={stockChart} margin={{top:25, bottom: 25}}>
                         <Line type="linear" dataKey="close" stroke="#00c805" dot={false} strokeWidth={2} isAnimationActive={true} />
@@ -124,20 +142,20 @@ const PortfolioStockChart = (props) => {
             </div>
             <div className="stockInfo__portfolio-div">
                 <div className="stockInfo__name">
-                    <span>{stockChart.symbol}</span>
-                    <span>${numberFormat(stockChart.currentPPS)}</span>
+                    <span>{companyInfo.symbol}</span>
+                    <span>${numberFormat(companyInfo.currentPPS)}</span>
                 </div>
                 <div className="stockInfo__shares-div">
                     <div className="totalValue__portfolio">
                         <span>Total Value</span>
-                        <span>${numberFormat(stockChart.totalValue)}</span>
+                        <span>${numberFormat(companyInfo.totalValue)}</span>
                     </div>
                     <div className="yourShares">
-                        <span>{stockChart.numShares} Shares</span>
-                        <span>@${numberFormat(stockChart.purchasedPPS)}/share</span>
+                        <span>{companyInfo.numShares} Shares</span>
+                        <span>@${numberFormat(companyInfo.purchasedPPS)}/share</span>
                     </div>
                     <div className="totalDifference__portfolio">
-                        {stockChart.difference > stockChart.totalValue ? <span className="profit__difference">+ ${numberFormat(stockChart.difference)}</span> : <span className="lost__difference">- ${numberFormat(stockChart.difference)}</span>}
+                        {companyInfo.difference > companyInfo.totalValue ? <span className="profit__difference">+ ${numberFormat(companyInfo.difference)}</span> : <span className="lost__difference">- ${numberFormat(companyInfo.difference)}</span>}
                     </div>
                 </div>
             </div>
