@@ -69,15 +69,11 @@ const Portfolio = () => {
                     dispatch(portfolioStockCharts(stockChartsArray));
                     window.localStorage.removeItem("count");
                 }
-            } else {
-                if (portfolioStockCharts) {
-                    stockChartsArray.push(portfolioStockChartsRedux);
-                }
             }
         }
         stockFunction();
         // eslint-disable-next-line
-    }, [portfolioStockChartsRedux]);
+    }, [finishedLoading]);
 
 
     const greenArrow = (

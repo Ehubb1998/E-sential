@@ -10,6 +10,7 @@ const PortfolioStockChart = (props) => {
     const memory = props.memory
     const [stockChart, setStockChart] = useState({});
     const [timeSelection, setTimeSelection] = useState("today");
+    const [previousTime, setPreviousTime] = useState("");
     const [loading, setLoading] = useState(true);
     const token = window.localStorage.getItem("ESENTIAL_ACCESS_TOKEN");
 
@@ -61,6 +62,7 @@ const PortfolioStockChart = (props) => {
     useEffect(() => {
         const stockFunction = async () => {
             if (memory && loading) {
+                console.log("inside of first if statement");
                 setStockChart(portfolioStock);
                 setLoading(false);
                 const count = window.localStorage.getItem("count");
@@ -73,7 +75,7 @@ const PortfolioStockChart = (props) => {
                 }
                 return;
             }
-            if (loading) {
+            if (loading || timeSelection !== previousTime) {
                 const stockData = await individualStockData(portfolioStock, timeSelection);
                 setStockChart(stockData);
                 setLoading(false);
@@ -87,6 +89,7 @@ const PortfolioStockChart = (props) => {
                     dispatch(portfolioStockCharts(stockData));
                 }
             }
+            setPreviousTime(timeSelection);
         }
         stockFunction();
         // eslint-disable-next-line
