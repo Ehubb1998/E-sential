@@ -10,6 +10,7 @@ const StockMarket = (props) => {
     const history = useHistory();
     const [menuSelection, setMenuSelection] = useState("portfolio");
     const backButton = window.localStorage.getItem("back");
+    window.localStorage.setItem("count", "0");
     let urlStockInfo = false;
     let stockInfo = props.stock;
     let component = props.component;

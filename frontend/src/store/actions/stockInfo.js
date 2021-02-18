@@ -1,4 +1,5 @@
 export const PORTFOLIO = "PORTFOLIO";
+export const FINISHEDLOADING = "FINISHEDLOADING";
 export const PORTFOLIOSTOCKCHARTS = "PORTFOLIOSTOCKCHARTS";
 export const FEATUREDSTOCKS = "FEATUREDSTOCKS";
 export const BACKBUTTON = "BACKBUTTON";
@@ -10,6 +11,7 @@ export const portfolio = data => ({ type: PORTFOLIO, data });
 export const portfolioStockCharts = data => ({ type: PORTFOLIOSTOCKCHARTS, data });
 export const featuredStocks = data => ({ type: FEATUREDSTOCKS, data });
 export const backButton = boolean => ({ type: BACKBUTTON, boolean });
+export const finishedLoading = boolean => ({ type: FINISHEDLOADING, boolean });
 export const stockInfo = data => ({ type: STOCKINFO, data });
 export const watchList = data => ({ type: WATCHLIST, data });
 export const plans = data => ({ type: PLANS, data });

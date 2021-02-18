@@ -17,7 +17,7 @@ def iex_stock_info(company, time_frame, postMethod=False):
         month = date.strftime("%m")
         day = date.strftime("%d")
 
-        response = requests.get(f"https://sandbox.iexapis.com/stable/stock/{company}/chart/date/{year}{month}11", params={"token": test_key})
+        response = requests.get(f"https://sandbox.iexapis.com/stable/stock/{company}/chart/date/{year}{month}16", params={"token": test_key})
         if response:
             company_chart = response.json()
             return company_chart
