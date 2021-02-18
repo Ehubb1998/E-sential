@@ -36,7 +36,7 @@ const Banking = () => {
     const loader = (
         <div className="loaderIcon__div">
             <div id="loader">
-                <div className="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+                <div style={{ marginLeft: "45.5%", marginTop: "10%" }} className="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
             </div>
             <div style={{ display: "none" }} className="inner__mainDiv">
                 {userData && storeUser && storeUser.primaryBank === "Bank of America" ? <div className="bankName__div"><img className="bankName__div-image" src={BankofAmerica} alt="" /></div> : <></>}
