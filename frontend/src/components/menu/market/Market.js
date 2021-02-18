@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import StockInfo from "./StockInfo";
 import MiniStockData from "./MiniStockData";
-import { backButton } from "../../../store/actions/stockInfo";
+import { backButton, featuredStocks } from "../../../store/actions/stockInfo";
 
 const Market = (props) => {
     let urlStockInfo = false;
@@ -19,6 +19,7 @@ const Market = (props) => {
 
     const dispatch = useDispatch();
     const backButtonRedux = useSelector(state => state.stockDataReducer.backButton);
+    const featuredCharts = useSelector(state => state.stockDataReducer.featuredStocks);
     const [inExpanded, setInExpanded] = useState(false);
     const [clickedStock, setClickedStock] = useState("");
     const [loading, setLoading] = useState(true);
@@ -67,14 +68,20 @@ const Market = (props) => {
             setInExpanded(false);
             dispatch(backButton(false));
         }
-        const featuredStocks = async () => {
+        const featuredStocksFunc = async () => {
+            if (featuredCharts && loading === true) {
+                setLoading(false);
+                setMiniStocks(featuredCharts);
+                return;
+            }
             if (loading === true) {
                 const stockData = await featuredStockData(featuredStockArray, "today");
                 setMiniStocks(stockData);
                 setLoading(false);
+                dispatch(featuredStocks(stockData))
             }
         }
-        featuredStocks();
+        featuredStocksFunc();
         // eslint-disable-next-line
     }, [backButtonRedux]);
 
@@ -94,7 +101,10 @@ const Market = (props) => {
             </div>
             <div className="totalValue__bottomBorder"></div>
             <div className="stockChart">
-                {loading === false && inExpanded === false && urlStockInfo === false ? <div className="featuredStocks__container">
+                {console.log(loading === false && inExpanded === false && urlStockInfo === false)}
+                {console.log(loading === false && featuredCharts && inExpanded === false && urlStockInfo === false)}
+                {console.log(miniStocks)}
+                {(loading === false && featuredCharts && inExpanded === false && urlStockInfo === false) || (loading === false && inExpanded === false && urlStockInfo === false) ? <div className="featuredStocks__container">
                     <div className="featuredStocks__row">
                         <div onClick={handleClick} id="SNAP" className="featuredStocks__div hvr-grow"><MiniStockData i={0} stockArray={miniStocks} /></div>
                         <div onClick={handleClick} id="AAPL" className="featuredStocks__div hvr-grow"><MiniStockData i={1} stockArray={miniStocks} /></div>

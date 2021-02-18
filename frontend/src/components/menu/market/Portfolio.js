@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { LineChart, Line, Tooltip, YAxis, ResponsiveContainer } from 'recharts';
+import { portfolioStockCharts } from "../../../store/actions/stockInfo";
 // import NoStocks from "./NoStocks";
 
 const Portfolio = () => {
     window.localStorage.removeItem("component");
+    const dispatch = useDispatch();
     const portfolio = useSelector(state => state.stockDataReducer.portfolioData);
+    const portfolioCharts = useSelector(state => state.stockDataReducer.portfolioStockCharts);
     const [portfolioTotalValue, setPortfolioTotalValue] = useState("");
     const [totalValueDifference, setTotalValueDifference] = useState("");
     const [differenceStatus, setDifferenceStatus] = useState("");
@@ -112,11 +115,18 @@ const Portfolio = () => {
 
     useEffect(() => {
         const stockFunction = async () => {
+            if (portfolioCharts && loading === true) {
+                totalValue(portfolio);
+                setLoading(false);
+                setStockCharts(portfolioCharts);
+                return;
+            }
             if (loading === true) {
                 totalValue(portfolio);
                 const stockData = await individualStockData(portfolio, timeSelection);
                 setStockCharts(stockData);
                 setLoading(false);
+                dispatch(portfolioStockCharts(stockData));
             }
         }
         stockFunction();
@@ -158,7 +168,7 @@ const Portfolio = () => {
             </div>
             <div className="totalValue__bottomBorder"></div>
             <div className="stockChart">
-                {loading === false ? stockCharts.map((chart) => (
+                {(loading === false && portfolioCharts) || loading === false ? stockCharts.map((chart) => (
                     <span key={chart.company}>
                         <div className="individualStocks__portfolio">
                             <div className="stockChart__div">
