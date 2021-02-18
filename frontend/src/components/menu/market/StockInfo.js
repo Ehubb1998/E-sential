@@ -79,7 +79,7 @@ const StockInfo = (props) => {
     }
 
     const loadingWheel = (
-        <div id="loader">
+        <div style={{ marginTop: "0px", marginBottom: "28%" }} id="loader">
             <div className="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
         </div>
     );
