@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import StockInfo from "./StockInfo";
 import MiniStockData from "./MiniStockData";
 import { backButton, featuredStocks } from "../../../store/actions/stockInfo";
+import { finishedLoading } from "../../../store/actions/stockInfo";
 
 const Market = (props) => {
     let urlStockInfo = false;
@@ -64,6 +65,7 @@ const Market = (props) => {
     }
 
     useEffect(() => {
+        dispatch(finishedLoading(false))
         if (backButtonRedux === true) {
             setInExpanded(false);
             dispatch(backButton(false));

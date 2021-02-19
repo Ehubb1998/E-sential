@@ -95,12 +95,33 @@ const PortfolioStockChart = (props) => {
             // }
             if (loading || timeSelection !== previousTime) {
                 if (timeSelection !== previousTime && finishedLoadingRedux) {
-                    const stockData = await individualStockData(portfolioStock, timeSelection);
-                    const stockCharts = stockData;
-                    const companyInfoProps = stockCharts.shift();
-                    setStockChart(stockCharts);
-                    setCompanyInfo(companyInfoProps);
-                    setLoading(false);
+                    if (previousTime === "") {
+                        const stockData = await individualStockData(portfolioStock, timeSelection);
+                        const stockCharts = stockData;
+                        const companyInfoProps = stockCharts.shift();
+                        setStockChart(stockCharts);
+                        setCompanyInfo(companyInfoProps);
+                        setLoading(false);
+                        const count = window.localStorage.getItem("count");
+                        const num = Number(count);
+                        debugger;
+                        if (num !== portfolioLength - 1) {
+                            window.localStorage.setItem("count", `${num + 1}`);
+                            window.localStorage.setItem(`newValue${num + 1}`, `${companyInfoProps.newValue}`);
+                            window.localStorage.setItem(`totalValue${num + 1}`, `${companyInfoProps.totalValue}`);
+                        } else {
+                            window.localStorage.setItem(`newValue${num + 1}`, `${companyInfoProps.newValue}`);
+                            window.localStorage.setItem(`totalValue${num + 1}`, `${companyInfoProps.totalValue}`);
+                            dispatch(finishedLoading(true));
+                        }
+                    } else {
+                        const stockData = await individualStockData(portfolioStock, timeSelection);
+                        const stockCharts = stockData;
+                        const companyInfoProps = stockCharts.shift();
+                        setStockChart(stockCharts);
+                        setCompanyInfo(companyInfoProps);
+                        setLoading(false);
+                    }
                 } else {
                     const stockData = await individualStockData(portfolioStock, timeSelection);
                     const stockCharts = stockData;

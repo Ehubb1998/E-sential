@@ -66,7 +66,7 @@ const Portfolio = () => {
             //         }
             //     }
             // }
-            if (finishedLoading === true) {
+            if (finishedLoading && window.localStorage.getItem("newValue1")) {
                 // grabStockCharts();
                 if (portfolioTotalValue === 0) {
                     const totalValueArray = [];
@@ -119,12 +119,16 @@ const Portfolio = () => {
         <div className="stockContent__div">
             <div className="portfolio__totalValue-container">
                 <div className="totalValue__div">
-                    {portfolio && loading === false ? <div className="totalValue">Portfolio Value • <span style={{ fontWeigth: "400" }}>{formatter.format(portfolioTotalValue)}</span></div> : <></>}
+                    {console.log(loading)}
+                    {console.log("portfolioTotalValue ", portfolioTotalValue)}
+                    {console.log("differenceStatus ", differenceStatus)}
+                    {console.log("totalValueDifference ", totalValueDifference)}
+                    {portfolio && loading === false && portfolioTotalValue ? <div className="totalValue">Portfolio Value • <span style={{ fontWeigth: "400" }}>{formatter.format(portfolioTotalValue)}</span></div> : <></>}
                     <div className="differenceInValue__div">
                         <div style={{ paddingTop: "5px" }}>
-                            {portfolio && loading === false && differenceStatus === "up" ? greenArrow : redArrow}
+                            {portfolio && loading === false && differenceStatus && differenceStatus === "up" ? greenArrow : differenceStatus === "down" ? redArrow : <></>}
                         </div>
-                        {portfolio && totalValueDifference ? <div className="differenceNumber">{formatter.format(totalValueDifference)}</div> : <></>}
+                        {portfolio && loading === false && totalValueDifference ? <div className="differenceNumber">{formatter.format(totalValueDifference)}</div> : <></>}
                     </div>
                 </div>
             </div>

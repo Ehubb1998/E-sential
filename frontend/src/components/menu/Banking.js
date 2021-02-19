@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { bankingDataLoaded } from "../../store/actions/bankInfo";
+import { finishedLoading } from "../../store/actions/stockInfo";
 import BankofAmerica from "../../assets/bankOfAmerica.svg";
 import CapitalOne from "../../assets/capitalOne.png";
 import ChaseBank from "../../assets/chaseBank.png";
@@ -22,10 +23,12 @@ const Banking = () => {
     const [loaderIcon, setLoaderIcon] = useState(true);
 
     useEffect(() => {
+        dispatch(finishedLoading(false));
         if (storeUser && bankInfo) {
             setBankData(bankInfo);
             setUserData(storeUser);
         }
+        // eslint-disable-next-line
     }, [storeUser, bankInfo])
 
     setTimeout(() => {

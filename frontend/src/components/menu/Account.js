@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { updateEmail, updatePrimaryBank, updateJob, confirmPassword, updatePassword } from "../../store/actions/userData";
+import { finishedLoading } from "../../store/actions/stockInfo";
 
 const Account = () => {
     window.localStorage.removeItem("component");
@@ -53,9 +54,11 @@ const Account = () => {
     const [reverseHiddenPassword, setReverseHiddenPassword] = useState(false);
 
     useEffect(() => {
+        dispatch(finishedLoading(false));
         if (user) {
             setUserData(user)
         }
+        // eslint-disable-next-line
     }, [user])
 
     const overEmail = () => {
