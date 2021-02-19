@@ -60,18 +60,16 @@ const PortfolioStockChart = (props) => {
         companyInfoObj["currentPPS"] = currentPPS;
         companyInfoObj["totalValue"] = companyInfoObj.purchasedPPS * companyInfoObj.numShares;
         const newValue = companyInfoObj.numShares * companyInfoObj.currentPPS
+        companyInfoObj["newValue"] = newValue;
 
         if (newValue > companyInfoObj.totalValue) {
             companyInfoObj["difference"] = newValue - companyInfoObj.totalValue;
-            companyInfoObj["newValue"] = newValue;
         } 
         if (newValue < companyInfoObj.totalValue) {
             companyInfoObj["difference"] = companyInfoObj.totalValue - newValue;
-            companyInfoObj["newValue"] = newValue;
         }
         if (newValue === companyInfoObj.totalValue) {
             companyInfoObj["difference"] = 0;
-            companyInfoObj["newValue"] = newValue;
         }
         stockChart.unshift(companyInfoObj);
         return stockChart;
@@ -110,21 +108,19 @@ const PortfolioStockChart = (props) => {
                     setStockChart(stockCharts);
                     setCompanyInfo(companyInfoProps);
                     setLoading(false);
-                    dispatch(finishedLoading(true));
+                    // dispatch(finishedLoading(true));
                     const count = window.localStorage.getItem("count");
                     const num = Number(count);
                     // debugger;
                     if (num !== portfolioLength - 1) {
                         window.localStorage.setItem("count", `${num + 1}`);
                         window.localStorage.setItem(`newValue${num + 1}`, `${companyInfoProps.newValue}`);
-                        window.localStorage.setItem(`differences${num + 1}`, `${companyInfoProps.difference}`);
-                        console.log("INSIDE OF IF STATEMENT");
+                        window.localStorage.setItem(`totalValue${num + 1}`, `${companyInfoProps.totalValue}`);
                         // debugger;
                         // window.localStorage.setItem(`portfolioStockChart${num + 1}`, JSON.stringify(stockData));
                     } else {
-                        console.log("INSIDE OF ELSE STATEMENT");
                         window.localStorage.setItem(`newValue${num + 1}`, `${companyInfoProps.newValue}`);
-                        window.localStorage.setItem(`differences${num + 1}`, `${companyInfoProps.difference}`);
+                        window.localStorage.setItem(`totalValue${num + 1}`, `${companyInfoProps.totalValue}`);
                         dispatch(finishedLoading(true));
                         // debugger;
                         // window.localStorage.setItem(`portfolioStockChart${num + 1}`, JSON.stringify(stockData));

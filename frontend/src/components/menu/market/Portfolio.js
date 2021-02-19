@@ -13,53 +13,36 @@ const Portfolio = () => {
     const [portfolioTotalValue, setPortfolioTotalValue] = useState(0);
     const [totalValueDifference, setTotalValueDifference] = useState("");
     const [differenceStatus, setDifferenceStatus] = useState("");
-    const total = window.localStorage.getItem("TOTAL");
     // const portfolioSet = window.localStorage.getItem("PORTFOLIO_SET");
     const [loading, setLoading] = useState(true);
     // const stockChartsArray = [];
-
-    const totalDifference = (num) => {
-        console.log("INSIDE OF TOTALDIFFERENCE FUNCTION");
-        const newNum = Number(total);
-        if (!newNum) {
-            setTotalValueDifference("0");
-            setDifferenceStatus("up");
-        }
-        if (num > newNum) {
-            let newTotal = num - newNum;
-            setTotalValueDifference(newTotal);
-            setDifferenceStatus("up");
-        }
-        if (num < newNum) {
-            let newTotal = newNum - num;
-            setTotalValueDifference(newTotal);
-        }
-        if (num === newNum) {
-            setTotalValueDifference("0");
-            setDifferenceStatus("up");
-        }
-    }
+    
 
     const totalValue = (portfolioData) => {
-        console.log("INSIDE OF TOTALVALUE FUNCTION");
-        const newValueArr = [];
-        const differenceArr = [];
         let newValue = 0;
-        let difference = 0;
+        let totalValue = 0;
         portfolioData.forEach((obj) => {
-            newValueArr.push(obj.newValue);
-            differenceArr.push(obj.difference);
+            const newValueNum = obj.newValue;
+            const totalValueNum = obj.totalValue;
+            newValue = newValue + Number(newValueNum);
+            totalValue = totalValue + Number(totalValueNum);
         });
-        for (let i = 0; i < portfolioData.length; i++) {
-            let newValueNum = newValueArr[i];
-            let differenceNum = differenceArr[i];
-            newValue =+ newValueNum;
-            difference =+ differenceNum;
+
+        if (newValue > totalValue) {
+            const difference = newValue - totalValue;
+            setTotalValueDifference(difference);
+            setDifferenceStatus("up");
+        }
+        if (totalValue > newValue) {
+            const difference = totalValue - newValue;
+            setTotalValueDifference(difference);
+            setDifferenceStatus("down");
+        }
+        if (newValue === totalValue) {
+            setTotalValueDifference("0");
+            setDifferenceStatus("up");
         }
         setPortfolioTotalValue(newValue);
-        // debugger;
-        totalDifference(difference);
-        window.localStorage.setItem("TOTAL", newValue);
     }
 
     useEffect(() => {
@@ -83,24 +66,22 @@ const Portfolio = () => {
             //         }
             //     }
             // }
-            if (finishedLoading) {
+            if (finishedLoading === true) {
                 // grabStockCharts();
-            if (portfolioTotalValue !== 0) {
-                const totalValueArray = [];
-                for (let i = 1; i <= portfolio.length; i++) {
-                    const newValue = window.localStorage.getItem(`newValue${i}`);
-                    const difference = window.localStorage.getItem(`differences${i}`);
-                    const totalValueObj = {};
-                    totalValueObj["newValue"] = newValue;
-                    totalValueObj["difference"] = difference;
-                    totalValueArray.push(totalValueObj);
-                    debugger;
-                    window.localStorage.removeItem(`newValue${i}`);
-                    window.localStorage.removeItem(`differences${i}`);
-                    console.log("INSIDE OF FOR LOOP");
+                if (portfolioTotalValue === 0) {
+                    const totalValueArray = [];
+                    for (let i = 1; i <= portfolio.length; i++) {
+                        const newValue = window.localStorage.getItem(`newValue${i}`);
+                        const totalValue = window.localStorage.getItem(`totalValue${i}`);
+                        const totalValueObj = {};
+                        totalValueObj["newValue"] = newValue;
+                        totalValueObj["totalValue"] = totalValue;
+                        totalValueArray.push(totalValueObj);
+                        window.localStorage.removeItem(`newValue${i}`);
+                        window.localStorage.removeItem(`totalValue${i}`);
+                    }
+                    totalValue(totalValueArray);
                 }
-                totalValue(totalValueArray);
-            }
                 setLoading(false);
                 window.localStorage.removeItem("count");
             }
