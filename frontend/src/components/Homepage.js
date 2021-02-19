@@ -44,9 +44,9 @@ const Homepage = (props) => {
     return (
         <>
         <div className="homepage__mainMenuDiv">
-            {(menuSelection === "banking" && urlStockInfo === false && !component) || component === "banking" ? <div onClick={bankingSelection} className="bankingInfo__menu selected">Banking</div> : <div onClick={bankingSelection} className="bankingInfo__menu">Banking</div>}
-            {menuSelection === "stock" || urlStockInfo === true || component === "stock" || subComponent === true ? <div onClick={stockSelection} className="stockMarket__menu selected">Stock Market</div> : <div onClick={stockSelection} className="stockMarket__menu">Stock Market</div>}
-            {menuSelection === "account" || component === "account" ? <div onClick={accountSelection} className="userAccount__menu selected">Account</div> : <div onClick={accountSelection} className="userAccount__menu">Account</div>}
+            {(menuSelection === "banking" && urlStockInfo === false && !component) || component === "banking" ? <div onClick={bankingSelection} className="bankingInfo__menu selected"><span>Banking</span></div> : <div onClick={bankingSelection} className="bankingInfo__menu"><span>Banking</span></div>}
+            {menuSelection === "stock" || urlStockInfo === true || component === "stock" || subComponent === true ? <div onClick={stockSelection} className="stockMarket__menu selected"><span>Stock Market</span></div> : <div onClick={stockSelection} className="stockMarket__menu"><span>Stock Market</span></div>}
+            {menuSelection === "account" || component === "account" ? <div onClick={accountSelection} className="userAccount__menu selected"><span>Account</span></div> : <div onClick={accountSelection} className="userAccount__menu"><span>Account</span></div>}
         </div>
         {menuSelection === "stock" || urlStockInfo === true || component === "stock" || subComponent === true ? <StockMarket component={component} stock={stockInfo} /> : menuSelection === "account" || component === "account" ? <Account /> : <Banking />}
         </>
