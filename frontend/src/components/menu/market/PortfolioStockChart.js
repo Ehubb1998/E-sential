@@ -59,7 +59,20 @@ const PortfolioStockChart = (props) => {
         let currentPPS = lastObj.close;
         companyInfoObj["currentPPS"] = currentPPS;
         companyInfoObj["totalValue"] = companyInfoObj.purchasedPPS * companyInfoObj.numShares;
-        companyInfoObj["difference"] = companyInfoObj.numShares * companyInfoObj.currentPPS;
+        const newValue = companyInfoObj.numShares * companyInfoObj.currentPPS
+
+        if (newValue > companyInfoObj.totalValue) {
+            companyInfoObj["difference"] = newValue - companyInfoObj.totalValue;
+            companyInfoObj["newValue"] = newValue;
+        } 
+        if (newValue < companyInfoObj.totalValue) {
+            companyInfoObj["difference"] = companyInfoObj.totalValue - newValue;
+            companyInfoObj["newValue"] = newValue;
+        }
+        if (newValue === companyInfoObj.totalValue) {
+            companyInfoObj["difference"] = 0;
+            companyInfoObj["newValue"] = newValue;
+        }
         stockChart.unshift(companyInfoObj);
         return stockChart;
     }
@@ -92,17 +105,28 @@ const PortfolioStockChart = (props) => {
                     setLoading(false);
                 } else {
                     const stockData = await individualStockData(portfolioStock, timeSelection);
-                    setStockChart(stockData);
+                    const stockCharts = stockData;
+                    const companyInfoProps = stockCharts.shift();
+                    setStockChart(stockCharts);
+                    setCompanyInfo(companyInfoProps);
                     setLoading(false);
                     dispatch(finishedLoading(true));
                     const count = window.localStorage.getItem("count");
                     const num = Number(count);
+                    // debugger;
                     if (num !== portfolioLength - 1) {
                         window.localStorage.setItem("count", `${num + 1}`);
-                        debugger;
+                        window.localStorage.setItem(`newValue${num + 1}`, `${companyInfoProps.newValue}`);
+                        window.localStorage.setItem(`differences${num + 1}`, `${companyInfoProps.difference}`);
+                        console.log("INSIDE OF IF STATEMENT");
+                        // debugger;
                         // window.localStorage.setItem(`portfolioStockChart${num + 1}`, JSON.stringify(stockData));
                     } else {
+                        console.log("INSIDE OF ELSE STATEMENT");
+                        window.localStorage.setItem(`newValue${num + 1}`, `${companyInfoProps.newValue}`);
+                        window.localStorage.setItem(`differences${num + 1}`, `${companyInfoProps.difference}`);
                         dispatch(finishedLoading(true));
+                        // debugger;
                         // window.localStorage.setItem(`portfolioStockChart${num + 1}`, JSON.stringify(stockData));
                     }
                 }
@@ -113,11 +137,17 @@ const PortfolioStockChart = (props) => {
         // eslint-disable-next-line
     }, [timeSelection]);
 
-    const numberFormat = (num) => {
-        let roundedNum = Math.round(num);
-        let formattedNum = roundedNum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-        return formattedNum;
-    }
+    // const numberFormat = (num) => {
+    //     let roundedNum = Math.round(num);
+    //     let formattedNum = roundedNum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    //     return formattedNum;
+    // }
+
+    const formatter = new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'USD',
+        minimumFractionDigits: 2,
+    });
 
     if (loading) return <></>
     return (
@@ -143,19 +173,19 @@ const PortfolioStockChart = (props) => {
             <div className="stockInfo__portfolio-div">
                 <div className="stockInfo__name">
                     <span>{companyInfo.symbol}</span>
-                    <span>${numberFormat(companyInfo.currentPPS)}</span>
+                    <span>{formatter.format(companyInfo.currentPPS)}</span>
                 </div>
                 <div className="stockInfo__shares-div">
                     <div className="totalValue__portfolio">
                         <span>Total Value</span>
-                        <span>${numberFormat(companyInfo.totalValue)}</span>
+                        <span>{formatter.format(companyInfo.newValue)}</span>
                     </div>
                     <div className="yourShares">
                         <span>{companyInfo.numShares} Shares</span>
-                        <span>@${numberFormat(companyInfo.purchasedPPS)}/share</span>
+                        <span>@{formatter.format(companyInfo.purchasedPPS)}/share</span>
                     </div>
                     <div className="totalDifference__portfolio">
-                        {companyInfo.difference > companyInfo.totalValue ? <span className="profit__difference">+ ${numberFormat(companyInfo.difference)}</span> : <span className="lost__difference">- ${numberFormat(companyInfo.difference)}</span>}
+                        {companyInfo.newValue > companyInfo.totalValue || companyInfo.newValue === companyInfo.totalValue ? <span className="profit__difference">+ {formatter.format(companyInfo.difference)}</span> : <span className="lost__difference">- {formatter.format(companyInfo.difference)}</span>}
                     </div>
                 </div>
             </div>

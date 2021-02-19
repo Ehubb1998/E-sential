@@ -10,7 +10,7 @@ const Portfolio = () => {
     const portfolio = useSelector(state => state.stockDataReducer.portfolioData);
     const finishedLoading = useSelector(state => state.stockDataReducer.finishedLoading);
     // const portfolioStockChartsRedux = useSelector(state => state.stockDataReducer.portfolioStockCharts);
-    const [portfolioTotalValue, setPortfolioTotalValue] = useState("");
+    const [portfolioTotalValue, setPortfolioTotalValue] = useState(0);
     const [totalValueDifference, setTotalValueDifference] = useState("");
     const [differenceStatus, setDifferenceStatus] = useState("");
     const total = window.localStorage.getItem("TOTAL");
@@ -19,49 +19,51 @@ const Portfolio = () => {
     // const stockChartsArray = [];
 
     const totalDifference = (num) => {
-        const newNum = num.toString();
-        if (!total) {
+        console.log("INSIDE OF TOTALDIFFERENCE FUNCTION");
+        const newNum = Number(total);
+        if (!newNum) {
             setTotalValueDifference("0");
             setDifferenceStatus("up");
         }
-        if (newNum > total) {
-            let newTotal = newNum - total;
+        if (num > newNum) {
+            let newTotal = num - newNum;
             setTotalValueDifference(newTotal);
             setDifferenceStatus("up");
         }
-        if (newNum < total) {
-            let newTotal = total - newNum;
+        if (num < newNum) {
+            let newTotal = newNum - num;
             setTotalValueDifference(newTotal);
         }
-        if (newNum === total) {
+        if (num === newNum) {
             setTotalValueDifference("0");
             setDifferenceStatus("up");
         }
     }
 
     const totalValue = (portfolioData) => {
-        let portfolioValues = [];
-        let totalValue = 0;
-        portfolioData.forEach((stock) => {
-            let shares = stock.shares;
-            let pps = stock.pps;
-            let total = shares * pps;
-            portfolioValues.push(total);
+        console.log("INSIDE OF TOTALVALUE FUNCTION");
+        const newValueArr = [];
+        const differenceArr = [];
+        let newValue = 0;
+        let difference = 0;
+        portfolioData.forEach((obj) => {
+            newValueArr.push(obj.newValue);
+            differenceArr.push(obj.difference);
         });
-        portfolioValues.forEach((num) => {
-            totalValue += num;
-        });
-        setPortfolioTotalValue(totalValue);
-        totalDifference(totalValue);
-        window.localStorage.setItem("TOTAL", totalValue);
+        for (let i = 0; i < portfolioData.length; i++) {
+            let newValueNum = newValueArr[i];
+            let differenceNum = differenceArr[i];
+            newValue =+ newValueNum;
+            difference =+ differenceNum;
+        }
+        setPortfolioTotalValue(newValue);
+        // debugger;
+        totalDifference(difference);
+        window.localStorage.setItem("TOTAL", newValue);
     }
 
     useEffect(() => {
         const stockFunction = async () => {
-            if (!portfolioTotalValue) {
-                totalValue(portfolio);
-            }
-
             // const grabStockCharts = () => {
             //     if (window.localStorage.getItem("done") === "true") {
             //         // window.localStorage.removeItem("done");
@@ -83,9 +85,24 @@ const Portfolio = () => {
             // }
             if (finishedLoading) {
                 // grabStockCharts();
+            if (portfolioTotalValue !== 0) {
+                const totalValueArray = [];
+                for (let i = 1; i <= portfolio.length; i++) {
+                    const newValue = window.localStorage.getItem(`newValue${i}`);
+                    const difference = window.localStorage.getItem(`differences${i}`);
+                    const totalValueObj = {};
+                    totalValueObj["newValue"] = newValue;
+                    totalValueObj["difference"] = difference;
+                    totalValueArray.push(totalValueObj);
+                    debugger;
+                    window.localStorage.removeItem(`newValue${i}`);
+                    window.localStorage.removeItem(`differences${i}`);
+                    console.log("INSIDE OF FOR LOOP");
+                }
+                totalValue(totalValueArray);
+            }
                 setLoading(false);
                 window.localStorage.removeItem("count");
-                debugger;
             }
         }
         stockFunction();
@@ -108,6 +125,11 @@ const Portfolio = () => {
             <div className="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
         </div>
     );
+    const formatter = new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'USD',
+        minimumFractionDigits: 2,
+    });
 
     // const testData = [{name: "Elijah", high: 1000, low: 900}, {name: "Hubbard", high: 800, low: 700}, {name: "Shamar", high: 600, low: 500}, {name: "Test", high: 400, low: 300}];
 
@@ -116,12 +138,12 @@ const Portfolio = () => {
         <div className="stockContent__div">
             <div className="portfolio__totalValue-container">
                 <div className="totalValue__div">
-                    {portfolio && portfolioTotalValue ? <div className="totalValue">Portfolio Value • <span style={{ fontWeigth: "400" }}>${portfolioTotalValue.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</span></div> : <></>}
+                    {portfolio && loading === false ? <div className="totalValue">Portfolio Value • <span style={{ fontWeigth: "400" }}>{formatter.format(portfolioTotalValue)}</span></div> : <></>}
                     <div className="differenceInValue__div">
                         <div style={{ paddingTop: "5px" }}>
-                            {portfolio && differenceStatus === "up" ? greenArrow : redArrow}
+                            {portfolio && loading === false && differenceStatus === "up" ? greenArrow : redArrow}
                         </div>
-                        {portfolio && totalValueDifference ? <div className="differenceNumber">${totalValueDifference.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</div> : <></>}
+                        {portfolio && totalValueDifference ? <div className="differenceNumber">{formatter.format(totalValueDifference)}</div> : <></>}
                     </div>
                 </div>
             </div>

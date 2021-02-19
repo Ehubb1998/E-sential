@@ -1094,7 +1094,7 @@ html, body, #root {
 .stockName__portfolio {
     font-weight: 600;
     font-size: 1.3em;
-    margin-bottom: 17%;
+    /* margin-bottom: 17%; */
 }
 .stockChart__timeFrame {
     border-bottom: 1px solid darkgrey;
