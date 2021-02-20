@@ -7,9 +7,7 @@ const PortfolioStockChart = (props) => {
     const dispatch = useDispatch();
     const portfolioStock = props.stock;
     const finishedLoadingRedux = useSelector(state => state.stockDataReducer.finishedLoading);
-    // const portfolioStockChartsRedux = useSelector(state => state.stockDataReducer.portfolioStockCharts);
     const portfolioLength = props.portfolioLength;
-    // const memory = props.memory
     const [stockChart, setStockChart] = useState({});
     const [companyInfo, setCompanyInfo] = useState({});
     const [timeSelection, setTimeSelection] = useState("today");
@@ -77,22 +75,6 @@ const PortfolioStockChart = (props) => {
 
     useEffect(() => {
         const stockFunction = async () => {
-            // if (memory && loading && portfolioStockChartsRedux) {
-            //     const stockCharts = portfolioStock;
-            //     const companyInfoProps = stockCharts.shift();
-            //     setStockChart(portfolioStock);
-            //     setCompanyInfo(companyInfoProps);
-            //     setLoading(false);
-            //     const count = window.localStorage.getItem("count");
-            //     const num = Number(count);
-            //     if (num !== portfolioLength - 1) {
-            //         window.localStorage.setItem("count", `${num + 1}`);
-            //     } else {
-            //         window.localStorage.setItem("done", "true");
-            //         // dispatch(finishedLoading(true));
-            //     }
-            //     return;
-            // }
             if (loading || timeSelection !== previousTime) {
                 if (timeSelection !== previousTime && finishedLoadingRedux) {
                     if (previousTime === "") {
@@ -104,7 +86,7 @@ const PortfolioStockChart = (props) => {
                         setLoading(false);
                         const count = window.localStorage.getItem("count");
                         const num = Number(count);
-                        debugger;
+
                         if (num !== portfolioLength - 1) {
                             window.localStorage.setItem("count", `${num + 1}`);
                             window.localStorage.setItem(`newValue${num + 1}`, `${companyInfoProps.newValue}`);
@@ -129,22 +111,17 @@ const PortfolioStockChart = (props) => {
                     setStockChart(stockCharts);
                     setCompanyInfo(companyInfoProps);
                     setLoading(false);
-                    // dispatch(finishedLoading(true));
                     const count = window.localStorage.getItem("count");
                     const num = Number(count);
-                    // debugger;
+
                     if (num !== portfolioLength - 1) {
                         window.localStorage.setItem("count", `${num + 1}`);
                         window.localStorage.setItem(`newValue${num + 1}`, `${companyInfoProps.newValue}`);
                         window.localStorage.setItem(`totalValue${num + 1}`, `${companyInfoProps.totalValue}`);
-                        // debugger;
-                        // window.localStorage.setItem(`portfolioStockChart${num + 1}`, JSON.stringify(stockData));
                     } else {
                         window.localStorage.setItem(`newValue${num + 1}`, `${companyInfoProps.newValue}`);
                         window.localStorage.setItem(`totalValue${num + 1}`, `${companyInfoProps.totalValue}`);
                         dispatch(finishedLoading(true));
-                        // debugger;
-                        // window.localStorage.setItem(`portfolioStockChart${num + 1}`, JSON.stringify(stockData));
                     }
                 }
             }
@@ -153,12 +130,6 @@ const PortfolioStockChart = (props) => {
         stockFunction();
         // eslint-disable-next-line
     }, [timeSelection]);
-
-    // const numberFormat = (num) => {
-    //     let roundedNum = Math.round(num);
-    //     let formattedNum = roundedNum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-    //     return formattedNum;
-    // }
 
     const formatter = new Intl.NumberFormat('en-US', {
         style: 'currency',

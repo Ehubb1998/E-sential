@@ -43,7 +43,11 @@ const Market = (props) => {
             return CompanyInfo
         }
         const { StockChart } = await chartRequests.json();
-        return StockChart;
+        const half = Math.ceil(StockChart.length / 2);
+        const rightHalf = StockChart.splice(half, StockChart.length - 1);
+        const halfOfRight = Math.ceil(rightHalf.length / 2);
+        const rightOfHalf = rightHalf.splice(halfOfRight, StockChart.length - 1);
+        return rightOfHalf;
     }
 
     const featuredStockData = async (stockArray, timeFrame) => {
