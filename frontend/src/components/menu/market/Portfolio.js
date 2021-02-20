@@ -119,10 +119,6 @@ const Portfolio = () => {
         <div className="stockContent__div">
             <div className="portfolio__totalValue-container">
                 <div className="totalValue__div">
-                    {console.log(loading)}
-                    {console.log("portfolioTotalValue ", portfolioTotalValue)}
-                    {console.log("differenceStatus ", differenceStatus)}
-                    {console.log("totalValueDifference ", totalValueDifference)}
                     {portfolio && loading === false && portfolioTotalValue ? <div className="totalValue">Portfolio Value • <span style={{ fontWeigth: "400" }}>{formatter.format(portfolioTotalValue)}</span></div> : <></>}
                     <div className="differenceInValue__div">
                         <div style={{ paddingTop: "5px" }}>
