@@ -12,6 +12,8 @@ const StockInfo = (props) => {
     const [stock, setStock] = useState({});
     const [loading, setLoading] = useState(true);
     const [timeSelection, setTimeSelection] = useState("today");
+    const [numShares, setNumShares] = useState(0);
+    const [totalAmount, setTotalAmount] = useState(0);
     const token = window.localStorage.getItem("ESENTIAL_ACCESS_TOKEN");
 
     const todaySelection = () => {
@@ -36,6 +38,11 @@ const StockInfo = (props) => {
             window.localStorage.setItem("component", "market");
             window.localStorage.setItem("back", "true");
         }
+    }
+    const amountOfShares = (e) => {
+        setNumShares(e.target.value);
+        const total = stock.currentPPS * e.target.value;
+        setTotalAmount(total);
     }
 
     const stockApi = async (timeFrame, nameOfStock) => {
@@ -111,18 +118,19 @@ const StockInfo = (props) => {
                     <span>{stock.symbol}</span>
                     <span>${numberFormat(stock.currentPPS)}</span>
                 </div>
-                <div className="stockInfo__shares-div">
-                    {/* <div className="totalValue__portfolio">
-                        <span>Total Value</span>
-                        <span>${numberFormat(chart.totalValue)}</span>
+                <div className="buyStocks__container">
+                    <div className="amountOfShares__container">
+                        <div className="amountOfShares__alignText"><span>Amount</span></div>
+                        <div className="amountOfShares__div">
+                            <input onChange={amountOfShares} className="amountOfShares__input" value={numShares} type="number" />
+                            <div className="amountOfShares__alignText"><span>Shares</span></div>
+                        </div>
                     </div>
-                    <div className="yourShares">
-                        <span>{chart.numShares} Shares</span>
-                        <span>@${numberFormat(chart.purchasedPPS)}/share</span>
+                    <div className="estimatedAmount__container">
+                        <span>Total</span>
+                        <span>${numberFormat(totalAmount)}</span>
                     </div>
-                    <div className="totalDifference__portfolio">
-                        {chart.difference > chart.totalValue ? <span className="profit__difference">+ ${numberFormat(chart.difference)}</span> : <span className="lost__difference">- ${numberFormat(chart.difference)}</span>}
-                    </div> */}
+                    <div className="amountOfShares__bottomBorder"></div>
                 </div>
             </div>
         </div>

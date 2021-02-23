@@ -1086,12 +1086,16 @@ html, body, #root {
     /* margin-bottom: 3%; */
 }
 .stockInfo__portfolio-div {
-    height: 75%;
-    width: 21%;
+    /* height: 75%; */
+    /* width: 21%; */
+    height: 87%;
+    width: 30%;
     background-color: rgb(240, 240, 240);
     border-radius: 5px;
-    margin-left: 9%;
-    margin-top: 3%;
+    /* margin-left: 9%; */
+    margin-left: 4%;
+    /* margin-top: 3%; */
+    margin-top: 2%;
     box-shadow: 1px 1px 3px 2px rgb(0 0 0 / 20%);
 }
 .stockChart__div {
@@ -1123,7 +1127,7 @@ html, body, #root {
 .stockInfo__name {
     display: flex;
     justify-content: space-between;
-    font-size: 1.5em;
+    font-size: 1.8em;
     padding: 8%;
     border-bottom: 1px solid black;
 }
@@ -1212,3 +1216,41 @@ html, body, #root {
     box-shadow: 1px 1px 3px 2px rgb(0 0 0 / 20%);
     cursor: pointer;
 } */
+
+/* StockInfo */
+.buyStocks__container {
+    padding: 8%;
+    font-size: 1.3em;
+}
+.amountOfShares__container {
+    display: flex;
+    justify-content: space-between;
+}
+.amountOfShares__alignText {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.amountOfShares__div {
+    display: flex;
+}
+.amountOfShares__input {
+    display: block;
+    padding: 10px 10px;
+    width: 100px;
+    height: 10px;
+    border: 3px solid rgba(4, 13, 20, 0.1);
+    border-radius: 4px;
+    font-size: 15px;
+}
+.estimatedAmount__container {
+    display: flex;
+    justify-content: space-between;
+    font-weight: 600;
+    margin-top: 10%;
+}
+.amountOfShares__bottomBorder {
+    width: 100%;
+    border-bottom: 1px solid black;
+    margin-top: 2%;
+}
