@@ -106,7 +106,7 @@ const Market = (props) => {
                 </div>
             </div>
             <div className="totalValue__bottomBorder"></div>
-            <div className="stockChart">
+            <div style={(loading === false && featuredCharts && inExpanded === false && urlStockInfo === false) || (loading === false && inExpanded === false && urlStockInfo === false) ? {} : { height: "67%" }} className="stockChart">
                 {(loading === false && featuredCharts && inExpanded === false && urlStockInfo === false) || (loading === false && inExpanded === false && urlStockInfo === false) ? <div className="featuredStocks__container">
                     <div className="featuredStocks__row">
                         <div onClick={handleClick} id="SNAP" className="featuredStocks__div hvr-grow"><MiniStockData i={0} stockArray={miniStocks} /></div>

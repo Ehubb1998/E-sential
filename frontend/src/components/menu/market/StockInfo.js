@@ -86,12 +86,12 @@ const StockInfo = (props) => {
     
     return (
         <>
-        <div className="individualStocks__portfolio">
-            <div className="stockChart__div">
-                <span onClick={backButtonFunc} style={{ paddingBottom: "2%" }} className="backButton">&lt; Back</span>
-                <div className="stockName__portfolio">{stock.company}</div>
-                {loading === false ? <div>
-                    <ResponsiveContainer height="78%">
+        <div style={{ height: "51vh" }} className="individualStocks__portfolio">
+            <div style={{ width: "60%" }}>
+                <span onClick={backButtonFunc} className="backButton">&lt; Back</span>
+                <div style={{ marginTop: "2%" }} className="stockName__portfolio">{stock.company}</div>
+                {loading === false && stock ? <div>
+                    <ResponsiveContainer height="36vh">
                         <LineChart data={stock} margin={{top:25, bottom: 25}}>
                             <Line type="linear" dataKey="close" stroke="#00c805" dot={false} strokeWidth={2} isAnimationActive={true} />
                             <YAxis hide={true} domain={[dataMin => (Math.round(dataMin)), dataMax => (Math.round(dataMax))]} />
@@ -109,8 +109,8 @@ const StockInfo = (props) => {
             </div>
             <div className="stockInfo__portfolio-div">
                 <div className="stockInfo__name">
-                    <span>{stock.symbol}</span>
-                    <span>${numberFormat(stock.currentPPS)}</span>
+                    {loading ? <span>Loading...</span> : <span>{stock.symbol}</span>}
+                    {loading ? <></> : <span>${numberFormat(stock.currentPPS)}</span>}
                 </div>
                 <div className="stockInfo__shares-div">
                     {/* <div className="totalValue__portfolio">
