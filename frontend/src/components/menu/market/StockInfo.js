@@ -83,34 +83,33 @@ const StockInfo = (props) => {
             <div className="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
         </div>
     );
-    
+
+    if (loading) return loadingWheel;
     return (
         <>
         <div style={{ height: "51vh" }} className="individualStocks__portfolio">
             <div style={{ width: "60%" }}>
                 <span onClick={backButtonFunc} className="backButton">&lt; Back</span>
                 <div style={{ marginTop: "2%" }} className="stockName__portfolio">{stock.company}</div>
-                {loading === false && stock ? <div>
-                    <ResponsiveContainer height="36vh">
-                        <LineChart data={stock} margin={{top:25, bottom: 25}}>
-                            <Line type="linear" dataKey="close" stroke="#00c805" dot={false} strokeWidth={2} isAnimationActive={true} />
-                            <YAxis hide={true} domain={[dataMin => (Math.round(dataMin)), dataMax => (Math.round(dataMax))]} />
-                            <Tooltip isAnimationActive={false} offset={-40} position={{ y: -40 }} />
-                        </LineChart>
-                    </ResponsiveContainer>
-                    <div className="stockChart__timeFrame">
-                        {timeSelection === "today" ? <div style={{ marginLeft: "0px" }} className="timeFrames selected__timeFrame">1D</div> : <div onClick={todaySelection} style={{ marginLeft: "0px" }} id="timeFrame__today" className="timeFrames">1D</div>}
-                        {timeSelection === "week" ? <div className="timeFrames selected__timeFrame">1W</div> : <div onClick={weekSelection} id="timeFrame__week" className="timeFrames">1W</div>}
-                        {timeSelection === "month" ? <div className="timeFrames selected__timeFrame">1M</div> : <div onClick={monthSelection} id="timeFrame__month" className="timeFrames">1M</div>}
-                        {timeSelection === "6months" ? <div className="timeFrames selected__timeFrame">6M</div> : <div onClick={sixMonthsSelection} id="timeFrame__6months" className="timeFrames">6M</div>}
-                        {timeSelection === "year" ? <div className="timeFrames selected__timeFrame">1Y</div> : <div onClick={yearSelection} id="timeFrame__year" className="timeFrames">1Y</div>}
-                    </div>
-                </div> : loadingWheel}
+                <ResponsiveContainer height="74%">
+                    <LineChart data={stock} margin={{top:25, bottom: 25}}>
+                        <Line type="linear" dataKey="close" stroke="#00c805" dot={false} strokeWidth={2} isAnimationActive={true} />
+                        <YAxis hide={true} domain={[dataMin => (Math.round(dataMin)), dataMax => (Math.round(dataMax))]} />
+                        <Tooltip isAnimationActive={false} offset={-40} position={{ y: -40 }} />
+                    </LineChart>
+                </ResponsiveContainer>
+                <div className="stockChart__timeFrame">
+                    {timeSelection === "today" ? <div style={{ marginLeft: "0px" }} className="timeFrames selected__timeFrame">1D</div> : <div onClick={todaySelection} style={{ marginLeft: "0px" }} id="timeFrame__today" className="timeFrames">1D</div>}
+                    {timeSelection === "week" ? <div className="timeFrames selected__timeFrame">1W</div> : <div onClick={weekSelection} id="timeFrame__week" className="timeFrames">1W</div>}
+                    {timeSelection === "month" ? <div className="timeFrames selected__timeFrame">1M</div> : <div onClick={monthSelection} id="timeFrame__month" className="timeFrames">1M</div>}
+                    {timeSelection === "6months" ? <div className="timeFrames selected__timeFrame">6M</div> : <div onClick={sixMonthsSelection} id="timeFrame__6months" className="timeFrames">6M</div>}
+                    {timeSelection === "year" ? <div className="timeFrames selected__timeFrame">1Y</div> : <div onClick={yearSelection} id="timeFrame__year" className="timeFrames">1Y</div>}
+                </div>
             </div>
             <div className="stockInfo__portfolio-div">
                 <div className="stockInfo__name">
-                    {loading ? <span>Loading...</span> : <span>{stock.symbol}</span>}
-                    {loading ? <></> : <span>${numberFormat(stock.currentPPS)}</span>}
+                    <span>{stock.symbol}</span>
+                    <span>${numberFormat(stock.currentPPS)}</span>
                 </div>
                 <div className="stockInfo__shares-div">
                     {/* <div className="totalValue__portfolio">
