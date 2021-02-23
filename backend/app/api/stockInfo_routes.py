@@ -68,15 +68,15 @@ def iex_stock_info(company, time_frame, postMethod=False):
 @check_for_token
 def new_stock_info():
     user_id = request.json["userId"]
-    company = request.json["companyName"]
+    stock = request.json["stockSymbol"]
     num_shares = request.json["numShares"]
-    stock_price = iex_stock_info(company, "na", postMethod=True)
+    stock_price = request.json["pps"]
 
     if stock_price != "Invalid Company Stock Symbol":
 
         new_info = StockInfo(
             user_id=user_id,
-            stock=company,
+            stock=stock,
             shares=num_shares,
             pps=stock_price
         )

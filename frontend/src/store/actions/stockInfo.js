@@ -25,3 +25,26 @@ export const portfolioData = (id, token) => {
         window.localStorage.setItem("PORTFOLIO_SET", "true");
     }
 }
+
+export const buyStock = (id, token, stockSymbol, numShares, pps) => {
+    return async () => {
+        try {
+            const res = await fetch("/api/stock_info/", {
+                method: "POST",
+                body: JSON.stringify({ userId: id, token: token, stockSymbol: stockSymbol, numShares: numShares, pps: pps }),
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            });
+
+            if (!res.ok) {
+                throw res;
+            }
+            portfolioData(id, token);
+
+        } catch (err) {
+            const error = await err.json();
+            console.error(error);
+        }
+    }
+}

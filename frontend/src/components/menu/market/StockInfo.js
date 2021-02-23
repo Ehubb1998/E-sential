@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from "react-router-dom";
 import { LineChart, Line, Tooltip, YAxis, ResponsiveContainer } from 'recharts';
-import { backButton } from "../../../store/actions/stockInfo";
+import { backButton, buyStock } from "../../../store/actions/stockInfo";
+import { updateBalance } from "../../../store/actions/bankInfo";
 
 const StockInfo = (props) => {
     const dispatch = useDispatch();
@@ -14,7 +15,9 @@ const StockInfo = (props) => {
     const [timeSelection, setTimeSelection] = useState("today");
     const [numShares, setNumShares] = useState(0);
     const [totalAmount, setTotalAmount] = useState(0);
+    const bankBalance = useSelector(state => state.bankDataReducer.bankData.accountBalance);
     const token = window.localStorage.getItem("ESENTIAL_ACCESS_TOKEN");
+    const userId = window.localStorage.getItem("ESENTIAL_USER_ID");
 
     const todaySelection = () => {
         setTimeSelection("today");
@@ -44,9 +47,11 @@ const StockInfo = (props) => {
         const total = stock.currentPPS * e.target.value;
         setTotalAmount(total);
     }
-    // const placeOrder = () => {
-
-    // }
+    const placeOrder = () => {
+        dispatch(buyStock(userId, token, stock.symbol, numShares, stock.currentPPS));
+        const newBalance = Number(bankBalance) - totalAmount;
+        dispatch(updateBalance(userId, token, newBalance));
+    }
 
     const stockApi = async (timeFrame, nameOfStock) => {
         const chartRequests = await fetch(`/api/stock_info/chart/${timeFrame}/${token}/${nameOfStock}`);
@@ -82,11 +87,11 @@ const StockInfo = (props) => {
         // eslint-disable-next-line
     }, []);
 
-    const numberFormat = (num) => {
-        let roundedNum = Math.round(num);
-        let formattedNum = roundedNum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-        return formattedNum;
-    }
+    const formatter = new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'USD',
+        minimumFractionDigits: 2,
+    });
 
     const loadingWheel = (
         <div style={{ marginTop: "0px", marginBottom: "28%" }} id="loader">
@@ -119,7 +124,7 @@ const StockInfo = (props) => {
             <div className="stockInfo__portfolio-div">
                 <div className="stockInfo__name">
                     <span>{stock.symbol}</span>
-                    <span>${numberFormat(stock.currentPPS)}</span>
+                    <span>{formatter.format(stock.currentPPS)}</span>
                 </div>
                 <div className="buyStocks__container">
                     <div className="amountOfShares__container">
@@ -131,11 +136,12 @@ const StockInfo = (props) => {
                     </div>
                     <div className="estimatedAmount__container">
                         <span>Total</span>
-                        <span>${numberFormat(totalAmount)}</span>
+                        <span>{formatter.format(totalAmount)}</span>
                     </div>
                     <div className="amountOfShares__bottomBorder"></div>
                 </div>
-                <button className="placeOrderButton">Place Order</button>
+                <p>{formatter.format(bankBalance)} Buying Power Available</p>
+                <button onClick={placeOrder} className="placeOrderButton">Place Order</button>
             </div>
         </div>
         </>
