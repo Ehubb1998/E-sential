@@ -44,6 +44,9 @@ const StockInfo = (props) => {
         const total = stock.currentPPS * e.target.value;
         setTotalAmount(total);
     }
+    // const placeOrder = () => {
+
+    // }
 
     const stockApi = async (timeFrame, nameOfStock) => {
         const chartRequests = await fetch(`/api/stock_info/chart/${timeFrame}/${token}/${nameOfStock}`);
@@ -132,6 +135,7 @@ const StockInfo = (props) => {
                     </div>
                     <div className="amountOfShares__bottomBorder"></div>
                 </div>
+                <button className="placeOrderButton">Place Order</button>
             </div>
         </div>
         </>
