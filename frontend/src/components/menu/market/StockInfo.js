@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useHistory } from "react-router-dom";
 import { LineChart, Line, Tooltip, YAxis, ResponsiveContainer } from 'recharts';
 import { backButton, buyStock } from "../../../store/actions/stockInfo";
@@ -15,7 +15,7 @@ const StockInfo = (props) => {
     const [timeSelection, setTimeSelection] = useState("today");
     const [numShares, setNumShares] = useState(0);
     const [totalAmount, setTotalAmount] = useState(0);
-    const bankBalance = useSelector(state => state.bankDataReducer.bankData.accountBalance);
+    const [bankBalance, setBankBalance] = useState(0);
     const token = window.localStorage.getItem("ESENTIAL_ACCESS_TOKEN");
     const userId = window.localStorage.getItem("ESENTIAL_USER_ID");
 
@@ -53,6 +53,13 @@ const StockInfo = (props) => {
         dispatch(updateBalance(userId, token, newBalance));
     }
 
+    const grabBankBalance = async () => {
+        const bankdata = await fetch(`/api/bank_info/info/${userId}/${token}`);
+        const { BankInfo } = await bankdata.json();
+        const balance = BankInfo.accountBalance;
+        setBankBalance(balance);
+    }
+
     const stockApi = async (timeFrame, nameOfStock) => {
         const chartRequests = await fetch(`/api/stock_info/chart/${timeFrame}/${token}/${nameOfStock}`);
         if (timeFrame === "company") {
@@ -84,6 +91,7 @@ const StockInfo = (props) => {
             }
         }
         stockFunction();
+        grabBankBalance();
         // eslint-disable-next-line
     }, []);
 
@@ -140,7 +148,7 @@ const StockInfo = (props) => {
                     </div>
                     <div className="amountOfShares__bottomBorder"></div>
                 </div>
-                <p>{formatter.format(bankBalance)} Buying Power Available</p>
+                <p style={{ margin: "0", textAlign: "center" }}>{formatter.format(bankBalance)} Buying Power Available</p>
                 <button onClick={placeOrder} className="placeOrderButton">Place Order</button>
             </div>
         </div>

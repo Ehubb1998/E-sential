@@ -1221,7 +1221,7 @@ html, body, #root {
 .buyStocks__container {
     padding: 8%;
     font-size: 1.3em;
-    padding-bottom: 5%;
+    padding-bottom: 4%;
 }
 .amountOfShares__container {
     display: flex;
@@ -1249,7 +1249,7 @@ html, body, #root {
     display: flex;
     justify-content: space-between;
     font-weight: 600;
-    margin-top: 10%;
+    margin-top: 7%;
 }
 .amountOfShares__bottomBorder {
     width: 100%;
