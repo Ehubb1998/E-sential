@@ -2,6 +2,7 @@ from flask import Blueprint, jsonify, session, request, make_response
 from app.models import db, StockInfo
 from ..config import Config
 from .check_for_token import check_for_token
+from collections import Counter
 import requests
 import datetime
 
@@ -71,35 +72,19 @@ def new_stock_info():
     stock = request.json["stockSymbol"]
     num_shares = request.json["numShares"]
     stock_price = request.json["pps"]
-
-    stocks = StockInfo.query.filter((StockInfo.user_id == user_id) & (StockInfo.stock == stock)).all()
-    if stocks:
-        stock_pps = [stock.pps_function() for stock in stocks]
-        stock_shares = [stock.shares_function() for stock in stocks]
-        total_value = 0
-        total_num_shares = 0
-        for i in range(len(stocks)):
-            current_pps = stock_pps[i]
-            current_shares = stock_shares[i]
-            value = current_pps * current_shares
-            total_value = total_value + value
-            total_num_shares = total_num_shares + current_shares
         
-        new_pps = total_value / total_num_shares
-        
+    new_info = StockInfo(
+        user_id=user_id,
+        stock=stock,
+        shares=num_shares,
+        pps=stock_price
+    )
 
-    # new_info = StockInfo(
-    #     user_id=user_id,
-    #     stock=stock,
-    #     shares=num_shares,
-    #     pps=stock_price
-    # )
+    db.session.add(new_info)
+    db.session.commit()
 
-    # db.session.add(new_info)
-    # db.session.commit()
-
-    # info = new_info.stock_info()
-    # return jsonify({"StockInfo": info})
+    info = new_info.stock_info()
+    return jsonify({"StockInfo": info})
 
 
 @stockInfo_routes.route("/info/<id>/<token>/<allOrOne>/<stock>")
@@ -119,12 +104,45 @@ def stock_info(*args, **kwargs):
         return jsonify({"StockInfo": info})
     else:
         stocks = StockInfo.query.filter(StockInfo.user_id == id).all()
-
         if not stocks:
             return make_response(jsonify("You do not own stocks"), 404)
-
+        
         info = [stock.stock_info() for stock in stocks]
-        return jsonify({"StockInfo": info})
+
+        stock_name_list = []
+        stock_info_list = []
+        for i in range(len(stocks)):
+            stock_info = info[i]
+            stock_name = stock_info["stock"]
+            stock_name_list.append(stock_name)
+        
+        repeated_stocks = [k for k, v in Counter(stock_name_list).items() if v > 1]
+        for stockName in repeated_stocks:
+            stock_list = StockInfo.query.filter((StockInfo.user_id == id) & (StockInfo.stock == stockName)).all()
+            stock_pps = [stock.pps_function() for stock in stock_list]
+            stock_shares = [stock.shares_function() for stock in stock_list]
+            total_value = 0
+            total_num_shares = 0
+            for i in range(len(stock_list)):
+                current_pps = stock_pps[i]
+                current_shares = stock_shares[i]
+                value = current_pps * current_shares
+                total_value = total_value + value
+                total_num_shares = total_num_shares + current_shares
+
+            new_pps = total_value / total_num_shares
+            first_stock = StockInfo.query.filter((StockInfo.user_id == id) & (StockInfo.stock == stockName)).first()
+            first_stock.pricePerShare = new_pps
+            first_stock.numShares = total_num_shares
+            info_from_stock = first_stock.stock_info()
+            stock_info_list.append(info_from_stock)
+
+            for i in range(len(stock_name_list)):
+                strName = stock_name_list[i]
+                if strName != stockName:
+                    stock_info_list.append(info[i])
+
+        return jsonify({"StockInfo": stock_info_list})
 
 
 @stockInfo_routes.route("/chart/<timeFrame>/<token>/<stock>")
