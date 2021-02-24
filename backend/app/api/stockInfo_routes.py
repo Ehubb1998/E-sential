@@ -86,13 +86,6 @@ def new_stock_info():
             total_num_shares = total_num_shares + current_shares
         
         new_pps = total_value / total_num_shares
-        for i in range(len(stocks)):
-            stock = stocks[i]
-            stock.pricePerShare = new_pps
-
-
-    print(stock_list)
-    return "Hey"
         
 
     # new_info = StockInfo(
