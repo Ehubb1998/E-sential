@@ -16,6 +16,7 @@ const StockInfo = (props) => {
     const [numShares, setNumShares] = useState(0);
     const [totalAmount, setTotalAmount] = useState(0);
     const [bankBalance, setBankBalance] = useState(0);
+    const [paymentSuccessful, setPaymentSuccessful] = useState(false);
     const token = window.localStorage.getItem("ESENTIAL_ACCESS_TOKEN");
     const userId = window.localStorage.getItem("ESENTIAL_USER_ID");
 
@@ -48,9 +49,17 @@ const StockInfo = (props) => {
         setTotalAmount(total);
     }
     const placeOrder = () => {
-        dispatch(buyStock(userId, token, stock.symbol, numShares, stock.currentPPS));
+        const stockSymbol = stock.symbol;
+        dispatch(buyStock(userId, token, stockSymbol.toLowerCase(), numShares, stock.currentPPS));
         const newBalance = Number(bankBalance) - totalAmount;
         dispatch(updateBalance(userId, token, newBalance));
+        setPaymentSuccessful(true);
+    }
+
+    if (paymentSuccessful) {
+        setTimeout(() => {
+            setPaymentSuccessful(false);
+        }, 4000);
     }
 
     const grabBankBalance = async () => {
@@ -93,7 +102,7 @@ const StockInfo = (props) => {
         stockFunction();
         grabBankBalance();
         // eslint-disable-next-line
-    }, []);
+    }, [paymentSuccessful]);
 
     const formatter = new Intl.NumberFormat('en-US', {
         style: 'currency',
@@ -149,7 +158,7 @@ const StockInfo = (props) => {
                     <div className="amountOfShares__bottomBorder"></div>
                 </div>
                 <p style={{ margin: "0", textAlign: "center" }}>{formatter.format(bankBalance)} Buying Power Available</p>
-                <button onClick={placeOrder} className="placeOrderButton">Place Order</button>
+                {paymentSuccessful === false ? <button onClick={placeOrder} className="placeOrderButton">Place Order</button> : <button style={{ height: "9%" }} className="placeOrderButton">Payment Successful</button>}
             </div>
         </div>
         </>

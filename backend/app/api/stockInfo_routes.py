@@ -72,22 +72,41 @@ def new_stock_info():
     num_shares = request.json["numShares"]
     stock_price = request.json["pps"]
 
-    if stock_price != "Invalid Company Stock Symbol":
+    stocks = StockInfo.query.filter((StockInfo.user_id == user_id) & (StockInfo.stock == stock)).all()
+    if stocks:
+        stock_pps = [stock.pps_function() for stock in stocks]
+        stock_shares = [stock.shares_function() for stock in stocks]
+        total_value = 0
+        total_num_shares = 0
+        for i in range(len(stocks)):
+            current_pps = stock_pps[i]
+            current_shares = stock_shares[i]
+            value = current_pps * current_shares
+            total_value = total_value + value
+            total_num_shares = total_num_shares + current_shares
+        
+        new_pps = total_value / total_num_shares
+        for i in range(len(stocks)):
+            stock = stocks[i]
+            stock.pricePerShare = new_pps
 
-        new_info = StockInfo(
-            user_id=user_id,
-            stock=stock,
-            shares=num_shares,
-            pps=stock_price
-        )
 
-        db.session.add(new_info)
-        db.session.commit()
+    print(stock_list)
+    return "Hey"
+        
 
-        info = new_info.stock_info()
-        return jsonify({"StockInfo": info})
-    else:
-        return make_response(jsonify("Invalid Company Stock Symbol"), 404)
+    # new_info = StockInfo(
+    #     user_id=user_id,
+    #     stock=stock,
+    #     shares=num_shares,
+    #     pps=stock_price
+    # )
+
+    # db.session.add(new_info)
+    # db.session.commit()
+
+    # info = new_info.stock_info()
+    # return jsonify({"StockInfo": info})
 
 
 @stockInfo_routes.route("/info/<id>/<token>/<allOrOne>/<stock>")

@@ -22,6 +22,16 @@ class StockInfo(db.Model):
     def numShares(self, number):
         self.shares = number
 
+
+    @property
+    def pricePerShare(self):
+        return self.pps
+
+
+    @pricePerShare.setter
+    def pricePerShare(self, number):
+        self.pps = number
+
     
     def stock_info(self):
         return {
@@ -31,3 +41,11 @@ class StockInfo(db.Model):
             "shares": self.shares,
             "pps": self.pps,
         }
+
+
+    def pps_function(self):
+        return self.pps
+
+
+    def shares_function(self):
+        return self.shares

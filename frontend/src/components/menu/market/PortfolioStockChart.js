@@ -32,15 +32,23 @@ const PortfolioStockChart = (props) => {
     }
 
     const stockApi = async (timeFrame, nameOfStock) => {
-        const chartRequests = await fetch(`/api/stock_info/chart/${timeFrame}/${token}/${nameOfStock}`);
-        if (timeFrame === "company") {
-            const { CompanyInfo } = await chartRequests.json();
-            return CompanyInfo
+        try {
+            const chartRequests = await fetch(`/api/stock_info/chart/${timeFrame}/${token}/${nameOfStock}`);
+            if (timeFrame === "company") {
+                const { CompanyInfo } = await chartRequests.json();
+                return CompanyInfo
+            }
+            if (!chartRequests.ok) {
+                throw chartRequests;
+            }
+            const { StockChart } = await chartRequests.json();
+            const half = Math.ceil(StockChart.length / 2);
+            const rightHalf = StockChart.splice(half, StockChart.length - 1);
+            return rightHalf;
+        } catch (err) {
+            const error = await err.json();
+            console.error(error);
         }
-        const { StockChart } = await chartRequests.json();
-        const half = Math.ceil(StockChart.length / 2);
-        const rightHalf = StockChart.splice(half, StockChart.length - 1);
-        return rightHalf;
     }
 
     const individualStockData = async (stock, timeFrame) => {
