@@ -60,7 +60,7 @@ const WatchList = () => {
         }
         featuredStocksFunc();
         // eslint-disable-next-line
-    }, [backButtonRedux]);
+    }, []);
 
     const loadingWheel = (
         <div id="loader">
