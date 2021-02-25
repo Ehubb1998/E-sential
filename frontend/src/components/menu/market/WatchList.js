@@ -81,10 +81,9 @@ const WatchList = () => {
                 {loading === false ? <div className="featuredStocks__container">
                     <div className="featuredStocks__row">
                         {watchList.map((stock) => (
-                            <div id={watchList.indexOf(stock)} className="featuredStocks__div hvr-grow"><MiniStockData i={watchList.indexOf(stock)} stockArray={miniStocks} /></div>
+                            <div id={watchList.indexOf(stock)} className="featuredStocks__div hvr-grow"><MiniStockData i={watchList.indexOf(stock)} watchList={true} stockArray={miniStocks} /></div>
                         ))}
                     </div>
-                    <div style={{ height: "5vh" }}></div>
                 </div> : loadingWheel}
             </div>
         </div>

@@ -4,6 +4,7 @@ import { LineChart, Line, YAxis, ResponsiveContainer } from 'recharts';
 const MiniStockData = (props) => {
     const miniStocks = props.stockArray
     const miniStock = miniStocks[props.i];
+    const watchLater = props.watchLater;
 
     const formatter = new Intl.NumberFormat('en-US', {
         style: 'currency',
