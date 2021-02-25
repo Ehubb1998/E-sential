@@ -17,7 +17,7 @@ def create_watchList():
     
     db.session.add(new_watchList)
     db.session.commit()
-    return jsonify({"New Watch List Info": new_watchList.watch_list()})
+    return jsonify({"NewWatchListInfo": new_watchList.watch_list()})
 
 
 @watchList_routes.route("/list/<id>/<token>")
@@ -31,7 +31,7 @@ def watchList_info(*args, **kwargs):
         return make_response(jsonify("You do not have any stocks in your Watch List"), 404)
 
     info = [watchList.watch_list() for watchList in watchLists]
-    return jsonify({"Watch List": info})
+    return jsonify({"WatchList": info})
 
 
 @watchList_routes.route("/", methods=["DELETE"])

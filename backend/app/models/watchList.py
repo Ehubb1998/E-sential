@@ -9,9 +9,11 @@ class WatchList(db.Model):
 
     user = db.relationship("User")
 
+    # def watch_list(self):
+    #     return {
+    #         "id": self.id,
+    #         "userId": self.user_id,
+    #         "stock": self.stock,
+    #     }
     def watch_list(self):
-        return {
-            "id": self.id,
-            "userId": self.user_id,
-            "stock": self.stock,
-        }
+        return self.stock
