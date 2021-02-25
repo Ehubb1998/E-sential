@@ -117,32 +117,35 @@ def stock_info(*args, **kwargs):
             stock_name_list.append(stock_name)
         
         repeated_stocks = [k for k, v in Counter(stock_name_list).items() if v > 1]
-        for stockName in repeated_stocks:
-            stock_list = StockInfo.query.filter((StockInfo.user_id == id) & (StockInfo.stock == stockName)).all()
-            stock_pps = [stock.pps_function() for stock in stock_list]
-            stock_shares = [stock.shares_function() for stock in stock_list]
-            total_value = 0
-            total_num_shares = 0
-            for i in range(len(stock_list)):
-                current_pps = stock_pps[i]
-                current_shares = stock_shares[i]
-                value = current_pps * current_shares
-                total_value = total_value + value
-                total_num_shares = total_num_shares + current_shares
+        if repeated_stocks:
+            for stockName in repeated_stocks:
+                stock_list = StockInfo.query.filter((StockInfo.user_id == id) & (StockInfo.stock == stockName)).all()
+                stock_pps = [stock.pps_function() for stock in stock_list]
+                stock_shares = [stock.shares_function() for stock in stock_list]
+                total_value = 0
+                total_num_shares = 0
+                for i in range(len(stock_list)):
+                    current_pps = stock_pps[i]
+                    current_shares = stock_shares[i]
+                    value = current_pps * current_shares
+                    total_value = total_value + value
+                    total_num_shares = total_num_shares + current_shares
 
-            new_pps = total_value / total_num_shares
-            first_stock = StockInfo.query.filter((StockInfo.user_id == id) & (StockInfo.stock == stockName)).first()
-            first_stock.pricePerShare = new_pps
-            first_stock.numShares = total_num_shares
-            info_from_stock = first_stock.stock_info()
-            stock_info_list.append(info_from_stock)
+                new_pps = total_value / total_num_shares
+                first_stock = StockInfo.query.filter((StockInfo.user_id == id) & (StockInfo.stock == stockName)).first()
+                first_stock.pricePerShare = new_pps
+                first_stock.numShares = total_num_shares
+                info_from_stock = first_stock.stock_info()
+                stock_info_list.append(info_from_stock)
 
-            for i in range(len(stock_name_list)):
-                strName = stock_name_list[i]
-                if strName != stockName:
-                    stock_info_list.append(info[i])
+                for i in range(len(stock_name_list)):
+                    strName = stock_name_list[i]
+                    if strName != stockName:
+                        stock_info_list.append(info[i])
 
-        return jsonify({"StockInfo": stock_info_list})
+            return jsonify({"StockInfo": stock_info_list})
+
+        return jsonify({"StockInfo": info})
 
 
 @stockInfo_routes.route("/chart/<timeFrame>/<token>/<stock>")
@@ -156,6 +159,7 @@ def stock_chart_data(*args, **kwargs):
         return jsonify({"CompanyInfo": stock_charts})
         
     stock_charts = iex_stock_info(stock, time_frame)
+    # print(jsonify({"StockChart": stock_charts}).data)
     return jsonify({"StockChart": stock_charts})
 
 
