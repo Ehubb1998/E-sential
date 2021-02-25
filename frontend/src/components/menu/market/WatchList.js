@@ -1,15 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import MiniStockData from "./MiniStockData";
 // import NoStocks from "./NoStocks";
-import { finishedLoading, backButton } from "../../../store/actions/stockInfo";
+import { finishedLoading } from "../../../store/actions/stockInfo";
 
 const WatchList = () => {
     const dispatch = useDispatch();
     window.localStorage.removeItem("component");
 
-    const backButtonRedux = useSelector(state => state.stockDataReducer.backButton);
-    const [inExpanded, setInExpanded] = useState(false);
     const [loading, setLoading] = useState(true);
     const [miniStocks, setMiniStocks] = useState([]);
     const [watchList, setWatchList] = useState([]);
@@ -50,10 +48,6 @@ const WatchList = () => {
 
     useEffect(() => {
         dispatch(finishedLoading(false))
-        if (backButtonRedux === true) {
-            setInExpanded(false);
-            dispatch(backButton(false));
-        }
         const featuredStocksFunc = async () => {
             if (loading === true) {
                 const watchListApi = await fetch(`/api/watch_list/list/${userId}/${token}`);
@@ -83,8 +77,8 @@ const WatchList = () => {
                 </div>
             </div>
             <div className="totalValue__bottomBorder"></div>
-            <div style={loading === false && inExpanded === false ? {} : { height: "67%" }} className="stockChart">
-                {loading === false && inExpanded === false ? <div className="featuredStocks__container">
+            <div className="stockChart">
+                {loading === false ? <div className="featuredStocks__container">
                     <div className="featuredStocks__row">
                         {watchList.map((stock) => (
                             <div id={watchList.indexOf(stock)} className="featuredStocks__div hvr-grow"><MiniStockData i={watchList.indexOf(stock)} stockArray={miniStocks} /></div>
