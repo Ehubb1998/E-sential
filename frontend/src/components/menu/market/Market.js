@@ -48,10 +48,15 @@ const Market = (props) => {
         setIconColor("black");
     }
     const addToWatchListFunc = async () => {
-        const stock = clickedStock.toLocaleLowerCase();
+        let stockName;
+        if (clickedStock) {
+            stockName = clickedStock.toLowerCase();
+        } else {
+            stockName = stock
+        }
         const watchListApi = await fetch("api/watch_list/", {
             method: "POST",
-            body: JSON.stringify({ userId: userId, stockName: stock, token: token }),
+            body: JSON.stringify({ userId: userId, stockName: stockName, token: token }),
             headers: {
                 "Content-Type": "application/json"
             }
@@ -71,7 +76,7 @@ const Market = (props) => {
             } else {
                 setAlreadyInWL(false);
             }
-        }, 2500);
+        }, 2000);
     }
 
     const stockApi = async (timeFrame, nameOfStock) => {
@@ -140,7 +145,7 @@ const Market = (props) => {
         <div className="stockContent__div">
             <div className="portfolio__totalValue-container">
                 <div style={{ justifyContent: "flex-start" }} className="totalValue__div">
-                    {inExpanded === false && urlStockInfo === false ? <div className="totalValue">Featured Stocks</div> : urlStockInfo === true ? <div className="totalValue">{stock}</div> : <div className="totalValue">{clickedStock}</div>}
+                    {inExpanded === false && urlStockInfo === false ? <div className="totalValue">Featured Stocks</div> : urlStockInfo === true ? <div className="totalValue">{stock.toUpperCase()}</div> : <div className="totalValue">{clickedStock}</div>}
                     {inExpanded || urlStockInfo ? <div onMouseEnter={overIcon} onMouseLeave={leftIcon} onClick={addToWatchListFunc} style={{ marginLeft: "1.5%", cursor: "pointer" }}>
                         {iconColor === "green" ? <FontAwesomeIcon icon={faEye} size="lg" color="rgb(0, 200, 5)" /> : <FontAwesomeIcon size="lg" icon={faEye} />}
                     </div> : <></>}
