@@ -9,6 +9,10 @@ watchList_routes = Blueprint("watchList", __name__)
 def create_watchList():
     user_id = request.json["userId"]
     stock = request.json["stockName"]
+
+    watchLists = WatchList.query.filter((WatchList.user_id == user_id) & (WatchList.stock == stock)).first()
+    if (watchLists):
+        return make_response(jsonify("Stock already in watch list"), 404)
     
     new_watchList = WatchList(
         user_id=user_id,

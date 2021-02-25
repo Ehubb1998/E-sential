@@ -5,6 +5,8 @@ import StockInfo from "./StockInfo";
 import MiniStockData from "./MiniStockData";
 import { backButton, featuredStocks } from "../../../store/actions/stockInfo";
 import { finishedLoading } from "../../../store/actions/stockInfo";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEye } from "@fortawesome/free-solid-svg-icons";
 
 const Market = (props) => {
     let urlStockInfo = false;
@@ -25,8 +27,12 @@ const Market = (props) => {
     const [clickedStock, setClickedStock] = useState("");
     const [loading, setLoading] = useState(true);
     const [miniStocks, setMiniStocks] = useState([]);
+    const [iconColor, setIconColor] = useState("black");
+    const [addedToWL, setAddedToWL] = useState(false);
+    const [alreadyInWL, setAlreadyInWL] = useState(false);
     const featuredStockArray = ["SNAP", "AAPL", "TWTR", "TSLA", "NFLX", "FB", "MSFT", "DIS", "GPRO", "SBUX", "GME", "UBER"];
     const token = window.localStorage.getItem("ESENTIAL_ACCESS_TOKEN");
+    const userId = window.localStorage.getItem("ESENTIAL_USER_ID");
     
     const { stock } = useParams();
 
@@ -34,6 +40,38 @@ const Market = (props) => {
         setInExpanded(true);
         const stockName = e.currentTarget.id;
         setClickedStock(stockName);
+    }
+    const overIcon = () => {
+        setIconColor("green");
+    }
+    const leftIcon = () => {
+        setIconColor("black");
+    }
+    const addToWatchListFunc = async () => {
+        const stock = clickedStock.toLocaleLowerCase();
+        const watchListApi = await fetch("api/watch_list/", {
+            method: "POST",
+            body: JSON.stringify({ userId: userId, stockName: stock, token: token }),
+            headers: {
+                "Content-Type": "application/json"
+            }
+        });
+
+        const results = await watchListApi.json();
+        if (results === "Stock already in watch list") {
+            setAlreadyInWL(true);
+        } else {
+            setAddedToWL(true);
+        }
+    }
+    if (addedToWL || alreadyInWL) {
+        setTimeout(() => {
+            if (addedToWL) {
+                setAddedToWL(false);
+            } else {
+                setAlreadyInWL(false);
+            }
+        }, 2500);
     }
 
     const stockApi = async (timeFrame, nameOfStock) => {
@@ -101,8 +139,12 @@ const Market = (props) => {
         <>
         <div className="stockContent__div">
             <div className="portfolio__totalValue-container">
-                <div className="totalValue__div">
+                <div style={{ justifyContent: "flex-start" }} className="totalValue__div">
                     {inExpanded === false && urlStockInfo === false ? <div className="totalValue">Featured Stocks</div> : urlStockInfo === true ? <div className="totalValue">{stock}</div> : <div className="totalValue">{clickedStock}</div>}
+                    {inExpanded || urlStockInfo ? <div onMouseEnter={overIcon} onMouseLeave={leftIcon} onClick={addToWatchListFunc} style={{ marginLeft: "1.5%", cursor: "pointer" }}>
+                        {iconColor === "green" ? <FontAwesomeIcon icon={faEye} size="lg" color="rgb(0, 200, 5)" /> : <FontAwesomeIcon size="lg" icon={faEye} />}
+                    </div> : <></>}
+                    {addedToWL ? <p style={{ color: "rgb(0, 200, 5)", marginLeft: "1.5%" }}>Added To Watch List</p> : alreadyInWL ? <p style={{ color: "#ff4400", marginLeft: "1.5%" }}>Already In Watch List</p> : <></>}
                 </div>
             </div>
             <div className="totalValue__bottomBorder"></div>
