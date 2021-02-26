@@ -1,10 +1,13 @@
 import React from "react";
 import { LineChart, Line, YAxis, ResponsiveContainer } from 'recharts';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTimesCircle } from "@fortawesome/free-solid-svg-icons";
 
 const MiniStockData = (props) => {
     const miniStocks = props.stockArray
     const miniStock = miniStocks[props.i];
     const watchLater = props.watchLater;
+    const overStock = props.overStock;
 
     const formatter = new Intl.NumberFormat('en-US', {
         style: 'currency',
@@ -14,6 +17,9 @@ const MiniStockData = (props) => {
 
     return (
         <div className="miniStockChart__container">
+            {watchLater && overStock ? <div className="xButton__div">
+                <FontAwesomeIcon icon={faTimesCircle} size="lg" />
+            </div> : <></>}
             <ResponsiveContainer height="60%" width="92%">
                 <LineChart data={miniStock}>
                     <YAxis hide={true} domain={[dataMin => (Math.round(dataMin)), dataMax => (Math.round(dataMax))]} />

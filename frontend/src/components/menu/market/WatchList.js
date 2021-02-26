@@ -11,8 +11,16 @@ const WatchList = () => {
     const [loading, setLoading] = useState(true);
     const [miniStocks, setMiniStocks] = useState([]);
     const [watchList, setWatchList] = useState([]);
+    const [overStock, setOverStock] = useState(false);
     const token = window.localStorage.getItem("ESENTIAL_ACCESS_TOKEN");
     const userId = window.localStorage.getItem("ESENTIAL_USER_ID");
+
+    const overStockFunc = () => {
+        setOverStock(true);
+    }
+    const leftStockFunc = () => {
+        setOverStock(false);
+    }
 
     const stockApi = async (timeFrame, nameOfStock) => {
         const chartRequests = await fetch(`/api/stock_info/chart/${timeFrame}/${token}/${nameOfStock}`);
@@ -81,7 +89,7 @@ const WatchList = () => {
                 {loading === false ? <div className="featuredStocks__container">
                     <div className="featuredStocks__row">
                         {watchList.map((stock) => (
-                            <div id={watchList.indexOf(stock)} className="featuredStocks__div hvr-grow"><MiniStockData i={watchList.indexOf(stock)} watchList={true} stockArray={miniStocks} /></div>
+                            <div key={stock} id={watchList.indexOf(stock)} onMouseEnter={overStockFunc} onMouseLeave={leftStockFunc} className="featuredStocks__div hvr-grow"><MiniStockData i={watchList.indexOf(stock)} watchList={true} overStock={overStock} stockArray={miniStocks} /></div>
                         ))}
                     </div>
                 </div> : loadingWheel}
