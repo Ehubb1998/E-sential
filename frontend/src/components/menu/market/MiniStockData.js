@@ -15,9 +15,12 @@ const MiniStockData = (props) => {
         minimumFractionDigits: 2,
     });
 
+    // console.log(overStock)
     return (
         <div className="miniStockChart__container">
-            {watchLater && overStock ? <div className="xButton__div">
+            {/* {console.log(watchLater)} */}
+            {console.log(overStock)}
+            {overStock ? <div className="xButton__div">
                 <FontAwesomeIcon icon={faTimesCircle} size="lg" />
             </div> : <></>}
             <ResponsiveContainer height="60%" width="92%">
