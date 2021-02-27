@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import MiniStockData from "./MiniStockData";
-// import NoStocks from "./NoStocks";
-import { finishedLoading } from "../../../store/actions/stockInfo";
+import NoStocks from "./NoStocks";
+import { finishedLoading, watchList } from "../../../store/actions/stockInfo";
 
 const WatchList = () => {
     const dispatch = useDispatch();
@@ -10,16 +10,19 @@ const WatchList = () => {
 
     const [loading, setLoading] = useState(true);
     const [miniStocks, setMiniStocks] = useState([]);
-    const [watchList, setWatchList] = useState([]);
-    const [overStock, setOverStock] = useState(false);
+    const [watchListState, setWatchListState] = useState([]);
+    const [editWatchList, setEditWatchList] = useState(false);
+    const [noStocks, setNoStocks] = useState(false);
+    const watchListRedux = useSelector(state => state.stockDataReducer.watchList);
     const token = window.localStorage.getItem("ESENTIAL_ACCESS_TOKEN");
     const userId = window.localStorage.getItem("ESENTIAL_USER_ID");
 
-    const overStockFunc = () => {
-        setOverStock(true);
-    }
-    const leftStockFunc = () => {
-        setOverStock(false);
+    const editWatchListFunc = () => {
+        if (editWatchList) {
+            setEditWatchList(false);
+        } else {
+            setEditWatchList(true);
+        }
     }
 
     const stockApi = async (timeFrame, nameOfStock) => {
@@ -60,15 +63,23 @@ const WatchList = () => {
             if (loading === true) {
                 const watchListApi = await fetch(`/api/watch_list/list/${userId}/${token}`);
                 const { WatchList } = await watchListApi.json();
-                const stockData = await featuredStockData(WatchList, "today");
-                setWatchList(WatchList)
-                setMiniStocks(stockData);
+                if (WatchList.length > 0) {
+                    const stockData = await featuredStockData(WatchList, "today");
+                    setWatchListState(WatchList)
+                    dispatch(watchList(WatchList));
+                    setMiniStocks(stockData);
+                } else {
+                    setNoStocks(true);
+                }
                 setLoading(false);
+            }
+            if (watchListRedux && watchListState.length > 0) {
+                setWatchListState(watchListRedux);
             }
         }
         featuredStocksFunc();
         // eslint-disable-next-line
-    }, []);
+    }, [watchListRedux]);
 
     const loadingWheel = (
         <div id="loader">
@@ -78,27 +89,26 @@ const WatchList = () => {
 
     return (
         <>
-        <div className="stockContent__div">
+        {noStocks === false ? <div className="stockContent__div">
             <div className="portfolio__totalValue-container">
-                <div className="totalValue__div">
+                <div style={{ display: "flex" }} className="totalValue__div">
                     <div className="totalValue">Watch List</div>
+                    <button onClick={editWatchListFunc} className="placeOrderButton editButton">{editWatchList ? "Done" : "Edit"}</button>
                 </div>
             </div>
             <div className="totalValue__bottomBorder"></div>
             <div className="stockChart">
                 {loading === false ? <div className="featuredStocks__container">
                     <div className="featuredStocks__row">
-                        {watchList.map((stock) => (
-                            <div key={stock} id={watchList.indexOf(stock)} onMouseEnter={overStockFunc} onMouseLeave={leftStockFunc} className="featuredStocks__div hvr-grow"><MiniStockData i={watchList.indexOf(stock)} watchList={true} overStock={overStock} stockArray={miniStocks} /></div>
+                        {watchListState.map((stock) => (
+                            <div key={stock} id={watchListState.indexOf(stock)} className="featuredStocks__div hvr-grow"><MiniStockData i={watchListState.indexOf(stock)} watchList={true} editWatchList={editWatchList} stockArray={miniStocks} /></div>
                         ))}
                     </div>
                 </div> : loadingWheel}
             </div>
-        </div>
+        </div> : <NoStocks tab="watchList" />}
         </>
     )
 }
 
 export default WatchList;
-
-/* <NoStocks tab="watchList" /> */
