@@ -1344,3 +1344,37 @@ html, body, #root {
 .buttonDiv:hover {
     background-color: rgb(3, 168, 9);
 }
+.planInfo__box {
+    width: 75%;
+    height: 71%;
+    background-color: rgb(255,255,255);
+    border-radius: 15px;
+}
+.planInfo__title {
+    font-size: 1.4em;
+    display: flex;
+    align-items: flex-end;
+    margin-left: 41%;
+}
+.newPlanRow {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 2%;
+}
+.planInfo__label {
+    font-size: 16px;
+    font-weight: 400;
+    display: block;
+    font-family: "Capsule Sans Text",system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+}
+.planInfo__input {
+    display: block;
+    padding: 10px 10px;
+    margin: 10px 0px;
+    width: 90%;
+    height: 15%;
+    border: 3px solid rgba(4, 13, 20, 0.1);
+    border-radius: 4px;
+    font-size: 15px;
+    margin-right: 100px;
+}

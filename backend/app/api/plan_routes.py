@@ -28,7 +28,7 @@ def create_plan():
     db.session.add(new_plan)
     db.session.commit()
     
-    plans = Plan.query.filter(Plan.user_id == id).all()
+    plans = Plan.query.filter(Plan.user_id == user_id).all()
 
     info = [plan.plan() for plan in plans]
     return jsonify({"Plans": info})

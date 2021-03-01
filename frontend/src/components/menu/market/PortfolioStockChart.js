@@ -32,24 +32,30 @@ const PortfolioStockChart = (props) => {
     }
 
     const stockApi = async (timeFrame, nameOfStock) => {
-        const chartRequests = await fetch(`/api/stock_info/chart/${timeFrame}/${token}/${nameOfStock}`);
+        return fetch(`/api/stock_info/chart/${timeFrame}/${token}/${nameOfStock}`).then(async (res) => {
+            if (timeFrame === "company") {
+                // const { CompanyInfo } = await chartRequests.json();
+                let { CompanyInfo } = await res.json();
+                // console.log(CompanyInfo);
+                return CompanyInfo
+            }
+            let { StockChart } = await res.json();
+            if (!StockChart) return;
+            console.log(StockChart);
+    
+            // const { StockChart } = await chartRequests.json();
+            const half = Math.ceil(StockChart.length / 2);
+            const rightHalf = StockChart.splice(half, StockChart.length - 1);
+            return rightHalf;
+        });
         
-        if (timeFrame === "company") {
-            const { CompanyInfo } = await chartRequests.json();
-            return CompanyInfo
-        }
-
-        const { StockChart } = await chartRequests.json();
-        const half = Math.ceil(StockChart.length / 2);
-        const rightHalf = StockChart.splice(half, StockChart.length - 1);
-        return rightHalf;
     }
 
     const individualStockData = async (stock, timeFrame) => {
         const stockName = stock.stock;
         const stockChart = await stockApi(timeFrame, stockName);
         const companyInfo = await stockApi("company", stockName);
-
+        if (!stockChart || !companyInfo) return;
         const companyInfoObj = {};
         companyInfoObj["company"] = companyInfo.companyName;
         companyInfoObj["symbol"] = companyInfo.symbol;
@@ -110,6 +116,7 @@ const PortfolioStockChart = (props) => {
                 } else {
                     const stockData = await individualStockData(portfolioStock, timeSelection);
                     const stockCharts = stockData;
+                    if (!stockCharts) return;
                     const companyInfoProps = stockCharts.shift();
                     setStockChart(stockCharts);
                     setCompanyInfo(companyInfoProps);

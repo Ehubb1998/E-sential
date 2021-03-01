@@ -54,8 +54,32 @@ export const getPlans = (id, token) => {
         const res = await fetch(`/api/plan/info/${id}/${token}`);
 
         const { Plans } = await res.json();
-        dispatch(plans(Plans))
+        dispatch(plans(Plans));
 
+    }
+}
+
+export const createPlan = (id, token, planName, job, monthlyIncome, stockName, amountToSave, target) => {
+    return async (dispatch) => {
+        try {
+            const res = await fetch("/api/plan/", {
+                method: "POST",
+                body: JSON.stringify({ userId: id, token: token, name: planName, job: job, monthlyIncome: monthlyIncome, stockName: stockName, amountToSave: amountToSave, target: target }),
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            });
+
+            if (!res.ok) {
+                throw res;
+            }
+
+            const { Plans } = await res.json();
+            dispatch(plans(Plans));
+        } catch (err) {
+            const error = await err.json();
+            console.error(error);
+        }
     }
 }
 
@@ -82,6 +106,4 @@ export const deletePlan = (userId, planId, token) => {
         }
 
     }
-    
-
 }
