@@ -74,6 +74,10 @@ const Plans = () => {
     useEffect(() => {
         dispatch(finishedLoading(false));
         if (plansRedux && plansRedux.length > 0) {
+            if (noPlans) {
+                setNoPlans(false);
+                setEditPlans(false);
+            }
             setPlansArr(plansRedux);
         } else {
             setNoPlans(true);
