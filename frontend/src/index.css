@@ -1294,6 +1294,13 @@ html, body, #root {
     text-align: center;
     padding-top: 1%;
 }
+.plan__title-xButton {
+    font-weight: 600;
+    text-align: center;
+    padding-top: 1%;
+    display: inline-block;
+    width: 92%;
+}
 .planTitle__borderBottom {
     margin-top: 1%;
     display: flex;
