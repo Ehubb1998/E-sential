@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 // import NoStocks from "./NoStocks";
 import { finishedLoading } from "../../../store/actions/stockInfo";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -8,6 +8,7 @@ import { faTimesCircle } from "@fortawesome/free-solid-svg-icons";
 const Plans = () => {
     const dispatch = useDispatch();
     window.localStorage.removeItem("component");
+    const plansRedux = useSelector(state => state.stockDataReducer.plans);
 
     const [editPlans, setEditPlans] = useState(false);
 

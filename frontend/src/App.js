@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import { currentUser } from "./store/actions/userData";
 import { bankData } from "./store/actions/bankInfo";
-import { portfolioData } from "./store/actions/stockInfo";
+import { portfolioData, getPlans } from "./store/actions/stockInfo";
 
 import Homepage from "./components/Homepage";
 import NavBar from "./components/NavBar";
@@ -41,6 +41,7 @@ const App = () => {
         dispatch(currentUser(userData));
         dispatch(bankData(BankInfo));
         dispatch(portfolioData(userId, token));
+        dispatch(getPlans(userId, token));
       } catch (err) {
           console.error(err);
       }

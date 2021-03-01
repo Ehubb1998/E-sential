@@ -22,7 +22,7 @@ export const portfolioData = (id, token) => {
 
         const { StockInfo } = await res.json();
         dispatch(portfolio(StockInfo));
-        window.localStorage.setItem("PORTFOLIO_SET", "true");
+        // window.localStorage.setItem("PORTFOLIO_SET", "true");
     }
 }
 
@@ -46,5 +46,15 @@ export const buyStock = (id, token, stockSymbol, numShares, pps) => {
             const error = await err.json();
             console.error(error);
         }
+    }
+}
+
+export const getPlans = (id, token) => {
+    return async (dispatch) => {
+        const res = await fetch(`/api/plan/info/${id}/${token}`);
+
+        const { Plans } = await res.json();
+        dispatch(plans(Plans))
+
     }
 }
