@@ -63,13 +63,13 @@ def delete_plan():
     #     return jsonify("Plans Deleted")
     # else: 
     user_id = request.json["userId"]
-    plan_name = request.json["planName"]
+    plan_id = request.json["planId"]
 
-    plan = Plan.query.filter((Plan.user_id == user_id) & (Plan.name == plan_name)).first_or_404(description="User does not have that plan")
+    plan = Plan.query.filter((Plan.user_id == user_id) & (Plan.id == plan_id)).first_or_404(description="User does not have that plan")
     db.session.delete(plan)
     db.session.commit()
 
-    plans = Plan.query.filter(Plan.user_id == id).all()
+    plans = Plan.query.filter(Plan.user_id == user_id).all()
 
     info = [plan.plan() for plan in plans]
     return jsonify({"Plans": info})

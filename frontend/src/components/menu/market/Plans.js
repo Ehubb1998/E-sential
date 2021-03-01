@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-// import NoStocks from "./NoStocks";
+import { deletePlan } from "../../../store/actions/stockInfo";
+import NoStocks from "./NoStocks";
 import { finishedLoading } from "../../../store/actions/stockInfo";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimesCircle } from "@fortawesome/free-solid-svg-icons";
@@ -8,9 +9,13 @@ import { faTimesCircle } from "@fortawesome/free-solid-svg-icons";
 const Plans = () => {
     const dispatch = useDispatch();
     window.localStorage.removeItem("component");
+    const token = window.localStorage.getItem("ESENTIAL_ACCESS_TOKEN");
+    const userId = window.localStorage.getItem("ESENTIAL_USER_ID");
     const plansRedux = useSelector(state => state.stockDataReducer.plans);
 
     const [editPlans, setEditPlans] = useState(false);
+    const [plansArr, setPlansArr] = useState([]);
+    const [noPlans, setNoPlans] = useState(false);
 
     const editPlansFunc = () => {
         if (editPlans) {
@@ -19,11 +24,20 @@ const Plans = () => {
             setEditPlans(true);
         }
     }
+    const deletePlanFunc = (planId) => {
+        console.log("IN DELETE PLAN FUNC")
+        dispatch(deletePlan(userId, planId, token));
+    }
 
     useEffect(() => {
         dispatch(finishedLoading(false));
+        if (plansRedux && plansRedux.length > 0) {
+            setPlansArr(plansRedux);
+        } else {
+            setNoPlans(true);
+        }
         // eslint-disable-next-line
-    }, [])
+    }, [plansRedux])
 
     const loadingWheel = (
         <div id="loader">
@@ -33,7 +47,7 @@ const Plans = () => {
 
     return (
         <>
-            <div className="stockContent__div">
+            {noPlans === false ? <div className="stockContent__div">
                 <div className="portfolio__totalValue-container">
                     <div style={{ display: "flex", justifyContent: "flex-start" }} className="totalValue__div">
                         <div className="totalValue">Plans</div>
@@ -47,9 +61,9 @@ const Plans = () => {
                 </div>
                 <div className="totalValue__bottomBorder"></div>
                 <div className="stockChart">
-                    {plansRedux ? plansRedux.map((plan) => (
-                        <div className="plan__container">
-                            {editPlans ? <div style={{ position: "unset", display: "inline-block", paddingLeft: "1%", paddingTop: "1%" }} className="xButton__div">
+                    {plansArr.length > 0 ? plansArr.map((plan) => (
+                        <div key={plan.id} className="plan__container">
+                            {editPlans ? <div onClick={() => deletePlanFunc(plan.id)} style={{ position: "unset", display: "inline-block", paddingLeft: "1%", paddingTop: "1%" }} className="xButton__div">
                                 <FontAwesomeIcon icon={faTimesCircle} size="2x" />
                             </div> : <></>}
                             <div className={editPlans ? "plan__title-xButton" : "plan__title"}>{plan.name}</div>
@@ -70,10 +84,9 @@ const Plans = () => {
                         </div>
                     )) : loadingWheel}
                 </div>
-            </div>
+            </div> : <NoStocks tab="plans" />}
         </>
     )
 }
 
 export default Plans;
-/* <NoStocks tab="plans" /> */

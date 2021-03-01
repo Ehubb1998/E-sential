@@ -58,3 +58,30 @@ export const getPlans = (id, token) => {
 
     }
 }
+
+export const deletePlan = (userId, planId, token) => {
+    return async (dispatch) => {
+        try {
+            const deletePlanApi = await fetch("/api/plan/", {
+                method: "DELETE",
+                body: JSON.stringify({ userId: userId, planId: planId, token: token }),
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            });
+
+            if (!deletePlanApi.ok) {
+                throw deletePlanApi;
+            }
+
+            const { Plans } = await deletePlanApi.json();
+            dispatch(plans(Plans));
+        } catch (err) {
+            const error = await err.json();
+            console.error(error);
+        }
+
+    }
+    
+
+}
