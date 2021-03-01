@@ -47,26 +47,28 @@ const Plans = () => {
                 </div>
                 <div className="totalValue__bottomBorder"></div>
                 <div className="stockChart">
-                    <div className="plan__container">
-                        {editPlans ? <div style={{ position: "unset", display: "inline-block", paddingLeft: "1%", paddingTop: "1%" }} className="xButton__div">
-                            <FontAwesomeIcon icon={faTimesCircle} size="2x" />
-                        </div> : <></>}
-                        <div className={editPlans ? "plan__title-xButton" : "plan__title"}>Apple Stock</div>
-                        <div className="planTitle__borderBottom">
-                            <div className="borderBottom__title"></div>
-                        </div>
-                        <div className="planDetails__div">
-                            <div className="planRow1">
-                                <span style={{ paddingLeft: "13%" }}>Job: Dominoes</span>
-                                <span>Stock: Apple</span>
+                    {plansRedux ? plansRedux.map((plan) => (
+                        <div className="plan__container">
+                            {editPlans ? <div style={{ position: "unset", display: "inline-block", paddingLeft: "1%", paddingTop: "1%" }} className="xButton__div">
+                                <FontAwesomeIcon icon={faTimesCircle} size="2x" />
+                            </div> : <></>}
+                            <div className={editPlans ? "plan__title-xButton" : "plan__title"}>{plan.name}</div>
+                            <div className="planTitle__borderBottom">
+                                <div className="borderBottom__title"></div>
                             </div>
-                            <div className="planRow2">
-                                <span>Monthly Income: $3000</span>
-                                <span>Amount To Save: $250</span>
-                                <span>Target Amount To Invest: $800</span>
+                            <div className="planDetails__div">
+                                <div className="planRow1">
+                                    <span style={{ paddingLeft: "13%" }}>Job: {plan.job}</span>
+                                    <span>Stock: {plan.stock.toUpperCase()}</span>
+                                </div>
+                                <div className="planRow2">
+                                    <span>Monthly Income: ${plan.monthlyIncome.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</span>
+                                    <span>Amount To Save: ${plan.amountToSave.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</span>
+                                    <span>Target Amount To Invest: ${plan.targetAmountToInvest.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</span>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    )) : loadingWheel}
                 </div>
             </div>
         </>

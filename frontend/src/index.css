@@ -1275,7 +1275,7 @@ html, body, #root {
     background-color: rgb(3, 168, 9);
 }
 
-/* Watch List */
+/* Plans */
 .plan__container {
     background-color: rgb(240, 240, 240);
     width: 93%;
@@ -1283,6 +1283,7 @@ html, body, #root {
     border-radius: 2%/10%;
     box-shadow: 1px 1px 3px 2px rgb(0 0 0 / 20%);
     font-size: 1.25em;
+    margin-bottom: 3%;
 }
 .planDetails__div {
     padding: 2.5% 2.5%;
