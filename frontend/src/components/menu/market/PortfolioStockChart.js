@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { LineChart, Line, Tooltip, YAxis, ResponsiveContainer } from 'recharts';
 import { finishedLoading } from "../../../store/actions/stockInfo";
+import backupChartData from "./backupChartData";
 
 const PortfolioStockChart = (props) => {
     const dispatch = useDispatch();
@@ -36,12 +37,13 @@ const PortfolioStockChart = (props) => {
             if (timeFrame === "company") {
                 // const { CompanyInfo } = await chartRequests.json();
                 let { CompanyInfo } = await res.json();
-                // console.log(CompanyInfo);
                 return CompanyInfo
             }
+
             let { StockChart } = await res.json();
-            if (!StockChart) return;
-            console.log(StockChart);
+            if (!StockChart) {
+                StockChart = backupChartData;
+            }
     
             // const { StockChart } = await chartRequests.json();
             const half = Math.ceil(StockChart.length / 2);
@@ -55,7 +57,7 @@ const PortfolioStockChart = (props) => {
         const stockName = stock.stock;
         const stockChart = await stockApi(timeFrame, stockName);
         const companyInfo = await stockApi("company", stockName);
-        if (!stockChart || !companyInfo) return;
+
         const companyInfoObj = {};
         companyInfoObj["company"] = companyInfo.companyName;
         companyInfoObj["symbol"] = companyInfo.symbol;
@@ -115,8 +117,9 @@ const PortfolioStockChart = (props) => {
                     }
                 } else {
                     const stockData = await individualStockData(portfolioStock, timeSelection);
+                    // debugger;
                     const stockCharts = stockData;
-                    if (!stockCharts) return;
+
                     const companyInfoProps = stockCharts.shift();
                     setStockChart(stockCharts);
                     setCompanyInfo(companyInfoProps);
@@ -132,6 +135,7 @@ const PortfolioStockChart = (props) => {
                         window.localStorage.setItem(`newValue${num + 1}`, `${companyInfoProps.newValue}`);
                         window.localStorage.setItem(`totalValue${num + 1}`, `${companyInfoProps.totalValue}`);
                         dispatch(finishedLoading(true));
+                        // debugger;
                     }
                 }
             }

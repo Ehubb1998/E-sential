@@ -8,6 +8,8 @@ import datetime
 
 stockInfo_routes = Blueprint("stockInfo", __name__)
 
+stock_charts = None
+
 def iex_stock_info(company, time_frame, postMethod=False):
     # api_key = Config.IEX_KEY
     test_key = Config.IEX_TEST_KEY
@@ -153,13 +155,12 @@ def stock_info(*args, **kwargs):
 def stock_chart_data(*args, **kwargs):
     time_frame = kwargs["timeFrame"]
     stock = kwargs["stock"]
-    
+
     if time_frame == "company":
         stock_charts = iex_stock_info(stock, time_frame)
         return jsonify({"CompanyInfo": stock_charts})
-        
+    
     stock_charts = iex_stock_info(stock, time_frame)
-    # print(stock_charts[0])
     return jsonify({"StockChart": stock_charts})
 
 
