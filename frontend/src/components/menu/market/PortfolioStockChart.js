@@ -56,8 +56,11 @@ const PortfolioStockChart = (props) => {
     const individualStockData = async (stock, timeFrame) => {
         const stockName = stock.stock;
         const stockChart = await stockApi(timeFrame, stockName);
-        const companyInfo = await stockApi("company", stockName);
+        let companyInfo = await stockApi("company", stockName);
 
+        if (!companyInfo) {
+            companyInfo = await stockApi("company", stockName);
+        }
         const companyInfoObj = {};
         companyInfoObj["company"] = companyInfo.companyName;
         companyInfoObj["symbol"] = companyInfo.symbol;

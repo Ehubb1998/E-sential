@@ -60,10 +60,4 @@ def delete_watchList():
     db.session.delete(watchList)
     db.session.commit()
 
-    watchLists = WatchList.query.filter(WatchList.user_id == user_id).all()
-
-    if not watchLists:
-        return make_response(jsonify("You do not have any stocks in your Watch List"), 404)
-
-    info = [watchList.watch_list() for watchList in watchLists]
-    return jsonify({"WatchList": info})
+    return jsonify("Successfully Deleted ")

@@ -107,3 +107,18 @@ export const deletePlan = (userId, planId, token) => {
 
     }
 }
+
+export const deleteFromWL = (userId, token, stockName, watchListArr, index) => {
+    return async (dispatch) => {
+        await fetch("/api/watch_list/", {
+            method: "DELETE",
+            body: JSON.stringify({ userId: userId, stockName: stockName.toLowerCase(), token: token }),
+            headers: {
+                "Content-Type": "application/json"
+            }
+        });
+
+        watchListArr.splice(index, 1);
+        dispatch(watchList(watchListArr));
+    }
+}

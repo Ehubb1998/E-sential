@@ -1,15 +1,27 @@
 import React from "react";
+import { useDispatch } from "react-redux";
 import { LineChart, Line, YAxis, ResponsiveContainer } from 'recharts';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimesCircle } from "@fortawesome/free-solid-svg-icons";
+import { deleteFromWL } from "../../../store/actions/stockInfo";
 
 const MiniStockData = (props) => {
+    const dispatch = useDispatch();
+    let miniStock;
+    const removeStockFromWL = props.removeStockFromWL;
     const miniStocks = props.stockArray
-    const miniStock = miniStocks[props.i];
+    if (props.watchList) {
+        miniStock = props.stock;
+    } else {
+        miniStock = miniStocks[props.i];
+    }
     // const watchLater = props.watchLater;
     const editWatchList = props.editWatchList;
-    const removeFromWL = props.removeFromWL;
 
+    const removeFromWL = () => {
+        dispatch(deleteFromWL(props.userId, props.token, miniStock.symbol.toLowerCase(), miniStocks, props.i));
+        removeStockFromWL(props.i);
+    }
 
     const formatter = new Intl.NumberFormat('en-US', {
         style: 'currency',
@@ -21,7 +33,7 @@ const MiniStockData = (props) => {
     // removeFromWL(miniStock.symbol)
     return (
         <div className="miniStockChart__container">
-            {editWatchList ? <div onClick={() => removeFromWL(miniStock.symbol.toLowerCase())} className="xButton__div">
+            {editWatchList ? <div onClick={removeFromWL} className="xButton__div">
                 <FontAwesomeIcon icon={faTimesCircle} size="lg" />
             </div> : <></>}
             <ResponsiveContainer height="60%" width="92%">
