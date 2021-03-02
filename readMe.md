@@ -14,7 +14,7 @@ _Ehubb's first Full-Stack Application!_
 
 ## **Brief Explanation of The App** 
 
-- This app will help users organize their finances and is a beginners's guide to investing on the stock market. If you are a beginner to investing, there is a visual tutorial on what stocks are, what does it mean to invest, how to invest, and most importantly, helps provide a custom plan to help you find money to invest. This is the perfect app for getting you a custom plan for financial freedom!
+- This app will help users organize their finances and is a beginners's guide to investing on the stock market. If you are a beginner to investing, this app helps give you a better visual understanding of how stocks work and helps provide a custom plan to help you find money to invest. This is the perfect app for getting you a custom plan for financial freedom!
 
 ---
 
@@ -27,6 +27,7 @@ _Ehubb's first Full-Stack Application!_
     - JavaScript
         - React
         - Redux
+        - Recharts
 
 - **Back-End**
 
@@ -85,7 +86,7 @@ _Ehubb's first Full-Stack Application!_
 - Banking Info
 - Stock Market
 - Custom Planning
-- Watch List
+- Stock Portfolio
 
 ---
 
@@ -93,8 +94,7 @@ _Ehubb's first Full-Stack Application!_
 
 - Sign Up / Log In
 - Can setup and organize financial information
-- Tutorial on the Stock Market and investing
-- Custom plan on how to invest
+- Custom plan to invest
 - View stocks
 - Stock Watch List
 
@@ -110,10 +110,14 @@ _Ehubb's first Full-Stack Application!_
 
 - NavBar Component
 - Splash Page Component
-    - Stock Market Component
 - *Once Logged In
 - Homepage Component
     - Banking Component
     - Stock Market Component
+        - Portfolio Component
+        - Market Component
+            - Featured Stock Components
+        - Watch List Component
+        - Plan Component
     - User Account Component
 ---

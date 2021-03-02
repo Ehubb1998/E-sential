@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import MiniStockData from "./MiniStockData";
 import NoStocks from "./NoStocks";
-import { finishedLoading, watchList } from "../../../store/actions/stockInfo";
+import { finishedLoading } from "../../../store/actions/stockInfo";
 
 const WatchList = () => {
     const dispatch = useDispatch();
@@ -12,7 +12,6 @@ const WatchList = () => {
     const [watchListState, setWatchListState] = useState([]);
     const [editWatchList, setEditWatchList] = useState(false);
     const [noStocks, setNoStocks] = useState(false);
-    const watchListRedux = useSelector(state => state.stockDataReducer.watchList);
     const token = window.localStorage.getItem("ESENTIAL_ACCESS_TOKEN");
     const userId = window.localStorage.getItem("ESENTIAL_USER_ID");
 
@@ -25,7 +24,7 @@ const WatchList = () => {
     }
 
     const removeStockFromWL = (index) => {
-        let newWatchList = watchListState;
+        let newWatchList = [...watchListState];
         newWatchList.splice(index, 1);
         setWatchListState(newWatchList);
     }
@@ -55,6 +54,7 @@ const WatchList = () => {
             stockChart["company"] = companyInfo.companyName;
             stockChart["symbol"] = companyInfo.symbol;
             let lastObj = stockChart[stockChart.length - 1];
+            // debugger;
             let currentPPS = lastObj.close;
             stockChart["currentPPS"] = currentPPS;
             stockDataArray.push(stockChart);
@@ -71,29 +71,27 @@ const WatchList = () => {
                 if (WatchList) {
                     const stockData = await featuredStockData(WatchList, "today");
                     setWatchListState(stockData)
-                    dispatch(watchList(stockData));
                 } else {
                     setNoStocks(true);
                 }
                 setLoading(false);
             } else {
-                if (watchListRedux && watchListRedux.length > 0) {
-                    setWatchListState(watchListRedux);
-                } else {
-                    setNoStocks(true);
-                }
+                setNoStocks(true);
             }
         }
         featuredStocksFunc();
         // eslint-disable-next-line
-    }, [watchListRedux]);
+    }, []);
 
     const loadingWheel = (
+        <>
         <div id="loader">
             <div className="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
         </div>
+        </>
     );
 
+    if (loading) return loadingWheel;
     return (
         <>
         {noStocks === false ? <div className="stockContent__div">
@@ -107,13 +105,18 @@ const WatchList = () => {
             </div>
             <div className="totalValue__bottomBorder"></div>
             <div className="stockChart">
-                {console.log("This the watchListState")}
-                {console.log(watchListState)}
-                {loading === false ? <div className="featuredStocks__container">
-                    {watchListState.map((stock) => (
-                        <div key={watchListState.indexOf(stock)} className="featuredStocks__div hvr-grow"><MiniStockData i={watchListState.indexOf(stock)} userId={userId} token={token} editWatchList={editWatchList} stock={stock} watchList={true} stockArray={watchListState} removeStockFromWL={removeStockFromWL} /></div>
+                <div className="featuredStocks__container">
+                    {watchListState.map((stock, i) => (
+                        <div key={watchListState.indexOf(stock)} className="featuredStocks__div hvr-grow">
+                            <MiniStockData 
+                            userId={userId} 
+                            token={token} 
+                            editWatchList={editWatchList} 
+                            stock={stock} 
+                            removeStockFromWL={() => removeStockFromWL(i)} />
+                        </div>
                     ))}
-                </div> : loadingWheel}
+                </div>
             </div>
         </div> : <NoStocks tab="watchList" />}
         </>

@@ -156,22 +156,22 @@ const Market = (props) => {
             <div style={(loading === false && featuredCharts && inExpanded === false && urlStockInfo === false) || (loading === false && inExpanded === false && urlStockInfo === false) ? {} : { height: "67%" }} className="stockChart">
                 {(loading === false && featuredCharts && inExpanded === false && urlStockInfo === false) || (loading === false && inExpanded === false && urlStockInfo === false) ? <div className="featuredStocks__container">
                     <div className="featuredStocks__row">
-                        <div onClick={handleClick} id="SNAP" className="featuredStocks__div hvr-grow"><MiniStockData i={0} stockArray={miniStocks} /></div>
-                        <div onClick={handleClick} id="AAPL" className="featuredStocks__div hvr-grow"><MiniStockData i={1} stockArray={miniStocks} /></div>
-                        <div onClick={handleClick} id="TWTR" className="featuredStocks__div hvr-grow"><MiniStockData i={2} stockArray={miniStocks} /></div>
-                        <div onClick={handleClick} id="TSLA" className="featuredStocks__div hvr-grow"><MiniStockData i={3} stockArray={miniStocks} /></div>
+                        <div onClick={handleClick} id="SNAP" className="featuredStocks__div hvr-grow"><MiniStockData stock={miniStocks[0]} /></div>
+                        <div onClick={handleClick} id="AAPL" className="featuredStocks__div hvr-grow"><MiniStockData stock={miniStocks[1]} /></div>
+                        <div onClick={handleClick} id="TWTR" className="featuredStocks__div hvr-grow"><MiniStockData stock={miniStocks[2]} /></div>
+                        <div onClick={handleClick} id="TSLA" className="featuredStocks__div hvr-grow"><MiniStockData stock={miniStocks[3]} /></div>
                     </div>
                     <div className="featuredStocks__row">
-                        <div onClick={handleClick} id="NFLX" className="featuredStocks__div hvr-grow"><MiniStockData i={4} stockArray={miniStocks} /></div>
-                        <div onClick={handleClick} id="FB" className="featuredStocks__div hvr-grow"><MiniStockData i={5} stockArray={miniStocks} /></div>
-                        <div onClick={handleClick} id="MSFT" className="featuredStocks__div hvr-grow"><MiniStockData i={6} stockArray={miniStocks} /></div>
-                        <div onClick={handleClick} id="DIS" className="featuredStocks__div hvr-grow"><MiniStockData i={7} stockArray={miniStocks} /></div>
+                        <div onClick={handleClick} id="NFLX" className="featuredStocks__div hvr-grow"><MiniStockData stock={miniStocks[4]} /></div>
+                        <div onClick={handleClick} id="FB" className="featuredStocks__div hvr-grow"><MiniStockData stock={miniStocks[5]} /></div>
+                        <div onClick={handleClick} id="MSFT" className="featuredStocks__div hvr-grow"><MiniStockData stock={miniStocks[6]} /></div>
+                        <div onClick={handleClick} id="DIS" className="featuredStocks__div hvr-grow"><MiniStockData stock={miniStocks[7]} /></div>
                     </div>
                     <div className="featuredStocks__row">
-                        <div onClick={handleClick} id="GPRO" className="featuredStocks__div hvr-grow"><MiniStockData i={8} stockArray={miniStocks} /></div>
-                        <div onClick={handleClick} id="SBUX" className="featuredStocks__div hvr-grow"><MiniStockData i={9} stockArray={miniStocks} /></div>
-                        <div onClick={handleClick} id="GME" className="featuredStocks__div hvr-grow"><MiniStockData i={10} stockArray={miniStocks} /></div>
-                        <div onClick={handleClick} id="UBER" className="featuredStocks__div hvr-grow"><MiniStockData i={11} stockArray={miniStocks} /></div>
+                        <div onClick={handleClick} id="GPRO" className="featuredStocks__div hvr-grow"><MiniStockData stock={miniStocks[8]} /></div>
+                        <div onClick={handleClick} id="SBUX" className="featuredStocks__div hvr-grow"><MiniStockData stock={miniStocks[9]} /></div>
+                        <div onClick={handleClick} id="GME" className="featuredStocks__div hvr-grow"><MiniStockData stock={miniStocks[10]} /></div>
+                        <div onClick={handleClick} id="UBER" className="featuredStocks__div hvr-grow"><MiniStockData stock={miniStocks[11]} /></div>
                     </div>
                     <div style={{ height: "5vh" }}></div>
                 </div> : urlStockInfo === true ? <StockInfo stock={stock} stockURL={stock} /> : loading ? loadingWheel : <StockInfo stock={clickedStock} />}
