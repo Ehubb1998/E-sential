@@ -13,6 +13,7 @@ const StockInfo = (props) => {
     const [stock, setStock] = useState({});
     const [loading, setLoading] = useState(true);
     const [timeSelection, setTimeSelection] = useState("today");
+    const [previousTime, setPreviousTime] = useState("");
     const [numShares, setNumShares] = useState(0);
     const [totalAmount, setTotalAmount] = useState(0);
     const [bankBalance, setBankBalance] = useState(0);
@@ -93,16 +94,17 @@ const StockInfo = (props) => {
 
     useEffect(() => {
         const stockFunction = async () => {
-            if (loading === true) {
+            if (loading === true || timeSelection !== previousTime) {
                 const stockData = await individualStockData(stockProp, timeSelection);
                 setStock(stockData);
                 setLoading(false);
             }
+            setPreviousTime(timeSelection);
         }
         stockFunction();
         grabBankBalance();
         // eslint-disable-next-line
-    }, [paymentSuccessful]);
+    }, [paymentSuccessful, timeSelection]);
 
     const formatter = new Intl.NumberFormat('en-US', {
         style: 'currency',
