@@ -1,13 +1,13 @@
-import React, { useState } from "react";
+import React from "react";
 import { NavLink } from "react-router-dom";
 import Logo from "../assets/logo.png";
 
 const NavBar = (props) => {
-    const [searchInput, setSearchInput] = useState("");
+    // const [searchInput, setSearchInput] = useState("");
 
-    const searchBox = (e) => {
-        setSearchInput(e.target.value)
-    }
+    // const searchBox = (e) => {
+    //     setSearchInput(e.target.value)
+    // }
     const logout = (e) => {
         e.preventDefault();
         window.localStorage.clear();
@@ -31,10 +31,10 @@ const NavBar = (props) => {
                 <img src={Logo} alt="logo" className="logo__pic" />
             </NavLink>
             <div className="searchWrap">
-                <form style={{ height: "100%" }} action="index.php" method="post">
+                {/* <form style={{ height: "100%" }} action="index.php" method="post">
                     <span className="searchIcon"></span>
                     <input onChange={searchBox} type="text" name="subject" className="instaSearch" value={searchInput} placeholder="Search" />
-                </form>
+                </form> */}
             </div>
             <a onClick={logout} className="navBar__authDiv-login" href="/">Logout</a>
 
