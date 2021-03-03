@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import MiniStockData from "./MiniStockData";
 import NoStocks from "./NoStocks";
-import { finishedLoading } from "../../../store/actions/stockInfo";
+import { finishedLoading, deleteFromWL } from "../../../store/actions/stockInfo";
 
 const WatchList = () => {
     const dispatch = useDispatch();
@@ -12,6 +12,7 @@ const WatchList = () => {
     const [watchListState, setWatchListState] = useState([]);
     const [editWatchList, setEditWatchList] = useState(false);
     const [noStocks, setNoStocks] = useState(false);
+    const watchListRedux = useSelector(state => state.stockDataReducer.watchList);
     const token = window.localStorage.getItem("ESENTIAL_ACCESS_TOKEN");
     const userId = window.localStorage.getItem("ESENTIAL_USER_ID");
 
@@ -25,8 +26,10 @@ const WatchList = () => {
 
     const removeStockFromWL = (index) => {
         let newWatchList = [...watchListState];
-        newWatchList.splice(index, 1);
+        const removedStock = newWatchList.splice(index, 1);
+        const removedStockName = removedStock[0]
         setWatchListState(newWatchList);
+        dispatch(deleteFromWL(userId, token, removedStockName["symbol"].toLowerCase(), newWatchList));
     }
 
     const stockApi = async (timeFrame, nameOfStock) => {
@@ -76,16 +79,18 @@ const WatchList = () => {
                 }
                 setLoading(false);
             } else {
-                setNoStocks(true);
+                if (watchListRedux.length === 0) {
+                    setNoStocks(true);
+                }
             }
         }
         featuredStocksFunc();
         // eslint-disable-next-line
-    }, []);
+    }, [watchListRedux]);
 
     const loadingWheel = (
         <>
-        <div id="loader">
+        <div style={{ marginLeft: "4%" }} id="loader">
             <div className="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
         </div>
         </>

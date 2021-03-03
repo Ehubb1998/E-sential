@@ -108,7 +108,7 @@ export const deletePlan = (userId, planId, token) => {
     }
 }
 
-export const deleteFromWL = (userId, token, stockName, watchListArr, index) => {
+export const deleteFromWL = (userId, token, stockName, watchListArr) => {
     return async (dispatch) => {
         await fetch("/api/watch_list/", {
             method: "DELETE",
@@ -118,7 +118,7 @@ export const deleteFromWL = (userId, token, stockName, watchListArr, index) => {
             }
         });
 
-        watchListArr.splice(index, 1);
+        // watchListArr.splice(index, 1);
         dispatch(watchList(watchListArr));
     }
 }
