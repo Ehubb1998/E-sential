@@ -31,6 +31,9 @@ const NavBar = (props) => {
                 <img src={Logo} alt="logo" className="logo__pic" />
             </NavLink>
             <div className="searchWrap">
+                <div className="darkMode__container">
+                    <div>Appearance: </div>
+                </div>
                 {/* <form style={{ height: "100%" }} action="index.php" method="post">
                     <span className="searchIcon"></span>
                     <input onChange={searchBox} type="text" name="subject" className="instaSearch" value={searchInput} placeholder="Search" />
