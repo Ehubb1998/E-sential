@@ -116,6 +116,10 @@ html, body, #root {
      color: #c9cbcc;
 }
 
+.darkMode__container {
+    display: flex;
+}
+
 /* Login Page */
 .logInPage-mainDiv {
     display: flex;

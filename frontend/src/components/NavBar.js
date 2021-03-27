@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 import Logo from "../assets/logo.png";
 
 const NavBar = (props) => {
     // const [searchInput, setSearchInput] = useState("");
+    const [theme, setTheme] = useState("light");
 
     // const searchBox = (e) => {
     //     setSearchInput(e.target.value)
@@ -32,7 +33,7 @@ const NavBar = (props) => {
             </NavLink>
             <div className="searchWrap">
                 <div className="darkMode__container">
-                    <div>Appearance: </div>
+                    <div>Appearance: {theme}</div>
                 </div>
                 {/* <form style={{ height: "100%" }} action="index.php" method="post">
                     <span className="searchIcon"></span>
