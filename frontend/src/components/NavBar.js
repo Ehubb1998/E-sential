@@ -33,7 +33,7 @@ const NavBar = (props) => {
             </NavLink>
             <div className="searchWrap">
                 <div className="darkMode__container">
-                    <div>Appearance: {theme}</div>
+                    <div style={{ fontSize: "0.7em" }}>Appearance: {theme}</div>
                 </div>
                 {/* <form style={{ height: "100%" }} action="index.php" method="post">
                     <span className="searchIcon"></span>
