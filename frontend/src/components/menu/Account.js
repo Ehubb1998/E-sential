@@ -233,7 +233,6 @@ const Account = () => {
     }
     if (hiddenEmailComponent === true) {
         setTimeout(() => {
-            // debugger;
             setClickedEditEmail(true);
             setHiddenEmailComponent(false);
         }, 80)
