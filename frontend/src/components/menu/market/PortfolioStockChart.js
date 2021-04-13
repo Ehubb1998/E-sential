@@ -67,7 +67,7 @@ const PortfolioStockChart = (props) => {
         companyInfoObj["purchasedPPS"] = stock.pps;
         companyInfoObj["numShares"] = stock.shares;
         let lastObj = stockChart[stockChart.length - 1];
-        // debugger;
+
         let currentPPS = lastObj.close;
         companyInfoObj["currentPPS"] = currentPPS;
         companyInfoObj["totalValue"] = companyInfoObj.purchasedPPS * companyInfoObj.numShares;
